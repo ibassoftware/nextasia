@@ -1,0 +1,61 @@
+
+<odoo>
+<data>
+    <record id="ibas_sale_view_form" model="ir.ui.view">
+        <field name="name">sale.order.view.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='validity_date']" position="before">
+                <field name="project_id"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <field name="unit_id" context="{
+                    'form_view_ref':'ibas_realestate.ire_property_view_form'
+                    }" />  
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="pre_selling_price" widget="monetary"/>
+                <field name="discount_amount" widget="monetary"/>
+                <field name="list_price" widget="monetary"/>
+            </xpath>
+
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="downpayment"/>
+                <field name="dp_terms"/>
+                <field name="reservation_amount"/>
+                <field name="closing_fees"/>
+                <field name="discount_spotdp"/>
+                <field name="interest_rate"></field>
+                
+            </xpath>
+
+            <xpath expr="//page[@name='order_lines']" position="before">
+                <page name="sc" string="Sample Computation">
+                    <field name="sc_ids">
+                        <tree>
+                            <field name="description"/>
+                            <field name="date"/>
+                            <field name="payment_amount" sum="Monthly DP"/>
+                            <field name="closing_fees" sum="Closing Fees"/>
+                            <field name="total" sum="Total"/>
+                        </tree>
+                    </field>    
+                    <group>
+                    <group>
+                    <field name="loanable_amount"/>
+                    <field name="monthly_10"/>
+                     <field name="monthly_20"/>
+                    </group>
+                    </group>
+                </page>
+            </xpath>
+
+            <xpath expr="//button[@name='action_draft']" position="after">
+                <button string="Compute Sample Computation" name="action_compute_sc" type="object" class="oe_highlight"/>
+            </xpath>
+
+        </field>
+    </record>
+</data>
+</odoo>
