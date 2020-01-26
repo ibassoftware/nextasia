@@ -22,7 +22,7 @@ class PropertiesProjectProperty(models.Model):
 
     currency_id = fields.Many2one('res.currency', related="company_id.currency_id", required=True, string='Currency', help="Main currency of the company.")
     company_id = fields.Many2one('res.company', string='Company',  required=True,
-    default=lambda self: self.env['res.company']._company_default_get('account.invoice'))
+    default=lambda self: self.env.company('account.invoice'))
 
 
     @api.onchange('project_id','block','lot')
