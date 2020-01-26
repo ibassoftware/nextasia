@@ -20,6 +20,10 @@ class PropertiesProjectProperty(models.Model):
 
     is_a_property = fields.Boolean(string='Is A Property')
 
+    currency_id = fields.Many2one('res.currency', related="company_id.currency_id", required=True, string='Currency', help="Main currency of the company.")
+    company_id = fields.Many2one('res.company', string='Company',  required=True,
+    default=lambda self: self.env['res.company']._company_default_get('account.invoice'))
+
 
     @api.onchange('project_id','block','lot')
     def _compute_name(self):
@@ -36,7 +40,7 @@ class PropertiesProjectProperty(models.Model):
     block = fields.Char(string='Block')
     lot = fields.Char(string='Lot')
 
-    preselling_price = fields.Float(string='Pre Selling Price')
+    preselling_price = fields.Monetary(string='Pre Selling Price')
 
     responsible = fields.Many2one('res.users', string='Responsible')
     contractor = fields.Many2one('res.partner', string='Contractor')
@@ -54,10 +58,12 @@ class PropertiesProjectProperty(models.Model):
         ('open', 'Open'),
         ('booked', 'Booked Sale'),
         ('contracted', 'Contracted Sale')
-    ], string='Status', default='open')
+    ], string='Status', default='open', tracking=True)
 
     customer = fields.Many2one('res.partner', string='Customer')
     propmodel_id = fields.Many2one('ibas_realestate.propertymodel', string='Model')
+
+    last_dp_date = fields.Date(string='Last DP Date')
 
 class IBASPropModel(models.Model):
     _name = 'ibas_realestate.propertymodel'

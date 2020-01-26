@@ -42,6 +42,11 @@ class IBASSale(models.Model):
         if self.unit_id:
             self.unit_id.state = 'booked'
             self.unit_id.customer = self.partner_id
+        
+            if len(self.sc_ids) > 0:
+                myids = self.sc_ids.sorted(key = lambda r: r.date, reverse = True)
+                self.unit_id.last_dp_date = myids[0].date
+            
 
         if self.env.user.has_group('sale.group_auto_done_setting'):
             self.action_done()
@@ -130,7 +135,7 @@ class IBASSale(models.Model):
 
     dp_terms = fields.Selection([
         ('monthly_12', '12 Months')
-    ], string='DP Terms', required=True)
+    ], string='DP Terms')
 
     monthly_10 = fields.Monetary(compute='_compute_monthly_10', string='Monthly Amortization 10 Years')
 
