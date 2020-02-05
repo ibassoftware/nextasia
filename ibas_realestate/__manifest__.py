@@ -28,6 +28,7 @@
         'views/views.xml',
         'views/sale.xml',
         'views/client_requirement.xml',
+        'views/res_partner.xml',
         'views/templates.xml',
     ],
     # only loaded in demonstration mode

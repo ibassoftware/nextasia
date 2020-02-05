@@ -23,6 +23,7 @@
             <xpath expr="//field[@name='payment_term_id']" position="after">
                 <field name="downpayment"/>
                 <field name="dp_terms"/>
+                <field name="is_cash"/>
                 <field name="reservation_amount"/>
                 <field name="closing_fees"/>
                 <field name="discount_spotdp"/>
