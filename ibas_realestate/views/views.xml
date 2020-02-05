@@ -1,0 +1,200 @@
+<odoo>
+  <data>
+
+  <record id="ibasre_project_view_form" model="ir.ui.view">
+    <field name="name">ibas_realestate.project.view.form</field>
+    <field name="model">ibas_realestate.project</field>
+    <field name="arch" type="xml">
+      <form string="">
+        <sheet>
+          <group>
+            <group>
+              <field name="name"/>
+            </group>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="ibasre_project_view_tree" model="ir.ui.view">
+    <field name="name">ibas_realestate.project.view.tree</field>
+    <field name="model">ibas_realestate.project</field>
+    <field name="arch" type="xml">
+      <tree string="Projects">
+        <field name="name"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="ibas_re_project_action" model="ir.actions.act_window">
+    <field name="name">Projects</field>
+    <field name="res_model">ibas_realestate.project</field>
+    <field name="view_mode">tree,form</field>
+    <field name="domain">[]</field>
+  </record>
+
+  <menuitem
+    id="ibas_re_menu"
+    name="Real Estate"
+    web_icon="ibas_realestate,static/src/img/house.png"
+    sequence="10"/>
+
+    <menuitem
+      id="re_project_menu"
+      name="Projects"
+      action="ibas_re_project_action"
+      parent="ibas_re_menu"
+      sequence="10"/>
+
+    
+  <record id="ire_property_view_form" model="ir.ui.view">
+    <field name="name">ibas_realestate.property.view.form</field>
+    <field name="model">product.product</field>
+    <field name="arch" type="xml">
+      <form string="Property">
+      <header>
+        <field name="state" widget="statusbar"/>
+      </header>
+        <sheet>
+        <strong><field name="name" invisible="1"/></strong>
+          <group>
+            <group>
+            <field name="project_id" required="1"/>
+            <field name="block" required="1"/>
+            <field name="lot" required="1"/>
+            <field name="propmodel_id"/>
+            <field name="list_price" widget="monetary"/>
+            <field name="preselling_price" widget="monetary"/>
+            <field name="responsible"/>
+            <!-- <field name="type"/> -->
+            <field name="categ_id"/>
+            
+            </group>
+            <group>
+            <!-- <field name="is_a_property"/> -->
+              <field name="customer"/>
+              <field name="financing_type"/>
+              <field name="contractor"/>
+              <field name="construction_start_date"/>
+              <field name="construction_end_date"/>
+              <field name="actual_construction_complete_date"/>
+              <field name="last_dp_date"/>
+            </group>
+          </group>
+        </sheet>
+
+         <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers"/>
+                <field name="message_ids" widget="mail_thread"/>
+         </div>
+      </form>
+    </field>
+  </record>
+
+  <record id="ire_property_view_tree" model="ir.ui.view">
+    <field name="name">ibas_realestate.property.view.tree</field>
+    <field name="model">product.product</field>
+    
+    <field name="arch" type="xml">
+      <tree string="Properties">
+        <field name="name"/>
+        <field name="propmodel_id"/>
+        <field name="project_id"/>
+        <field name="state"/>
+        <field name="responsible"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="ire_ibas_property_action" model="ir.actions.act_window">
+    <field name="name">Properties</field>
+    <field name="res_model">product.product</field>
+    <field name="view_mode">tree,form</field>
+    <field name="context">{
+   'default_type': 'service',
+   'default_is_a_property': True,
+   'default_sale_ok': True,
+   }</field>
+    <field name="domain">[('is_a_property','=',True)]</field>
+  </record>
+
+  <record model="ir.actions.act_window.view" id="action_view_re_tree">
+ <field name="sequence" eval="1"/>
+ <field name="view_mode">tree</field>
+ <field name="view_id" ref="ire_property_view_tree"/>
+ <field name="act_window_id" ref="ire_ibas_property_action"/>
+</record>
+
+<record model="ir.actions.act_window.view" id="action_view_re_form">
+ <field name="sequence" eval="2"/>
+ <field name="view_mode">form</field>
+ <field name="view_id" ref="ire_property_view_form"/>
+ <field name="act_window_id" ref="ire_ibas_property_action"/>
+</record>
+
+  <menuitem
+    id="ire_property_menu"
+    name="Properties"
+    action="ire_ibas_property_action"
+    parent="ibas_re_menu"
+    sequence="10"/>
+
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="ibas_realestate.list">
+      <field name="name">ibas_realestate list</field>
+      <field name="model">ibas_realestate.ibas_realestate</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="ibas_realestate.action_window">
+      <field name="name">ibas_realestate window</field>
+      <field name="res_model">ibas_realestate.ibas_realestate</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="ibas_realestate.action_server">
+      <field name="name">ibas_realestate server</field>
+      <field name="model_id" ref="model_ibas_realestate_ibas_realestate"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="ibas_realestate" id="ibas_realestate.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="ibas_realestate.menu_1" parent="ibas_realestate.menu_root"/>
+    <menuitem name="Menu 2" id="ibas_realestate.menu_2" parent="ibas_realestate.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="ibas_realestate.menu_1_list" parent="ibas_realestate.menu_1"
+              action="ibas_realestate.action_window"/>
+    <menuitem name="Server to list" id="ibas_realestate" parent="ibas_realestate.menu_2"
+              action="ibas_realestate.action_server"/>
+-->
+  </data>
+</odoo>

@@ -1,0 +1,32 @@
+<odoo>
+<data>
+    <record id="ibas_realestate_client_reqs_view_form" model="ir.ui.view">
+        <field name="name">ibas_realestate.client_requirement.view.form</field>
+        <field name="model">ibas_realestate.client_requirement</field>
+        <field name="arch" type="xml">
+            <form string="Client Requirement">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="default_requirement"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="client_reqs_action" model="ir.actions.act_window">
+        <field name="name">Client Requirements</field>
+        <field name="res_model">ibas_realestate.client_requirement</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+    </record>
+
+    <menuitem
+        id="client_req_menu"
+        name="Client Requirements"
+        action="client_reqs_action"
+        parent="ibas_re_menu"
+        sequence="10"/>
+</data>
+</odoo>
