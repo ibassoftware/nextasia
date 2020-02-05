@@ -54,6 +54,8 @@
     <field name="arch" type="xml">
       <form string="Property">
       <header>
+        <button string="Mark Contracted Sale" name="mark_contracted" type="object" class="oe_highlight" states="booked"/>
+        <button string="Get Requirements" name="get_requirements" type="object" class="oe_highlight" attrs="{'invisible' :[('line_ids', '!=', [])]}"/>
         <field name="state" widget="statusbar"/>
       </header>
         <sheet>
@@ -63,13 +65,15 @@
             <field name="project_id" required="1"/>
             <field name="block" required="1"/>
             <field name="lot" required="1"/>
-            <field name="propmodel_id"/>
+            <field name="propmodel_id" required="1"/>
+            <field name="propclass_id" required="1"/>
+            <field name="floor_area" required="1"/>
+            <field name="lot_area" required="1"/>
             <field name="list_price" widget="monetary"/>
             <field name="preselling_price" widget="monetary"/>
             <field name="responsible"/>
-            <!-- <field name="type"/> -->
-            <field name="categ_id"/>
-            
+            <field name="dp_terms" required="1"/>
+            <field name="categ_id"/>        
             </group>
             <group>
             <!-- <field name="is_a_property"/> -->
@@ -84,10 +88,26 @@
           </group>
         </sheet>
 
+        <sheet>
+        <group>
+        <field name="line_ids" string="">
+            <tree editable="bottom">
+              <field name="requirement"/>
+              <field name="compliance_date"/>
+              <field name="requirement_file"/>
+              <field name="complied"/>
+            </tree>
+          </field>
+        </group>
+        </sheet>
+
          <div class="oe_chatter">
                 <field name="message_follower_ids" widget="mail_followers"/>
+                <field name="activity_ids" widget="mail_activity"/>
                 <field name="message_ids" widget="mail_thread"/>
          </div>
+
+
       </form>
     </field>
   </record>
@@ -107,6 +127,21 @@
     </field>
   </record>
 
+  <record id="ibas_re_view_kanban" model="ir.ui.view">
+    <field name="name">product.product.view.kanban</field>
+    <field name="model">product.product</field>
+    <field name="inherit_id" ref="product.product_kanban_view"/>
+    <field name="arch" type="xml">
+      <xpath expr="//div[@name='tags']" position="before">
+        <div>
+        <button string="Open Property" name="open_view_form" 
+        type="object" attrs="{'invisible': [('is_a_property', '!=', True)]}"> Open Property </button> 
+        </div>
+        <field name="is_a_property" invisible="1"/>
+      </xpath>
+    </field>
+  </record>
+
   <record id="ire_ibas_property_action" model="ir.actions.act_window">
     <field name="name">Properties</field>
     <field name="res_model">product.product</field>
@@ -118,6 +153,14 @@
    }</field>
     <field name="domain">[('is_a_property','=',True)]</field>
   </record>
+
+  <!-- <record id="open_re_form_action" model="ir.actions.act_window">
+    <field name="name">Open RE Property Form</field>
+    <field name="res_model">product.product</field>
+    <field name="view_mode">form</field>
+     <field name="res_id" ref="active_id"></field>
+    <field name="view_id" ref="ire_property_view_form"/>
+  </record> -->
 
   <record model="ir.actions.act_window.view" id="action_view_re_tree">
  <field name="sequence" eval="1"/>
@@ -132,6 +175,7 @@
  <field name="view_id" ref="ire_property_view_form"/>
  <field name="act_window_id" ref="ire_ibas_property_action"/>
 </record>
+
 
   <menuitem
     id="ire_property_menu"

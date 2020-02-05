@@ -30,6 +30,9 @@ class IBASSale(models.Model):
             raise UserError(_(
                 'It is not allowed to confirm an order in the following states: %s'
             ) % (', '.join(self._get_forbidden_state_confirm())))
+        
+        if self.unit_id.state != 'open':
+            raise UserError(_('This property is already sold'))
 
         for order in self.filtered(lambda order: order.partner_id not in order.message_partner_ids):
             order.message_subscribe([order.partner_id.id])
@@ -60,6 +63,7 @@ class IBASSale(models.Model):
                 rec.pre_selling_price = rec.unit_id.preselling_price
                 rec.list_price = rec.unit_id.list_price
                 rec.discount_amount = rec.pre_selling_price - rec.list_price
+                rec.dp_terms = rec.unit_id.dp_terms
 
                 self.update({
                     'order_line':[(5,0,0)]
@@ -116,13 +120,17 @@ class IBASSale(models.Model):
                     })]
                 })
 
-                if rec.dp_terms == 'monthly_12':
+                if rec.dp_terms:                    
                     i = 0
-                    monthly_closing_fees = rec.closing_fees / 12
-                    monthly_fees = rec.downpayment / 12
-                    while i < 12:
+                    my_dp_term_int = int(rec.dp_terms)
+                    monthly_closing_fees = rec.closing_fees / my_dp_term_int
+                    monthly_fees = rec.downpayment / my_dp_term_int
+                    if rec.is_cash:
+                        monthly_fees = rec.downpayment - rec.discount_spotdp
+                    while i < my_dp_term_int:
                         month_iteration  = i + 1
                         mydate = datetime.today() + relativedelta(months=+month_iteration)
+                        
                         self.update({
                             'sc_ids': [(0,0,{
                                 'date': mydate,
@@ -134,8 +142,42 @@ class IBASSale(models.Model):
                         i = i + 1
 
     dp_terms = fields.Selection([
-        ('monthly_12', '12 Months')
+        ('1', '1 Month'),
+        ('2', '2 Months'),
+        ('3', '3 Months'),
+        ('4', '4 Months'),
+        ('5', '5 Months'),
+        ('6', '6 Months'),
+        ('7', '7 Months'),
+        ('8', '8 Months'),
+        ('9', '9 Months'),
+        ('10', '10 Months'),
+        ('11', '11 Months'),
+        ('12', '12 Months'),
+        ('13', '13 Months'),
+        ('14', '14 Months'),
+        ('15', '15 Months'),
+        ('16', '16 Months'),
+        ('17', '17 Months'),
+        ('18', '18 Months'),
+        ('19', '19 Months'),
+        ('20', '20 Months'),
+        ('21', '21 Months'),
+        ('22', '22 Months'),
+        ('23', '23 Months'),
+        ('24', '24 Months'),
+        
     ], string='DP Terms')
+
+    is_cash= fields.Boolean(string='Cash DP')
+
+    @api.onchange('is_cash')
+    def _onchange_is_cash(self):
+        if self.unit_id:
+            if self.is_cash:
+                self.dp_terms = '1'
+            else:
+                self.dp_terms = self.unit_id.dp_terms
 
     monthly_10 = fields.Monetary(compute='_compute_monthly_10', string='Monthly Amortization 10 Years')
 
