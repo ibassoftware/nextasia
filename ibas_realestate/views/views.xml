@@ -56,6 +56,7 @@
       <header>
         <button string="Mark Contracted Sale" name="mark_contracted" type="object" class="oe_highlight" states="booked"/>
         <button string="Get Requirements" name="get_requirements" type="object" class="oe_highlight" attrs="{'invisible' :[('line_ids', '!=', [])]}"/>
+        <button string="Booked Sale" name="booked_sale" type="object" class="oe_highlight" states="reserved"/>
         <field name="state" widget="statusbar"/>
       </header>
         <sheet>
@@ -65,6 +66,7 @@
             <field name="project_id" required="1"/>
             <field name="block" required="1"/>
             <field name="lot" required="1"/>
+            <field name="phase" required="1"/>
             <field name="propmodel_id" required="1"/>
             <field name="propclass_id" required="1"/>
             <field name="floor_area" required="1"/>
@@ -89,6 +91,8 @@
         </sheet>
 
         <sheet>
+        <notebook>
+        <page string="Requirements">
         <group>
         <field name="line_ids" string="">
             <tree editable="bottom">
@@ -99,6 +103,10 @@
             </tree>
           </field>
         </group>
+        </page>
+        <page string="Price History">
+        </page>
+        </notebook>
         </sheet>
 
          <div class="oe_chatter">
@@ -119,8 +127,11 @@
     <field name="arch" type="xml">
       <tree string="Properties">
         <field name="name"/>
-        <field name="propmodel_id"/>
         <field name="project_id"/>
+        <field name="customer"/>
+        <field name="phase"/>
+        <field name="propmodel_id"/>
+        <field name="propclass_id"/>
         <field name="state"/>
         <field name="responsible"/>
       </tree>

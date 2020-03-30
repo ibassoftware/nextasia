@@ -20,7 +20,7 @@
     'version': '0.3',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','product','sale'],
+    'depends': ['base', 'product', 'sale'],
 
     # always loaded
     'data': [
@@ -30,6 +30,8 @@
         'views/client_requirement.xml',
         'views/res_partner.xml',
         'views/templates.xml',
+        'views/property_class_views.xml',
+        'views/property_model_views.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
