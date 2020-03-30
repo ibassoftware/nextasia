@@ -3,15 +3,22 @@
 import logging
 
 from odoo import _, api, fields, models
+from odoo.exceptions import Warning, UserError, ValidationError
 
 _logger = logging.getLogger(__name__)
+
+
+class custom_partner(models.Model):
+    _inherit = "res.partner"
+
+    is_company = fields.Boolean(default=False)
+
 
 class IBASREProject(models.Model):
     _name = 'ibas_realestate.project'
     _description = 'Real Estate Project'
-    
-    name = fields.Char(string='Project Name', required=True)
 
+    name = fields.Char(string='Project Name', required=True)
 
 
 class PropertiesProjectProperty(models.Model):
@@ -20,33 +27,34 @@ class PropertiesProjectProperty(models.Model):
 
     is_a_property = fields.Boolean(string='Is A Property')
 
-    currency_id = fields.Many2one('res.currency', related="company_id.currency_id", required=True, string='Currency', help="Main currency of the company.")
+    currency_id = fields.Many2one('res.currency', related="company_id.currency_id",
+                                  required=True, string='Currency', help="Main currency of the company.")
     company_id = fields.Many2one('res.company', string='Company',  required=True,
-    default=lambda self: self.env.company.id)
+                                 default=lambda self: self.env.company.id)
 
-
-    @api.onchange('project_id','block','lot')
+    @api.onchange('project_id', 'block', 'lot')
     def _compute_name(self):
         for rec in self:
-            if rec.is_a_property:            
+            if rec.is_a_property:
                 for rec in self:
                     try:
-                        rec.name = rec.project_id.name + ' ' + rec.block + ' ' + rec.lot
+                        rec.name = rec.project_id.name + ' Block ' + rec.block + ' Lot ' + rec.lot
                     except:
                         pass
-                
 
     project_id = fields.Many2one('ibas_realestate.project', string='Project')
     block = fields.Char(string='Block')
     lot = fields.Char(string='Lot')
+    phase = fields.Char('Phase')
 
     preselling_price = fields.Monetary(string='Pre Selling Price')
 
-    responsible = fields.Many2one('res.users', string='Responsible')
+    responsible = fields.Many2one('res.users', string='Account Officer')
     contractor = fields.Many2one('res.partner', string='Contractor')
     construction_start_date = fields.Date(string='Construction Start Date')
     construction_end_date = fields.Date(string='Construction End Date')
-    actual_construction_complete_date = fields.Date(string='Actual Construction Completion Date')
+    actual_construction_complete_date = fields.Date(
+        string='Actual Construction Completion Date')
     financing_type = fields.Selection([
         ('na', 'NA'),
         ('bank', 'Bank'),
@@ -55,13 +63,16 @@ class PropertiesProjectProperty(models.Model):
     ], string='Financing')
 
     state = fields.Selection([
-        ('open', 'Open'),
+        ('open', 'Available'),
+        ('reserved', 'Reservation Sale'),
         ('booked', 'Booked Sale'),
-        ('contracted', 'Contracted Sale')
+        ('contracted', 'Contracted Sale'),
+        ('hold', 'Tech Hold'),
     ], string='Status', default='open', tracking=True)
 
     customer = fields.Many2one('res.partner', string='Customer')
-    propmodel_id = fields.Many2one('ibas_realestate.propertymodel', string='Model')
+    propmodel_id = fields.Many2one(
+        'ibas_realestate.propertymodel', string='Model')
 
     last_dp_date = fields.Date(string='Last DP Date')
     dp_terms = fields.Selection([
@@ -89,45 +100,57 @@ class PropertiesProjectProperty(models.Model):
         ('22', '22 Months'),
         ('23', '23 Months'),
         ('24', '24 Months'),
-        
+
     ], string='DP Terms')
 
-    propclass_id = fields.Many2one('ibas_realestate.property_class', string='Class')    
+    propclass_id = fields.Many2one(
+        'ibas_realestate.property_class', string='Type')
     floor_area = fields.Float(string='Floor Area (sqm)')
     lot_area = fields.Float(string='Lot Area (sqm)')
 
     def mark_contracted(self):
         self.state = 'contracted'
-    
-    
+
     def get_requirements(self):
         for rec in self:
-            if rec.state == 'booked':
+            if rec.state == 'open':
                 self.update({
-                    'line_ids':[(5,0,0)]
+                    'line_ids': [(5, 0, 0)]
                 })
 
-                def_reqts = self.env['ibas_realestate.client_requirement'].search([('default_requirement', '=', True)])
+                def_reqts = self.env['ibas_realestate.client_requirement'].search(
+                    [('default_requirement', '=', True)])
                 for target_list in def_reqts:
                     self.update({
-                    'line_ids': [(0,0,{
-                        'requirement': target_list.id,
-                    })]
-                })
-    
-    line_ids = fields.One2many('ibas_realestate.requirement_line', 'product_id', string='Requirements')
+                        'line_ids': [(0, 0, {
+                            'requirement': target_list.id,
+                        })],
+                        'state': 'reserved'
+                    })
 
-    
+    line_ids = fields.One2many(
+        'ibas_realestate.requirement_line', 'product_id', string='Requirements')
+
+    def booked_sale(self):
+        for rec in self:
+            if rec.state == 'reserved':
+                for line in rec.line_ids:
+                    if line.complied == True:
+                        rec.state = 'booked'
+                    else:
+                        raise UserError('Requirements not Complete')
+
     def open_view_form(self):
         return {
-            'name': 'Property Form', # Lable
+            'name': 'Property Form',  # Lable
             'type': 'ir.actions.act_window',
             'view_type': 'form',
             'view_mode': 'form',
             'view_id': self.env.ref('ibas_realestate.ire_property_view_form').id,
-            'res_model': 'product.product', # your model
+            'res_model': 'product.product',  # your model
             'res_id': self.id
         }
+
 
 class IBASPropModel(models.Model):
     _name = 'ibas_realestate.propertymodel'
@@ -136,27 +159,31 @@ class IBASPropModel(models.Model):
     name = fields.Char(string='Name', required=True)
     project_id = fields.Many2one('ibas_realestate.project', string='Project')
 
+
 class IBASRequirementModel(models.Model):
     _name = 'ibas_realestate.client_requirement'
     _description = 'Client Requirements'
-    
-    name = fields.Char(string='Name', required= True)
+
+    name = fields.Char(string='Name', required=True)
     default_requirement = fields.Boolean(string='Default')
+    stage = fields.Selection([('reservation', 'Reservation'),
+                              ('booked', 'Booked Sale'), ('contracted', 'Contracted Sale')], string="Stage")
+
 
 class IBASPropertyRequirementLine(models.Model):
     _name = 'ibas_realestate.requirement_line'
     _description = 'Requirement Line'
-    
+
     product_id = fields.Many2one('product.product', string='Property')
-    requirement = fields.Many2one('ibas_realestate.client_requirement', string='Requirement')
+    requirement = fields.Many2one(
+        'ibas_realestate.client_requirement', string='Requirement')
     compliance_date = fields.Date(string='Date Complied')
     requirement_file = fields.Binary(string='File Attachment')
     complied = fields.Boolean(string='Complied')
 
-class ProeprtyClass(models.Model):
+
+class PropertyClass(models.Model):
     _name = 'ibas_realestate.property_class'
     _description = 'Property Class'
-    
+
     name = fields.Char(string='Class', required=True)
-
-
