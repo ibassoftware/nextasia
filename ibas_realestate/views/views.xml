@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
   <data>
 
@@ -55,7 +56,8 @@
       <form string="Property">
       <header>
         <button string="Mark Contracted Sale" name="mark_contracted" type="object" class="oe_highlight" states="booked"/>
-        <button string="Get Requirements" name="get_requirements" type="object" class="oe_highlight" attrs="{'invisible' :[('line_ids', '!=', [])]}"/>
+        <button string="Get Requirements" name="get_requirements" type="object" class="oe_highlight" attrs="{'invisible' :[('reservation_line_ids', '!=', [])]}"/>
+        <button string="Reserved" name="reserved" type="object" class="oe_highlight" states="open"/>
         <button string="Booked Sale" name="booked_sale" type="object" class="oe_highlight" states="reserved"/>
         <field name="state" widget="statusbar"/>
       </header>
@@ -94,9 +96,32 @@
         <notebook>
         <page string="Requirements">
         <group>
-        <field name="line_ids" string="">
+        <label for='reservation_line_ids' string="RESERVATION" colspan="5" style="font-size:13px; padding: 5px; vertical-align: middle; margin-top:0px; text-align:left; background-color: green; color:white; border:1px solid grey;"/>
+        <field name="reservation_line_ids" nolabel="1" attrs="{'readonly': [('state','!=','open')]}">
             <tree editable="bottom">
-              <field name="requirement"/>
+              <field name="requirement" options="{'no_open':1,'no_create':1,'no_create_edit':1}"/>
+              <field name="compliance_date"/>
+              <field name="requirement_file"/>
+              <field name="complied"/>
+            </tree>
+          </field>
+        </group>
+        <group>
+        <label for='booked_sale_line_ids' string="BOOKED SALE" colspan="5" style="font-size:13px; padding: 5px; vertical-align: middle; margin-top:0px; text-align:left; background-color: green; color:white; border:1px solid grey;"/>
+        <field name="booked_sale_line_ids" nolabel="1" attrs="{'readonly': [('state','!=','reserved')]}">
+            <tree editable="bottom">
+              <field name="requirement" options="{'no_open':1,'no_create':1,'no_create_edit':1}"/>
+              <field name="compliance_date"/>
+              <field name="requirement_file"/>
+              <field name="complied"/>
+            </tree>
+          </field>
+        </group>
+        <group>
+        <label for='contracted_sale_line_ids' string="CONTRACTED SALE" colspan="5" style="font-size:13px; padding: 5px; vertical-align: middle; margin-top:0px; text-align:left; background-color: green; color:white; border:1px solid grey;"/>
+        <field name="contracted_sale_line_ids" nolabel="1" attrs="{'readonly': [('state','!=','booked')]}">
+            <tree editable="bottom">
+              <field name="requirement" options="{'no_open':1,'no_create':1,'no_create_edit':1}"/>
               <field name="compliance_date"/>
               <field name="requirement_file"/>
               <field name="complied"/>
@@ -195,6 +220,22 @@
     parent="ibas_re_menu"
     sequence="10"/>
 
+  <record id="base.action_partner_customer_form" model="ir.actions.act_window">
+            <field name="name">Customers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{'res_partner_search_mode': 'customer', 'default_is_company': False}</field>
+            <field name="filter" eval="True"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a new customer in your address book
+              </p><p>
+                Odoo helps you easily track all activities related to a customer.
+              </p>
+            </field>
+  </record>
     <!-- explicit list view definition -->
 <!--
     <record model="ir.ui.view" id="ibas_realestate.list">
