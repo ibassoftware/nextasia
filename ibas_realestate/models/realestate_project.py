@@ -108,37 +108,90 @@ class PropertiesProjectProperty(models.Model):
     floor_area = fields.Float(string='Floor Area (sqm)')
     lot_area = fields.Float(string='Lot Area (sqm)')
 
+    reservation_line_ids = fields.One2many(
+        'ibas_realestate.requirement_reservation_line', 'product_id', string='Reservation')
+    booked_sale_line_ids = fields.One2many(
+        'ibas_realestate.requirement_booked_sale_line', 'product_id', string='Booked Sale')
+    contracted_sale_line_ids = fields.One2many(
+        'ibas_realestate.requirement_contracted_sale_line', 'product_id', string='Contracted Sale')
+
     def mark_contracted(self):
-        self.state = 'contracted'
+        if self.state == 'booked':
+            for line in self.contracted_sale_line_ids:
+                if line.complied == True:
+                    self.state = 'contracted'
+                else:
+                    raise ValidationError(
+                        'All Requirements has not been Complied')
 
     def get_requirements(self):
         for rec in self:
             if rec.state == 'open':
                 self.update({
-                    'line_ids': [(5, 0, 0)]
+                    'reservation_line_ids': [(5, 0, 0)]
                 })
 
                 def_reqts = self.env['ibas_realestate.client_requirement'].search(
-                    [('default_requirement', '=', True)])
+                    [('default_requirement', '=', True), ('stage', '=', 'reservation')])
                 for target_list in def_reqts:
                     self.update({
-                        'line_ids': [(0, 0, {
+                        'reservation_line_ids': [(0, 0, {
                             'requirement': target_list.id,
                         })],
-                        'state': 'reserved'
                     })
 
-    line_ids = fields.One2many(
-        'ibas_realestate.requirement_line', 'product_id', string='Requirements')
+    def reserved(self):
+        client_reqs = self.env['ibas_realestate.client_requirement'].search(
+            [('default_requirement', '=', True), ('stage', '=', 'booked')])
+        client_lines = []
+        if self.state == 'open':
+            for req in client_reqs:
+                client_line = {
+                    'requirement': req.id
+                }
+                client_lines.append(client_line)
+
+        for line in self.reservation_line_ids:
+            if line.complied == True:
+                self.state = 'reserved'
+            else:
+                raise ValidationError('All Requirements has not been Complied')
+
+        if not self.reservation_line_ids:
+            raise UserError('There are no reservation requirements in list')
+
+        if len(client_lines) > 0:
+            booked_lines = []
+            for client in client_lines:
+                booked_lines.append((0, 0, client))
+            self.update({'booked_sale_line_ids': booked_lines})
+        else:
+            raise UserError('There are no client requirements')
 
     def booked_sale(self):
-        for rec in self:
-            if rec.state == 'reserved':
-                for line in rec.line_ids:
-                    if line.complied == True:
-                        rec.state = 'booked'
-                    else:
-                        raise UserError('Requirements not Complete')
+        client_reqs = self.env['ibas_realestate.client_requirement'].search(
+            [('default_requirement', '=', True), ('stage', '=', 'contracted')])
+        client_lines = []
+        if self.state == 'reserved':
+            for req in client_reqs:
+                client_line = {
+                    'requirement': req.id
+                }
+                client_lines.append(client_line)
+
+        for line in self.booked_sale_line_ids:
+            if line.complied == True:
+                self.state = 'booked'
+            else:
+                raise ValidationError('All Requirements has not been Complied')
+
+        if len(client_lines) > 0:
+            contracted_lines = []
+            for client in client_lines:
+                contracted_lines.append((0, 0, client))
+            self.update({'contracted_sale_line_ids': contracted_lines})
+        else:
+            raise UserError('There are no client requirements')
 
     def open_view_form(self):
         return {
@@ -169,14 +222,44 @@ class IBASRequirementModel(models.Model):
     stage = fields.Selection([('reservation', 'Reservation'),
                               ('booked', 'Booked Sale'), ('contracted', 'Contracted Sale')], string="Stage")
 
+# reservation
 
-class IBASPropertyRequirementLine(models.Model):
-    _name = 'ibas_realestate.requirement_line'
-    _description = 'Requirement Line'
+
+class IBASPropertyRequirementReservationLine(models.Model):
+    _name = 'ibas_realestate.requirement_reservation_line'
+    _description = 'Requirement Reservation Line'
 
     product_id = fields.Many2one('product.product', string='Property')
     requirement = fields.Many2one(
-        'ibas_realestate.client_requirement', string='Requirement')
+        'ibas_realestate.client_requirement', string='Reservation', domain=[('stage', '=', 'reservation')])
+    compliance_date = fields.Date(string='Date Complied')
+    requirement_file = fields.Binary(string='File Attachment')
+    complied = fields.Boolean(string='Complied')
+
+# booked sale
+
+
+class IBASPropertyRequirementBookedSaleLine(models.Model):
+    _name = 'ibas_realestate.requirement_booked_sale_line'
+    _description = 'Requirement Booked Sale Line'
+
+    product_id = fields.Many2one('product.product', string='Property')
+    requirement = fields.Many2one(
+        'ibas_realestate.client_requirement', string='Booked Sale', domain=[('stage', '=', 'booked')])
+    compliance_date = fields.Date(string='Date Complied')
+    requirement_file = fields.Binary(string='File Attachment')
+    complied = fields.Boolean(string='Complied')
+
+# contracted sale
+
+
+class IBASPropertyRequirementContractedSaleLine(models.Model):
+    _name = 'ibas_realestate.requirement_contracted_sale_line'
+    _description = 'Requirement Contracted Sale Line'
+
+    product_id = fields.Many2one('product.product', string='Property')
+    requirement = fields.Many2one(
+        'ibas_realestate.client_requirement', string='Contracted Sale', domain=[('stage', '=', 'contracted')])
     compliance_date = fields.Date(string='Date Complied')
     requirement_file = fields.Binary(string='File Attachment')
     complied = fields.Boolean(string='Complied')
