@@ -116,13 +116,15 @@ class PropertiesProjectProperty(models.Model):
         'ibas_realestate.requirement_contracted_sale_line', 'product_id', string='Contracted Sale')
 
     def mark_contracted(self):
-        if self.state == 'booked':
+        if self.contracted_sale_line_ids:
             for line in self.contracted_sale_line_ids:
                 if line.complied == True:
                     self.state = 'contracted'
                 else:
                     raise ValidationError(
                         'All Requirements has not been Complied')
+        else:
+            self.state = 'contracted'
 
     def get_requirements(self):
         for rec in self:
@@ -178,12 +180,15 @@ class PropertiesProjectProperty(models.Model):
                     'requirement': req.id
                 }
                 client_lines.append(client_line)
-
-        for line in self.booked_sale_line_ids:
-            if line.complied == True:
-                self.state = 'booked'
-            else:
-                raise ValidationError('All Requirements has not been Complied')
+        if self.booked_sale_line_ids:
+            for line in self.booked_sale_line_ids:
+                if line.complied == True:
+                    self.state = 'booked'
+                else:
+                    raise ValidationError(
+                        'All Requirements has not been Complied')
+        else:
+            self.state = 'booked'
 
         if len(client_lines) > 0:
             contracted_lines = []
