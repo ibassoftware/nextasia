@@ -55,10 +55,10 @@
     <field name="arch" type="xml">
       <form string="Property">
       <header>
-        <button string="Mark Contracted Sale" name="mark_contracted" type="object" class="oe_highlight" states="booked"/>
+        <button string="Tech Hold" name="tech_hold" type="object" class="oe_highlight" states="contracted"/>
         <button string="Get Requirements" name="get_requirements" type="object" class="oe_highlight" attrs="{'invisible' :[('reservation_line_ids', '!=', [])]}"/>
-        <button string="Reserved" name="reserved" type="object" class="oe_highlight" states="open"/>
-        <button string="Booked Sale" name="booked_sale" type="object" class="oe_highlight" states="reserved"/>
+        <button string="Process Booked Sale" name="booked_sale" type="object" class="oe_highlight" states="reserved"/>
+        <button string="Process Contracted Sale" name="contracted_sale" type="object" class="oe_highlight" states="booked"/>
         <field name="state" widget="statusbar"/>
       </header>
         <sheet>
@@ -97,7 +97,7 @@
         <page string="Requirements">
         <group>
         <label for='reservation_line_ids' string="RESERVATION" colspan="5" style="font-size:13px; padding: 5px; vertical-align: middle; margin-top:0px; text-align:left; background-color: green; color:white; border:1px solid grey;"/>
-        <field name="reservation_line_ids" nolabel="1" attrs="{'readonly': [('state','!=','open')]}">
+        <field name="reservation_line_ids" nolabel="1" attrs="{'readonly': [('state','!=','reserved')]}">
             <tree editable="bottom">
               <field name="requirement" options="{'no_open':1,'no_create':1,'no_create_edit':1}"/>
               <field name="compliance_date"/>
@@ -108,7 +108,7 @@
         </group>
         <group>
         <label for='booked_sale_line_ids' string="BOOKED SALE" colspan="5" style="font-size:13px; padding: 5px; vertical-align: middle; margin-top:0px; text-align:left; background-color: green; color:white; border:1px solid grey;"/>
-        <field name="booked_sale_line_ids" nolabel="1" attrs="{'readonly': [('state','!=','reserved')]}">
+        <field name="booked_sale_line_ids" nolabel="1" attrs="{'readonly': [('state','!=','booked')]}">
             <tree editable="bottom">
               <field name="requirement" options="{'no_open':1,'no_create':1,'no_create_edit':1}"/>
               <field name="compliance_date"/>
@@ -119,7 +119,7 @@
         </group>
         <group>
         <label for='contracted_sale_line_ids' string="CONTRACTED SALE" colspan="5" style="font-size:13px; padding: 5px; vertical-align: middle; margin-top:0px; text-align:left; background-color: green; color:white; border:1px solid grey;"/>
-        <field name="contracted_sale_line_ids" nolabel="1" attrs="{'readonly': [('state','!=','booked')]}">
+        <field name="contracted_sale_line_ids" nolabel="1" attrs="{'readonly': [('state','!=','contracted')]}">
             <tree editable="bottom">
               <field name="requirement" options="{'no_open':1,'no_create':1,'no_create_edit':1}"/>
               <field name="compliance_date"/>
@@ -130,6 +130,16 @@
         </group>
         </page>
         <page string="Price History">
+          <group>
+          <button string="Update Price" colspan="5" type="object" class="oe_highlight"/>
+          <field name="price_history_line_ids" nolabel="1">
+            <tree editable="bottom">
+              <field name="effective_date"/>
+              <field name="selling_price"/>
+              <field name="pre_selling_price"/>
+            </tree>
+          </field>
+          </group>
         </page>
         </notebook>
         </sheet>
