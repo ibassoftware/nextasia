@@ -115,20 +115,24 @@ class PropertiesProjectProperty(models.Model):
     contracted_sale_line_ids = fields.One2many(
         'ibas_realestate.requirement_contracted_sale_line', 'product_id', string='Contracted Sale')
 
-    def mark_contracted(self):
+    price_history_line_ids = fields.One2many(
+        'ibas_realestate.price_history_line', 'product_id', string='Contracted Sale')
+
+    def tech_hold(self):
         if self.contracted_sale_line_ids:
             for line in self.contracted_sale_line_ids:
                 if line.complied == True:
-                    self.state = 'contracted'
+                    self.state = 'hold'
                 else:
                     raise ValidationError(
-                        'All Requirements has not been Complied')
+                        'All Contracted Sale Requirements has not been Complied')
         else:
-            self.state = 'contracted'
+            raise ValidationError(
+                'There are no Contracted Sale requirements in the list')
 
     def get_requirements(self):
         for rec in self:
-            if rec.state == 'open':
+            if rec.state == 'reserved':
                 self.update({
                     'reservation_line_ids': [(5, 0, 0)]
                 })
@@ -142,25 +146,26 @@ class PropertiesProjectProperty(models.Model):
                         })],
                     })
 
-    def reserved(self):
+    def booked_sale(self):
         client_reqs = self.env['ibas_realestate.client_requirement'].search(
             [('default_requirement', '=', True), ('stage', '=', 'booked')])
         client_lines = []
-        if self.state == 'open':
+        if self.state == 'reserved':
             for req in client_reqs:
                 client_line = {
                     'requirement': req.id
                 }
                 client_lines.append(client_line)
-
-        for line in self.reservation_line_ids:
-            if line.complied == True:
-                self.state = 'reserved'
-            else:
-                raise ValidationError('All Requirements has not been Complied')
-
-        if not self.reservation_line_ids:
-            raise UserError('There are no reservation requirements in list')
+        if self.reservation_line_ids:
+            for line in self.reservation_line_ids:
+                if line.complied == True:
+                    self.state = 'booked'
+                else:
+                    raise ValidationError(
+                        'All Reservation Requirements has not been Complied')
+        else:
+            raise ValidationError(
+                'There are no Reservation requirements in the list')
 
         if len(client_lines) > 0:
             booked_lines = []
@@ -170,11 +175,11 @@ class PropertiesProjectProperty(models.Model):
         else:
             raise UserError('There are no client requirements')
 
-    def booked_sale(self):
+    def contracted_sale(self):
         client_reqs = self.env['ibas_realestate.client_requirement'].search(
             [('default_requirement', '=', True), ('stage', '=', 'contracted')])
         client_lines = []
-        if self.state == 'reserved':
+        if self.state == 'booked':
             for req in client_reqs:
                 client_line = {
                     'requirement': req.id
@@ -183,12 +188,13 @@ class PropertiesProjectProperty(models.Model):
         if self.booked_sale_line_ids:
             for line in self.booked_sale_line_ids:
                 if line.complied == True:
-                    self.state = 'booked'
+                    self.state = 'contracted'
                 else:
                     raise ValidationError(
-                        'All Requirements has not been Complied')
+                        'All Booked Sale Requirements has not been Complied')
         else:
-            self.state = 'booked'
+            raise ValidationError(
+                'There are no Booked Sale requirements in the list')
 
         if len(client_lines) > 0:
             contracted_lines = []
@@ -268,6 +274,18 @@ class IBASPropertyRequirementContractedSaleLine(models.Model):
     compliance_date = fields.Date(string='Date Complied')
     requirement_file = fields.Binary(string='File Attachment')
     complied = fields.Boolean(string='Complied')
+
+# Price History
+
+
+class IBASPropertyPriceHistoryLine(models.Model):
+    _name = 'ibas_realestate.price_history_line'
+    _description = 'Price History'
+
+    product_id = fields.Many2one('product.product', string='Property')
+    effective_date = fields.Datetime(string='Effective Date')
+    selling_price = fields.Float(string='Sale Price')
+    pre_selling_price = fields.Float(string='Pre Selling Price')
 
 
 class PropertyClass(models.Model):

@@ -7,10 +7,22 @@ from odoo import _, api, fields, models
 
 _logger = logging.getLogger(__name__)
 
+
 class IBASCustomer(models.Model):
     _inherit = 'res.partner'
 
-    
+    phone = fields.Char(string='Residence Landline No.')
+    mobile = fields.Char(string='Mobile No.')
+
+    age = fields.Char('Age')
+    place_of_birth = fields.Char('Place of Birth')
+    education_attain = fields.Selection([
+        ('High School Graduate', 'High School Graduate'),
+        ('College Graduate', 'College Graduate'),
+        ('Post Graduate', 'Post Graduate'),
+    ], string="Educational Attainment")
+    office_landline = fields.Char('Office Landline No.')
+    have_co_buyer = fields.Boolean('Does he/she have a Co-buyer?')
 
     civil_status = fields.Selection([
         ('Single', 'Single'),
@@ -34,7 +46,7 @@ class IBASCustomer(models.Model):
         ('relatives', 'Living with Relatives'),
     ], string='Current Home Ownership')
 
-    occupation = fields.Char(string='Occupation')   
+    occupation = fields.Char(string='Occupation')
 
     employer_name = fields.Char(string='Employer or Business Name')
     monthly_income = fields.Selection([
@@ -94,7 +106,4 @@ class IBASCustomer(models.Model):
     spa_contact = fields.Char(string='SPA Contact Number')
     spa_relationship = fields.Char(string='Relationship to Buyer')
 
-
-
-
-
+    # Principal Buyer
