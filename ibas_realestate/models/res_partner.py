@@ -14,6 +14,7 @@ class IBASCustomer(models.Model):
     phone = fields.Char(string='Residence Landline No.')
     mobile = fields.Char(string='Mobile No.')
 
+    # Principal Buyer
     age = fields.Char('Age')
     place_of_birth = fields.Char('Place of Birth')
     education_attain = fields.Selection([
@@ -23,6 +24,26 @@ class IBASCustomer(models.Model):
     ], string="Educational Attainment")
     office_landline = fields.Char('Office Landline No.')
     have_co_buyer = fields.Boolean('Does he/she have a Co-buyer?')
+
+    sss_no = fields.Char('SSS No.')
+    pag_ibig_no = fields.Char('Pag-ibig No.')
+    tin_no = fields.Char('Tin No.')
+    employer_name = fields.Char(string='Employer/Business Name')
+    company_address = fields.Char('Company Address')
+    nature_business = fields.Char('Nature of Business')
+    date_employed_established = fields.Date('Date Employed/Established')
+    monthly_gross_salary = fields.Monetary('Monthly Gross Salary')
+    allowances = fields.Monetary('Allowances')
+    commisions = fields.Monetary('Commisions')
+    total_earnings = fields.Monetary(
+        compute="_compute_earnings", string='Total')
+
+    monthly_income = fields.Selection([
+        ('50k', 'Below 50k'),
+        ('100k', '50k-100k'),
+        ('200k', '100k-200k'),
+        ('201k', 'Above 200k'),
+    ], string='Monthly Income')
 
     civil_status = fields.Selection([
         ('Single', 'Single'),
@@ -48,14 +69,6 @@ class IBASCustomer(models.Model):
 
     occupation = fields.Char(string='Occupation')
 
-    employer_name = fields.Char(string='Employer or Business Name')
-    monthly_income = fields.Selection([
-        ('50k', 'Below 50k'),
-        ('100k', '50k-100k'),
-        ('200k', '100k-200k'),
-        ('201k', 'Above 200k'),
-    ], string='Monthly Income')
-
     is_ofw = fields.Boolean(string='Is an OFW')
 
     buying_reason = fields.Selection([
@@ -78,6 +91,8 @@ class IBASCustomer(models.Model):
         ('web', 'Website'),
     ], string='Source of Awareness')
 
+    # Co-Buyer
+    co_buyer_id = fields.Many2one('res.partner', string="Co-Buyer")
     # Spouse info
 
     spouse_name = fields.Char(string='Spouse')
@@ -106,4 +121,27 @@ class IBASCustomer(models.Model):
     spa_contact = fields.Char(string='SPA Contact Number')
     spa_relationship = fields.Char(string='Relationship to Buyer')
 
-    # Principal Buyer
+    # Financial References
+    loan_name = fields.Char('Name of Institution')
+    loan_type = fields.Char('Type of Loan')
+    loan_paid_granted = fields.Date('Date Paid/Granted')
+    loan_outstanding_balance = fields.Monetary('Outstanding Balance')
+    loan_month_amortization = fields.Monetary('Monthly Amortization')
+
+    credit_card_issuer = fields.Char('Card Issuer')
+    credit_card_number = fields.Char('Credit Card Number')
+    credit_limit = fields.Monetary('Credit Limit')
+    credit_card_name = fields.Char('Name of Card')
+
+    # Sales & Purchase
+
+    broker = fields.Many2one('hr.employee', string="Broker")
+    agent = fields.Many2one('hr.employee', string="Agent")
+    sales_manager = fields.Many2one('hr.employee', string="Sales Manager")
+    nali_coordinator = fields.Many2one(
+        'hr.employee', string="NALI Coordinator")
+
+    @api.depends('monthly_gross_salary', 'allowances', 'commisions')
+    def _compute_earnings(self):
+        self.total_earnings = self.monthly_gross_salary + \
+            self.allowances + self.commisions

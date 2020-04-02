@@ -8,14 +8,51 @@
             
             <xpath expr="//page" position="before">
                 <page string="Principal Buyer">
+                <group colspan="4" col="4">
+                    <group colspan="2" col="2">
+                        <field name="is_ofw" attrs="{'invisible': [('is_company','=', True)]}"/>
+                        <field name="duration_stay" attrs="{'invisible': [('is_company','=', True)]}"/>
+                        <field name="home_ownership" attrs="{'invisible': [('is_company','=', True)]}"/>
+                        <field name="monthly_gross_salary" attrs="{'invisible': [('is_company','=', True)]}"/>
+                        <field name="allowances" attrs="{'invisible': [('is_company','=', True)]}"/>
+                        <field name="commisions" attrs="{'invisible': [('is_company','=', True)]}"/>
+                        <field name="total_earnings" attrs="{'invisible': [('is_company','=', True)]}"/>
+                    </group>
+                    <group colspan="2" col="2">
+                        <field name="sss_no" attrs="{'invisible': [('is_company','=', True)]}"/>
+                        <field name="pag_ibig_no" attrs="{'invisible': [('is_company','=', True)]}"/>
+                        <field name="tin_no" attrs="{'invisible': [('is_company','=', True)]}"/>
+                        <field name="employer_name" attrs="{'invisible': [('is_company','=', True)]}"/>
+                        <field name="company_address" attrs="{'invisible': [('is_company','=', True)]}"/>
+                        <field name="nature_business" attrs="{'invisible': [('is_company','=', True)]}"/>
+                        <field name="date_employed_established" attrs="{'invisible': [('is_company','=', True)]}"/>
+                    </group>
+                </group>
+                    
                 </page>
                 <page string="Co-Buyer Info">
+                    <field name="co_buyer_id" attrs="{'invisible': [('is_company','=', True)]}"/>
                 </page>
                 <page string="Financial References">
-                </page>
-                <page string="Personal References">
+                    <group colspan="4" col="4">
+                        <group string="Loans" colspan='2' col="2">
+                            <field name="loan_name" attrs="{'invisible': [('is_company','=', True)]}"/>
+                            <field name="loan_type" attrs="{'invisible': [('is_company','=', True)]}"/>
+                            <field name="loan_paid_granted" attrs="{'invisible': [('is_company','=', True)]}"/>
+                            <field name="loan_outstanding_balance" attrs="{'invisible': [('is_company','=', True)]}"/>
+                            <field name="loan_month_amortization" attrs="{'invisible': [('is_company','=', True)]}"/>
+                        </group>
+                        <group string="Credit Cards" colspan="2" col="2">
+                            <field name="credit_card_issuer" attrs="{'invisible': [('is_company','=', True)]}"/>
+                            <field name="credit_card_number" attrs="{'invisible': [('is_company','=', True)]}"/>
+                            <field name="credit_limit" attrs="{'invisible': [('is_company','=', True)]}"/>
+                            <field name="credit_card_name" attrs="{'invisible': [('is_company','=', True)]}"/>
+                        </group>
+                    </group>
                 </page>
                 <page string="Requirements">
+                </page>
+                <page string="Personal References">
                 </page>
             </xpath>
             <xpath expr="//field[@name='category_id']" position="after">
@@ -40,13 +77,14 @@
             </xpath>
 
             <xpath expr="//field[@name='property_payment_term_id']" position="before">
-                <field name="is_ofw" attrs="{'invisible': [('is_company','=', True)]}"/>
-                <field name="duration_stay" attrs="{'invisible': [('is_company','=', True)]}"/>
-                <field name="home_ownership" attrs="{'invisible': [('is_company','=', True)]}"/>
-                <field name="employer_name" attrs="{'invisible': [('is_company','=', True)]}"/>
-                <field name="monthly_income" attrs="{'invisible': [('is_company','=', True)]}"/>
                 <field name="buying_reason" attrs="{'invisible': [('is_company','=', True)]}"/>
                 <field name="source_awareness" attrs="{'invisible': [('is_company','=', True)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='property_supplier_payment_term_id']" position="after">
+                <field name="broker" attrs="{'invisible': [('is_company','=', True)]}"/>
+                <field name="agent" attrs="{'invisible': [('is_company','=', True)]}"/>
+                <field name="sales_manager" attrs="{'invisible': [('is_company','=', True)]}"/>
+                <field name="nali_coordinator" attrs="{'invisible': [('is_company','=', True)]}"/>
             </xpath>
 
             <xpath expr="//page[@name='sales_purchases']" position="before">
