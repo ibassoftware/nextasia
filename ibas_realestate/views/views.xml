@@ -136,11 +136,12 @@
             <button name="%(action_ibas_realestate_update_sale_price_wiz)d" colspan="5" type="action" string="Update Price" class="oe_highlight"/>
           </div>
           <group>
-          <field name="price_history_line_ids" nolabel="1" readonly="1">
+          <field name="price_history_line_ids" nolabel="1" readonly="0">
             <tree editable="bottom">
               <field name="effective_date"/>
               <field name="selling_price"/>
               <field name="pre_selling_price"/>
+              <field name="user_id"/>
             </tree>
           </field>
           </group>

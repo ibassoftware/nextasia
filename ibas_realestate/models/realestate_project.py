@@ -176,7 +176,7 @@ class PropertiesProjectProperty(models.Model):
             for client in client_lines:
                 if not self.booked_sale_line_ids:
                     booked_lines.append((0, 0, client))
-                self.update({'booked_sale_line_ids': booked_lines})
+            self.update({'booked_sale_line_ids': booked_lines})
         else:
             raise UserError('There are no client requirements')
 
@@ -206,7 +206,7 @@ class PropertiesProjectProperty(models.Model):
             for client in client_lines:
                 if not self.contracted_sale_line_ids:
                     contracted_lines.append((0, 0, client))
-                self.update({'contracted_sale_line_ids': contracted_lines})
+            self.update({'contracted_sale_line_ids': contracted_lines})
         else:
             raise UserError('There are no client requirements')
 
@@ -305,6 +305,8 @@ class IBASPropertyPriceHistoryLine(models.Model):
     effective_date = fields.Datetime(string='Effective Date')
     selling_price = fields.Float(string='Sale Price')
     pre_selling_price = fields.Float(string='Pre Selling Price')
+    user_id = fields.Many2one('res.users', string='Update By:',
+                              required=True, default=lambda self: self.env.uid)
 
 
 class PropertyClass(models.Model):
