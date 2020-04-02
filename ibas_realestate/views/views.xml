@@ -59,6 +59,8 @@
         <button string="Get Requirements" name="get_requirements" type="object" class="oe_highlight" attrs="{'invisible' :[('reservation_line_ids', '!=', [])]}"/>
         <button string="Process Booked Sale" name="booked_sale" type="object" class="oe_highlight" states="reserved"/>
         <button string="Process Contracted Sale" name="contracted_sale" type="object" class="oe_highlight" states="booked"/>
+        <button string="Back to Reservation" name="back_to_reservation" type="object" states="booked"/>
+        <button string="Back to Booked" name="back_to_booked" type="object" states="contracted"/>
         <field name="state" widget="statusbar"/>
       </header>
         <sheet>
@@ -130,9 +132,11 @@
         </group>
         </page>
         <page string="Price History">
+          <div colspan="5" col="5" style="padding: 5px; margin-right: 5px; margin-top: 3px; border: 1px solid black">
+            <button name="%(action_ibas_realestate_update_sale_price_wiz)d" colspan="5" type="action" string="Update Price" class="oe_highlight"/>
+          </div>
           <group>
-          <button string="Update Price" colspan="5" type="object" class="oe_highlight"/>
-          <field name="price_history_line_ids" nolabel="1">
+          <field name="price_history_line_ids" nolabel="1" readonly="1">
             <tree editable="bottom">
               <field name="effective_date"/>
               <field name="selling_price"/>
