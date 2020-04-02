@@ -139,12 +139,16 @@ class PropertiesProjectProperty(models.Model):
 
                 def_reqts = self.env['ibas_realestate.client_requirement'].search(
                     [('default_requirement', '=', True), ('stage', '=', 'reservation')])
-                for target_list in def_reqts:
-                    self.update({
-                        'reservation_line_ids': [(0, 0, {
-                            'requirement': target_list.id,
-                        })],
-                    })
+                if def_reqts:
+                    for target_list in def_reqts:
+                        self.update({
+                            'reservation_line_ids': [(0, 0, {
+                                'requirement': target_list.id,
+                            })],
+                        })
+                else:
+                    raise ValidationError(
+                        'There are no Reservation Requirements Created.')
 
     def booked_sale(self):
         client_reqs = self.env['ibas_realestate.client_requirement'].search(
@@ -170,8 +174,9 @@ class PropertiesProjectProperty(models.Model):
         if len(client_lines) > 0:
             booked_lines = []
             for client in client_lines:
-                booked_lines.append((0, 0, client))
-            self.update({'booked_sale_line_ids': booked_lines})
+                if not self.booked_sale_line_ids:
+                    booked_lines.append((0, 0, client))
+                self.update({'booked_sale_line_ids': booked_lines})
         else:
             raise UserError('There are no client requirements')
 
@@ -199,10 +204,23 @@ class PropertiesProjectProperty(models.Model):
         if len(client_lines) > 0:
             contracted_lines = []
             for client in client_lines:
-                contracted_lines.append((0, 0, client))
-            self.update({'contracted_sale_line_ids': contracted_lines})
+                if not self.contracted_sale_line_ids:
+                    contracted_lines.append((0, 0, client))
+                self.update({'contracted_sale_line_ids': contracted_lines})
         else:
             raise UserError('There are no client requirements')
+
+    # back to
+
+    def back_to_reservation(self):
+        for rec in self:
+            rec.state = 'reserved'
+
+    def back_to_booked(self):
+        for rec in self:
+            rec.state = 'booked'
+
+     ####
 
     def open_view_form(self):
         return {
@@ -281,6 +299,7 @@ class IBASPropertyRequirementContractedSaleLine(models.Model):
 class IBASPropertyPriceHistoryLine(models.Model):
     _name = 'ibas_realestate.price_history_line'
     _description = 'Price History'
+    _order = "effective_date desc"
 
     product_id = fields.Many2one('product.product', string='Property')
     effective_date = fields.Datetime(string='Effective Date')

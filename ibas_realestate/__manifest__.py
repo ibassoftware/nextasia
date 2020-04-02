@@ -25,6 +25,7 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'wizard/update_sale_price_wiz_views.xml',
         'views/views.xml',
         'views/sale.xml',
         'views/client_requirement.xml',
@@ -32,6 +33,7 @@
         'views/templates.xml',
         'views/property_class_views.xml',
         'views/property_model_views.xml',
+
     ],
     # only loaded in demonstration mode
     'demo': [

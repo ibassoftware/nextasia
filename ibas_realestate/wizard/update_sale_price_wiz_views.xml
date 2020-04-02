@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+  <data>
+    <record id="ibas_realestate_update_sale_price_wiz_view" model="ir.ui.view">
+      <field name="name">ibas_realestate_update_sale_price_wiz_view</field>
+      <field name="model">ibas_realestate.update_sale_price_wiz</field>
+      <field name="arch" type="xml">
+        <form string="Update Sale Price and Pre Selling Price">
+          <group colspan="4" col="4">
+              <field name="product_id" colspan="4" invisible="1"/>
+              <field name="selling_price"/>
+              <field name="pre_selling_price"/>
+          </group>
+          <footer>
+            <button string="Update" name="update_price" type="object" class="btn-primary" confirm="This will update current Sale Price and Pre Selling Price. Are you sure you want to continue?"/>
+            <button string="Cancel" class="btn-default" special="cancel"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+
+  <!--  <record id="action_ibas_realestate_update_sale_price_wiz" model="ir.actions.act_window">
+      <field name="name">Update Sale Price</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">ibas_realestate.update_sale_price_wiz</field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="ibas_realestate_update_sale_price_wiz_view"/>
+      <field name="target">new</field>
+    </record>  -->
+
+
+    <act_window id="action_ibas_realestate_update_sale_price_wiz"
+            name="Update Sale Price"
+            binding_model="product.product"
+            res_model="ibas_realestate.update_sale_price_wiz"
+            view_mode="form"
+            target="new"/>
+
+  </data>
+</odoo>
