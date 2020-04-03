@@ -258,6 +258,7 @@ class IBASPropertyRequirementReservationLine(models.Model):
     _name = 'ibas_realestate.requirement_reservation_line'
     _description = 'Requirement Reservation Line'
 
+    parent_id = fields.Many2one('res.partner', string="customer")
     product_id = fields.Many2one('product.product', string='Property')
     requirement = fields.Many2one(
         'ibas_realestate.client_requirement', string='Reservation', domain=[('stage', '=', 'reservation')])
@@ -272,6 +273,7 @@ class IBASPropertyRequirementBookedSaleLine(models.Model):
     _name = 'ibas_realestate.requirement_booked_sale_line'
     _description = 'Requirement Booked Sale Line'
 
+    parent_id = fields.Many2one('res.partner', string="customer")
     product_id = fields.Many2one('product.product', string='Property')
     requirement = fields.Many2one(
         'ibas_realestate.client_requirement', string='Booked Sale', domain=[('stage', '=', 'booked')])
@@ -286,6 +288,7 @@ class IBASPropertyRequirementContractedSaleLine(models.Model):
     _name = 'ibas_realestate.requirement_contracted_sale_line'
     _description = 'Requirement Contracted Sale Line'
 
+    parent_id = fields.Many2one('res.partner', string="customer")
     product_id = fields.Many2one('product.product', string='Property')
     requirement = fields.Many2one(
         'ibas_realestate.client_requirement', string='Contracted Sale', domain=[('stage', '=', 'contracted')])

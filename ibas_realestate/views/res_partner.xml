@@ -7,52 +7,145 @@
         <field name="arch" type="xml">
             
             <xpath expr="//page" position="before">
-                <page string="Principal Buyer">
+                <page string="Principal Buyer" attrs="{'invisible': [('is_company','=', True)]}" autofocus="autofocus">
                 <group colspan="4" col="4">
                     <group colspan="2" col="2">
-                        <field name="is_ofw" attrs="{'invisible': [('is_company','=', True)]}"/>
-                        <field name="duration_stay" attrs="{'invisible': [('is_company','=', True)]}"/>
-                        <field name="home_ownership" attrs="{'invisible': [('is_company','=', True)]}"/>
-                        <field name="monthly_gross_salary" attrs="{'invisible': [('is_company','=', True)]}"/>
-                        <field name="allowances" attrs="{'invisible': [('is_company','=', True)]}"/>
-                        <field name="commisions" attrs="{'invisible': [('is_company','=', True)]}"/>
-                        <field name="total_earnings" attrs="{'invisible': [('is_company','=', True)]}"/>
+                        <field name="is_ofw"/>
+                        <label for="duration_stay_from" string="Duration of Stay"/>
+                        <div>
+                            <field name="duration_stay_from" placeholder="From" class="oe_inline"/> to 
+                            <field name="duration_stay_to" placeholder="To" class="oe_inline"/>
+                        </div>
+                        
+                        <field name="home_ownership"/>
+                        <field name="monthly_gross_salary"/>
+                        <field name="allowances"/>
+                        <field name="commisions"/>
+                        <field name="total_earnings"/>
                     </group>
                     <group colspan="2" col="2">
-                        <field name="sss_no" attrs="{'invisible': [('is_company','=', True)]}"/>
-                        <field name="pag_ibig_no" attrs="{'invisible': [('is_company','=', True)]}"/>
-                        <field name="tin_no" attrs="{'invisible': [('is_company','=', True)]}"/>
-                        <field name="employer_name" attrs="{'invisible': [('is_company','=', True)]}"/>
-                        <field name="company_address" attrs="{'invisible': [('is_company','=', True)]}"/>
-                        <field name="nature_business" attrs="{'invisible': [('is_company','=', True)]}"/>
-                        <field name="date_employed_established" attrs="{'invisible': [('is_company','=', True)]}"/>
+                        <field name="sss_no"/>
+                        <field name="pag_ibig_no"/>
+                        <field name="tin_no"/>
+                        <field name="employer_name"/>
+                        <field name="company_address"/>
+                        <field name="nature_business"/>
+                        <field name="date_employed_established"/>
                     </group>
                 </group>
                     
                 </page>
-                <page string="Co-Buyer Info">
-                    <field name="co_buyer_id" attrs="{'invisible': [('is_company','=', True)]}"/>
-                </page>
-                <page string="Financial References">
-                    <group colspan="4" col="4">
-                        <group string="Loans" colspan='2' col="2">
-                            <field name="loan_name" attrs="{'invisible': [('is_company','=', True)]}"/>
-                            <field name="loan_type" attrs="{'invisible': [('is_company','=', True)]}"/>
-                            <field name="loan_paid_granted" attrs="{'invisible': [('is_company','=', True)]}"/>
-                            <field name="loan_outstanding_balance" attrs="{'invisible': [('is_company','=', True)]}"/>
-                            <field name="loan_month_amortization" attrs="{'invisible': [('is_company','=', True)]}"/>
+                <page string="Co-Buyer Info" attrs="{'invisible': [('is_company','=', True)]}">
+                    <group>
+                        <group>
+                            <label for="cb_lastname" string="Full Name"/>
+                            <div>
+                                <field name="cb_lastname" placeholder="Last Name" class="oe_inline" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>, 
+                                <field name="cb_firstname" placeholder="First Name" class="oe_inline" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>, 
+                                <field name="cb_middlename" placeholder="Middle Name" class="oe_inline" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>, 
+                                <field name="cb_suffix" placeholder="Suffix" class="oe_inline" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            </div>
+                            <label for="cb_street" string="Address"/>
+                            <div class="o_address_format">
+                                <field name="cb_street" placeholder="Street..." class="o_address_street" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                                <field name="cb_street2" placeholder="Street 2..." class="o_address_street" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                                <field name="cb_city" placeholder="City" class="o_address_city" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                                <field name="cb_state_id" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;: True}" attrs="{'readonly': [('have_co_buyer','!=', True)]}" context="{'country_id': country_id, 'zip': zip}"/>
+                                <field name="cb_zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                                <field name="cb_country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            </div>
+                            <label for="cb_duration_stay_from" string="Duration of Stay"/>
+                            <div>
+                                <field name="cb_duration_stay_from" placeholder="From" class="oe_inline" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/> to 
+                                <field name="cb_duration_stay_to" placeholder="To" class="oe_inline" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            </div>
+                            <field name="cb_home_ownership" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_civil_status" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_sex" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_citizenship" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_age" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_place_of_birth" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_monthly_gross_salary" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_allowances" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_commisions" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_total_earnings" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
                         </group>
-                        <group string="Credit Cards" colspan="2" col="2">
-                            <field name="credit_card_issuer" attrs="{'invisible': [('is_company','=', True)]}"/>
-                            <field name="credit_card_number" attrs="{'invisible': [('is_company','=', True)]}"/>
-                            <field name="credit_limit" attrs="{'invisible': [('is_company','=', True)]}"/>
-                            <field name="credit_card_name" attrs="{'invisible': [('is_company','=', True)]}"/>
+                        <group>
+                            <field name="cb_sss_no" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_pag_ibig_no" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_tin_no" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_email" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_residence_landline" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_mobile_no" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_office_landline" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_company_name" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_company_address" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_nature_business" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_designation" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_date_employed_established" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
                         </group>
                     </group>
                 </page>
-                <page string="Requirements">
+                <page string="Financial References" attrs="{'invisible': [('is_company','=', True)]}">
+                    <group colspan="4" col="4">
+                        <group string="Loans" colspan='2' col="2">
+                            <field name="loan_name"/>
+                            <field name="loan_type"/>
+                            <field name="loan_paid_granted"/>
+                            <field name="loan_outstanding_balance"/>
+                            <field name="loan_month_amortization"/>
+                        </group>
+                        <group string="Credit Cards" colspan="2" col="2">
+                            <field name="credit_card_issuer"/>
+                            <field name="credit_card_number"/>
+                            <field name="credit_limit"/>
+                            <field name="credit_card_name"/>
+                        </group>
+                    </group>
                 </page>
-                <page string="Personal References">
+                <page string="Requirements" attrs="{'invisible': [('is_company','=', True)]}">
+                    <group>
+                    <label for='reservation_ids' string="RESERVATION" colspan="5" style="font-size:13px; padding: 5px; vertical-align: middle; margin-top:0px; text-align:left; background-color: green; color:white; border:1px solid grey;"/>
+                    <field name="reservation_ids" nolabel="1">
+                        <tree editable="bottom">
+                        <field name="requirement" options="{'no_open':1,'no_create':1,'no_create_edit':1}"/>
+                        <field name="compliance_date"/>
+                        <field name="requirement_file"/>
+                        <field name="complied"/>
+                        </tree>
+                    </field>
+                    </group>
+                    <group>
+                    <label for='booked_sale_ids' string="BOOKED SALE" colspan="5" style="font-size:13px; padding: 5px; vertical-align: middle; margin-top:0px; text-align:left; background-color: green; color:white; border:1px solid grey;"/>
+                    <field name="booked_sale_ids" nolabel="1">
+                        <tree editable="bottom">
+                        <field name="requirement" options="{'no_open':1,'no_create':1,'no_create_edit':1}"/>
+                        <field name="compliance_date"/>
+                        <field name="requirement_file"/>
+                        <field name="complied"/>
+                        </tree>
+                    </field>
+                    </group>
+                    <group>
+                    <label for='contracted_sale_ids' string="CONTRACTED SALE" colspan="5" style="font-size:13px; padding: 5px; vertical-align: middle; margin-top:0px; text-align:left; background-color: green; color:white; border:1px solid grey;"/>
+                    <field name="contracted_sale_ids" nolabel="1">
+                        <tree editable="bottom">
+                        <field name="requirement" options="{'no_open':1,'no_create':1,'no_create_edit':1}"/>
+                        <field name="compliance_date"/>
+                        <field name="requirement_file"/>
+                        <field name="complied"/>
+                        </tree>
+                    </field>
+                    </group>
+                </page>
+                <page string="Personal References" attrs="{'invisible': [('is_company','=', True)]}">
+                    <group>
+                        <field name="per_name"/>
+                        <field name="per_relation_buyer"/>
+                        <field name="per_residence_address"/>
+                        <field name="per_office_address"/>
+                        <field name="per_contact_number"/>
+                    </group>
                 </page>
             </xpath>
             <xpath expr="//field[@name='category_id']" position="after">
@@ -69,41 +162,58 @@
                 </label>
             </xpath>
             <xpath expr="//field[@name='vat']" position="after">
-                <field name="civil_status" attrs="{'invisible': [('is_company','=', True)]}"/>
-                <field name="sex" attrs="{'invisible': [('is_company','=', True)]}"/>
-                <field name="citizenship" attrs="{'invisible': [('is_company','=', True)]}"/>
-                <field name="birthdate" attrs="{'invisible': [('is_company','=', True)]}"/>
-                <field name="occupation" attrs="{'invisible': [('is_company','=', True)]}"/>
+                <field name="civil_status"/>
+                <field name="sex"/>
+                <field name="citizenship"/>
+                <field name="birthdate"/>
+                <field name="occupation"/>
             </xpath>
 
             <xpath expr="//field[@name='property_payment_term_id']" position="before">
-                <field name="buying_reason" attrs="{'invisible': [('is_company','=', True)]}"/>
-                <field name="source_awareness" attrs="{'invisible': [('is_company','=', True)]}"/>
+                <field name="broker"/>
+                <field name="agent"/>
+                <field name="sales_manager"/>
+                <field name="nali_coordinator"/>
+                <field name="buying_reason"/>
+                <field name="source_awareness"/>
             </xpath>
-            <xpath expr="//field[@name='property_supplier_payment_term_id']" position="after">
-                <field name="broker" attrs="{'invisible': [('is_company','=', True)]}"/>
-                <field name="agent" attrs="{'invisible': [('is_company','=', True)]}"/>
-                <field name="sales_manager" attrs="{'invisible': [('is_company','=', True)]}"/>
-                <field name="nali_coordinator" attrs="{'invisible': [('is_company','=', True)]}"/>
-            </xpath>
-
+           
             <xpath expr="//page[@name='sales_purchases']" position="before">
-              <page name="spouse" string="Spouse Info" attrs="{'invisible': [('is_company','=', True)]}">
+              <page name="spouse" string="Spouse Info"  attrs="{'invisible': [('is_company','=', True)]}">
                     <group>
                         <group>
-                            <field name="spouse_name" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                            <field name="spouse_citizenship" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                            <field name="spouse_birthday" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                            <field name="spouse_mobile" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                            <field name="spouse_occupation" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                            <field name="spouse_employer" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
+                            <label for="spouse_street" string="Address"/>
+                            <div class="o_address_format">
+                                <field name="spouse_street" placeholder="Street..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="spouse_street2" placeholder="Street 2..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="spouse_city" placeholder="City" class="o_address_city" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="spouse_state_id" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" context="{'country_id': country_id, 'zip': zip}"/>
+                                <field name="spouse_zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="spouse_country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                            </div>
+                            <field name="spouse_name"/>
+                            <field name="spouse_citizenship"/>
+                            <field name="spouse_birthday"/>
+                            <field name="spouse_mobile"/>
+                            <field name="spouse_age"/>
+                            <field name="spouse_place_of_birth"/>
+                            <field name="spouse_sex"/>
+                            <field name="spouse_monthly_gross_salary"/>
+                            <field name="spouse_allowances"/>
+                            <field name="spouse_commisions"/>
+                            <field name="spouse_total_earnings"/>
                         </group>
                         <group>
-                        <field name="spouse_designation" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                        <field name="spouse_contact" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                        <field name="spouse_office_address" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                        <field name="spouse_tin" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                        <field name="spouse_monthly_income" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
+                            <field name="spouse_sss_no"/>
+                            <field name="spouse_pag_ibig_no"/>
+                            <field name="spouse_tin_no"/>
+                            <field name="spouse_email"/>
+                            <field name="spouse_residence_landline"/>
+                            <field name="spouse_office_landline"/>
+                            <field name="spouse_employer_name"/>
+                            <field name="spouse_company_address"/>
+                            <field name="spouse_nature_business"/>
+                            <field name="spouse_date_employed_established"/>
                         </group>
                     </group>
                 </page>
@@ -111,15 +221,36 @@
                 <page name="spa" string="SPA Info" attrs="{'invisible': [('is_company','=', True)]}">
                     <group>
                         <group>
+                            <label for="spa_street" string="Address"/>
+                            <div class="o_address_format">
+                                <field name="spa_street" placeholder="Street..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="spa_street2" placeholder="Street 2..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="spa_city" placeholder="City" class="o_address_city" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="spa_state_id" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" context="{'country_id': country_id, 'zip': zip}"/>
+                                <field name="spa_zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="spa_country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                            </div>
                             <field name="spa_name"/>
                             <field name="spa_citizenship"/>
                             <field name="spa_birthday"/>
+                            <field name="spa_age"/>
+                            <field name="spa_place_of_birth"/>
+                            <field name="spa_civil_status"/>
+                            <field name="spa_sex"/>
                             <field name="spa_mobile"/>
                             <field name="spa_contact"/>
                             <field name="spa_relationship"/>
                         </group>
                         <group>
-                        
+                            <field name="spa_email"/>
+                            <field name="spa_office_landline"/>
+                            <field name="spa_sss_no"/>
+                            <field name="spa_tin_no"/>
+                            <field name="spa_company_name"/>
+                            <field name="spa_company_address"/>
+                            <field name="spa_nature_business"/>
+                            <field name="spa_designation"/>
+                            <field name="spa_date_employed_established"/>
                         </group>
                     </group>
                 </page>
