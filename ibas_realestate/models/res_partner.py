@@ -167,7 +167,7 @@ class IBASCustomer(models.Model):
     spouse_zip = fields.Char('Spouse  Zip')
     spouse_country_id = fields.Many2one('res.country', string="Spouse Country")
 
-    spouse_name = fields.Char(string='Name of Spouse')
+    spouse_name = fields.Char(string='Spouse Name')
     spouse_citizenship = fields.Char(string='Spouse Citizenship')
     spouse_birthday = fields.Date(string='Spouse Date of Birth')
     spouse_mobile = fields.Char(string='Spouse Mobile No.')
@@ -239,6 +239,7 @@ class IBASCustomer(models.Model):
     spa_email = fields.Char('SPA Email Address')
     spa_office_landline = fields.Char('SPA Office Landline No.')
     spa_sss_no = fields.Char('SPA SSS No.')
+    spa_pag_ibig_no = fields.Char('SPA Pag-IBIG No.')
     spa_tin_no = fields.Char('SPA Tin No.')
     spa_company_name = fields.Char(string='SPA Company/Business Name')
     spa_company_address = fields.Char('SPA Company Address')
@@ -248,16 +249,22 @@ class IBASCustomer(models.Model):
         'SPA Date Employed/Established')
 
     # Financial References
-    loan_name = fields.Char('Name of Institution')
-    loan_type = fields.Char('Type of Loan')
-    loan_paid_granted = fields.Date('Date Paid/Granted')
-    loan_outstanding_balance = fields.Monetary('Outstanding Balance')
-    loan_month_amortization = fields.Monetary('Monthly Amortization')
 
-    credit_card_issuer = fields.Char('Card Issuer')
-    credit_card_number = fields.Char('Credit Card Number')
-    credit_limit = fields.Monetary('Credit Limit')
-    credit_card_name = fields.Char('Name on Card')
+    loan_ids = fields.One2many(
+        'ibas_realestate.financial_references_loan', 'parent_id', string="Loan")
+    credit_cards_ids = fields.One2many(
+        'ibas_realestate.financial_references_credit_cards', 'parent_id', string="Credit Cards")
+
+    #loan_name = fields.Char('Name of Institution')
+    #loan_type = fields.Char('Type of Loan')
+    #loan_paid_granted = fields.Date('Date Paid/Granted')
+    #loan_outstanding_balance = fields.Monetary('Outstanding Balance')
+    #loan_month_amortization = fields.Monetary('Monthly Amortization')
+
+    #credit_card_issuer = fields.Char('Card Issuer')
+    #credit_card_number = fields.Char('Credit Card Number')
+    #credit_limit = fields.Monetary('Credit Limit')
+    #credit_card_name = fields.Char('Name on Card')
 
     # Personal References
     personal_ref_ids = fields.One2many(
@@ -325,6 +332,29 @@ class IBASContactPersonalReferences(models.Model):
     parent_id = fields.Many2one('res.partner', string="Customer")
     per_name = fields.Char('Name')
     per_relation_buyer = fields.Char('Relation to Buyer')
-    per_residence_address = fields.Char('Residenece to Buyer')
+    per_residence_address = fields.Char('Residence Address')
     per_office_address = fields.Char('Office Address')
     per_contact_number = fields.Char('Contact Number')
+
+
+class IBASContactFinancialReferencesLoan(models.Model):
+    _name = 'ibas_realestate.financial_references_loan'
+    _description = 'Contact Financial References Loan'
+
+    parent_id = fields.Many2one('res.partner', string="Customer")
+    loan_name = fields.Char('Name of Institution')
+    loan_type = fields.Char('Type of Loan')
+    loan_paid_granted = fields.Date('Date Paid/Granted')
+    loan_outstanding_balance = fields.Float('Outstanding Balance')
+    loan_month_amortization = fields.Float('Monthly Amortization')
+
+
+class IBASContactFinancialReferencesCreditCard(models.Model):
+    _name = 'ibas_realestate.financial_references_credit_cards'
+    _description = 'Contact Financial References Credit Cards'
+
+    parent_id = fields.Many2one('res.partner', string="Customer")
+    credit_card_issuer = fields.Char('Card Issuer')
+    credit_card_number = fields.Char('Credit Card Number')
+    credit_limit = fields.Float('Credit Limit')
+    credit_card_name = fields.Char('Name on Card')

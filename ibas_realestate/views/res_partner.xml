@@ -88,21 +88,29 @@
                     </group>
                 </page>
                 <page string="Financial References" attrs="{'invisible': [('is_company','=', True)]}">
-                    <group colspan="4" col="4">
-                        <group string="Loans" colspan='2' col="2">
-                            <field name="loan_name"/>
-                            <field name="loan_type"/>
-                            <field name="loan_paid_granted"/>
-                            <field name="loan_outstanding_balance"/>
-                            <field name="loan_month_amortization"/>
+                   
+                        <group string="Loans">
+                            <field name="loan_ids" nolabel="1">
+                                <tree editable="bottom">
+                                <field name="loan_name"/>
+                                <field name="loan_type"/>
+                                <field name="loan_paid_granted"/>
+                                <field name="loan_outstanding_balance"/>
+                                <field name="loan_month_amortization"/>
+                                </tree>
+                            </field>
                         </group>
-                        <group string="Credit Cards" colspan="2" col="2">
-                            <field name="credit_card_issuer"/>
-                            <field name="credit_card_number"/>
-                            <field name="credit_limit"/>
-                            <field name="credit_card_name"/>
+                        <group string="Credit Cards">
+                            <field name="credit_cards_ids" nolabel="1">
+                                <tree editable="bottom">
+                                <field name="credit_card_issuer"/>
+                                <field name="credit_card_number"/>
+                                <field name="credit_limit"/>
+                                <field name="credit_card_name"/>
+                                </tree>
+                            </field>
                         </group>
-                    </group>
+                
                 </page>
                 <page string="Requirements" attrs="{'invisible': [('is_company','=', True)]}">
                     <group>
@@ -248,6 +256,7 @@
                 <page name="spa" string="SPA Info" attrs="{'invisible': [('is_company','=', True)]}">
                     <group>
                         <group>
+                            <field name="spa_name"/>
                             <label for="spa_street" string="SPA Address"/>
                             <div class="o_address_format">
                                 <field name="spa_street" placeholder="Street..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
@@ -257,7 +266,6 @@
                                 <field name="spa_zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
                                 <field name="spa_country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
                             </div>
-                            <field name="spa_name"/>
                             <field name="spa_citizenship"/>
                             <field name="spa_birthday"/>
                             <field name="spa_age"/>
@@ -272,6 +280,7 @@
                             <field name="spa_email"/>
                             <field name="spa_office_landline"/>
                             <field name="spa_sss_no"/>
+                            <field name="spa_pag_ibig_no"/>
                             <field name="spa_tin_no"/>
                             <field name="spa_company_name"/>
                             <field name="spa_company_address"/>
