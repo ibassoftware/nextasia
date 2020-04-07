@@ -198,7 +198,7 @@
                 <field name="civil_status"/>
                 <field name="sex"/>
                 <field name="citizenship"/>
-                <field name="birthdate"/>
+                <field name="birthday"/>
                 <field name="occupation"/>
             </xpath>
 

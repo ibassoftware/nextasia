@@ -63,7 +63,7 @@ class IBASCustomer(models.Model):
     ], string='Sex')
 
     citizenship = fields.Char(string='Citizenship')
-    birthdate = fields.Date(string='Date of Birth')
+    birthday = fields.Date(string='Date of Birth')
 
     home_ownership = fields.Selection([
         ('owned', 'Owned'),
@@ -146,7 +146,7 @@ class IBASCustomer(models.Model):
     cb_place_of_birth = fields.Char(
         related='cb_contact_id.place_of_birth', string='Co-Buyer Place of Birth')
     cb_date_of_birth = fields.Date(
-        related='cb_contact_id.birthdate', string='Co-Buyer Date of Birth')
+        related='cb_contact_id.birthday', string='Co-Buyer Date of Birth')
     # Right
     cb_sss_no = fields.Char(
         related='cb_contact_id.sss_no', string='Co-Buyer SSS No.')
@@ -208,7 +208,7 @@ class IBASCustomer(models.Model):
     spouse_citizenship = fields.Char(
         related='spouse_contact_id.citizenship', string='Spouse Citizenship')
     spouse_birthday = fields.Date(
-        related='spouse_contact_id.birthdate', string='Spouse Date of Birth')
+        related='spouse_contact_id.birthday', string='Spouse Date of Birth')
     spouse_mobile = fields.Char(
         related='spouse_contact_id.mobile', string='Spouse Mobile No.')
     spouse_monthly_income = fields.Selection([
@@ -282,7 +282,7 @@ class IBASCustomer(models.Model):
     spa_citizenship = fields.Char(
         related='spa_contact_id.citizenship', string='SPA Citizenship')
     spa_birthday = fields.Date(
-        related='spa_contact_id.birthdate', string='SPA Date of Birth')
+        related='spa_contact_id.birthday', string='SPA Date of Birth')
     spa_mobile = fields.Char(
         related='spa_contact_id.mobile', string='SPA Mobile Number')
     spa_contact = fields.Char(
