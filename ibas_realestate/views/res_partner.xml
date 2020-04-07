@@ -38,13 +38,11 @@
                 <page string="Co-Buyer Info" attrs="{'invisible': [('is_company','=', True)]}">
                     <group>
                         <group>
-                            <label for="cb_lastname" string="Full Name"/>
-                            <div>
-                                <field name="cb_lastname" placeholder="Last Name" class="oe_inline" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>, 
-                                <field name="cb_firstname" placeholder="First Name" class="oe_inline" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>, 
-                                <field name="cb_middlename" placeholder="Middle Name" class="oe_inline" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>, 
-                                <field name="cb_suffix" placeholder="Suffix" class="oe_inline" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
-                            </div>
+                            <field name='cb_contact_id' attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_lastname" placeholder="Last Name" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_firstname" placeholder="First Name" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_middlename" placeholder="Middle Name" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
+                            <field name="cb_suffix" placeholder="Suffix" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
                             <label for="cb_street" string="Co-Buyer Address"/>
                             <div class="o_address_format">
                                 <field name="cb_street" placeholder="Street..." class="o_address_street" attrs="{'readonly': [('have_co_buyer','!=', True)]}"/>
@@ -217,7 +215,11 @@
               <page name="spouse" string="Spouse Info"  attrs="{'invisible': [('is_company','=', True)]}">
                     <group>
                         <group>
-                            <field name="spouse_name" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
+                            <field name='spouse_contact_id'/>
+                            <field name="spouse_lastname" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
+                            <field name="spouse_firstname" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
+                            <field name="spouse_middlename" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
+                            <field name="spouse_suffix" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
                             <label for="spouse_street" string="Spouse Address"/>
                             <div class="o_address_format">
                                 <field name="spouse_street" placeholder="Street..." class="o_address_street" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
@@ -256,7 +258,11 @@
                 <page name="spa" string="SPA Info" attrs="{'invisible': [('is_company','=', True)]}">
                     <group>
                         <group>
-                            <field name="spa_name"/>
+                            <field name="spa_contact_id"/>
+                            <field name="spa_lastname"/>
+                            <field name="spa_firstname"/>
+                            <field name="spa_middlename"/>
+                            <field name="spa_suffix"/>
                             <label for="spa_street" string="SPA Address"/>
                             <div class="o_address_format">
                                 <field name="spa_street" placeholder="Street..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>

@@ -99,17 +99,25 @@ class IBASCustomer(models.Model):
 
     # Co-Buyer
     # Left
-    cb_lastname = fields.Char('Last Name')
-    cb_firstname = fields.Char('First Name')
-    cb_middlename = fields.Char('Middle Name')
-    cb_suffix = fields.Char('Suffix')
-    cb_street = fields.Char('Co-Buyer Street')
-    cb_street2 = fields.Char('Co-Buyer Street2')
-    cb_city = fields.Char('Co-Buyer City')
+    cb_contact_id = fields.Many2one('res.partner', string='Co-Buyer Name')
+    cb_lastname = fields.Char(
+        related='cb_contact_id.last_name', string='Co-Buyer Last Name')
+    cb_firstname = fields.Char(
+        related='cb_contact_id.first_name', string='Co-Buyer First Name')
+    cb_middlename = fields.Char(
+        related='cb_contact_id.middle_name', string='Co-Buyer Middle Name')
+    cb_suffix = fields.Char(
+        related='cb_contact_id.suffix', string='Co-Buyer Suffix')
+    cb_street = fields.Char(
+        related='cb_contact_id.street', string='Co-Buyer Street')
+    cb_street2 = fields.Char(
+        related='cb_contact_id.street2', string='Co-Buyer Street2')
+    cb_city = fields.Char(related='cb_contact_id.city', string='Co-Buyer City')
     cb_state_id = fields.Many2one(
-        'res.country.state', string="State", domain="[('country_id','=', country_id)]")
-    cb_zip = fields.Char('Zip')
-    cb_country_id = fields.Many2one('res.country', string="Co-Buyer Country")
+        'res.country.state', string="Co-Buyer State", domain="[('country_id','=', country_id)]", related='cb_contact_id.state_id')
+    cb_zip = fields.Char(related='cb_contact_id.zip', string='Co-Buyer Zip')
+    cb_country_id = fields.Many2one(
+        'res.country', string="Co-Buyer Country", related='cb_contact_id.country_id')
 
     cb_duration_stay_from = fields.Date(string='Co-Buyer From')
     cb_duration_stay_to = fields.Date(string='Co-Buyer To')
@@ -117,60 +125,92 @@ class IBASCustomer(models.Model):
         ('owned', 'Owned'),
         ('rented', 'Rented'),
         ('relatives', 'Living with Relatives'),
-    ], string='Current Home Ownership')
+    ], string='Co-Buyer Current Home Ownership', related='cb_contact_id.home_ownership')
 
     cb_civil_status = fields.Selection([
         ('Single', 'Single'),
         ('Married', 'Married'),
         ('Widowed', 'Widowed'),
         ('Separated', 'Separated or Divorced'),
-    ], string='Co-Buyer Civil Status')
+    ], string='Co-Buyer Civil Status', related='cb_contact_id.civil_status')
 
     cb_sex = fields.Selection([
         ('male', 'Male'),
         ('female', 'Female'),
-    ], string='Co-Buyer Gender')
+    ], string='Co-Buyer Gender', related='cb_contact_id.sex')
 
-    cb_citizenship = fields.Char(string='Co-Buyer Citizenship')
+    cb_citizenship = fields.Char(
+        string='Co-Buyer Citizenship', related='cb_contact_id.citizenship')
 
-    cb_age = fields.Char('Co-Buyer Age')
-    cb_place_of_birth = fields.Char('Co-Buyer Place of Birth')
-    cb_date_of_birth = fields.Char('Co-Buyer Date of Birth')
+    cb_age = fields.Char(related='cb_contact_id.age', string='Co-Buyer Age')
+    cb_place_of_birth = fields.Char(
+        related='cb_contact_id.place_of_birth', string='Co-Buyer Place of Birth')
+    cb_date_of_birth = fields.Date(
+        related='cb_contact_id.birthdate', string='Co-Buyer Date of Birth')
     # Right
-    cb_sss_no = fields.Char('Co-Buyer SSS No.')
-    cb_pag_ibig_no = fields.Char('Co-Buyer Pag-ibig No.')
-    cb_tin_no = fields.Char('Co-Buyer Tin No.')
-    cb_email = fields.Char('Co-Buyer Email Address')
-    cb_residence_landline = fields.Char('Co-Buyer Residence Landline No.')
-    cb_mobile_no = fields.Char('Co-Buyer Mobile No.')
-    cb_office_landline = fields.Char('Co-Buyer Office Landline No.')
+    cb_sss_no = fields.Char(
+        related='cb_contact_id.sss_no', string='Co-Buyer SSS No.')
+    cb_pag_ibig_no = fields.Char(
+        related='cb_contact_id.pag_ibig_no', string='Co-Buyer Pag-ibig No.')
+    cb_tin_no = fields.Char(
+        related='cb_contact_id.tin_no', string='Co-Buyer Tin No.')
+    cb_email = fields.Char(related='cb_contact_id.email',
+                           string='Co-Buyer Email Address')
+    cb_residence_landline = fields.Char(
+        related='cb_contact_id.phone', string='Co-Buyer Residence Landline No.')
+    cb_mobile_no = fields.Char(
+        related='cb_contact_id.mobile', string='Co-Buyer Mobile No.')
+    cb_office_landline = fields.Char(
+        related='cb_contact_id.office_landline', string='Co-Buyer Office Landline No.')
 
-    cb_company_name = fields.Char(string='Co-Buyer Company/Business Name')
-    cb_company_address = fields.Char('Co-Buyer Company Address')
-    cb_designation = fields.Char('Co-Buyer Designation')
-    cb_nature_business = fields.Char('Co-Buyer Nature of Business')
+    cb_company_name = fields.Char(
+        related='cb_contact_id.employer_name', string='Co-Buyer Company/Business Name')
+    cb_company_address = fields.Char(
+        related='cb_contact_id.company_address', string='Co-Buyer Company Address')
+    cb_designation = fields.Char(string='Co-Buyer Designation')
+    cb_nature_business = fields.Char(
+        related='cb_contact_id.nature_business', string='Co-Buyer Nature of Business')
     cb_date_employed_established = fields.Date(
-        'Co-Buyer Date Employed/Established')
-    cb_monthly_gross_salary = fields.Monetary('Co-Buyer Monthly Gross Salary')
-    cb_allowances = fields.Monetary('Co-Buyer Allowances')
-    cb_commisions = fields.Monetary('Co-Buyer Commisions')
+        related='cb_contact_id.date_employed_established', string='Co-Buyer Date Employed/Established')
+    cb_monthly_gross_salary = fields.Monetary(
+        related='cb_contact_id.monthly_gross_salary', string='Co-Buyer Monthly Gross Salary')
+    cb_allowances = fields.Monetary(
+        related='cb_contact_id.allowances', string='Co-Buyer Allowances')
+    cb_commisions = fields.Monetary(
+        related='cb_contact_id.commisions', string='Co-Buyer Commisions')
     cb_total_earnings = fields.Monetary(
         compute="_compute_cb_earnings", string='Co-Buyer Total')
 
     # Spouse info
 
-    spouse_street = fields.Char('Spouse Street')
-    spouse_street2 = fields.Char('Spouse Street2')
-    spouse_city = fields.Char('Spouse City')
-    spouse_state_id = fields.Many2one(
-        'res.country.state', string="Spouse State", domain="[('country_id','=', country_id)]")
-    spouse_zip = fields.Char('Spouse  Zip')
-    spouse_country_id = fields.Many2one('res.country', string="Spouse Country")
+    spouse_contact_id = fields.Many2one('res.partner', string='Spouse Name')
+    spouse_lastname = fields.Char(
+        related='spouse_contact_id.last_name', string='Spouse Last Name')
+    spouse_firstname = fields.Char(
+        related='spouse_contact_id.first_name', string='Spouse First Name')
+    spouse_middlename = fields.Char(
+        related='spouse_contact_id.middle_name', string='Spouse Middle Name')
+    spouse_suffix = fields.Char(
+        related='spouse_contact_id.suffix', string='Spouse Suffix')
+    spouse_street = fields.Char(
+        related='spouse_contact_id.street', string='Spouse Street')
+    spouse_street2 = fields.Char(
+        related='spouse_contact_id.street2', string='Spouse Street2')
+    spouse_city = fields.Char(
+        related='spouse_contact_id.city', string='Spouse City')
+    spouse_state_id = fields.Many2one('res.country.state', string="Spouse State",
+                                      domain="[('country_id','=', country_id)]", related='spouse_contact_id.state_id')
+    spouse_zip = fields.Char(
+        related='spouse_contact_id.zip', string='Spouse  Zip')
+    spouse_country_id = fields.Many2one(
+        'res.country', string="Spouse Country", related='spouse_contact_id.country_id')
 
-    spouse_name = fields.Char(string='Spouse Name')
-    spouse_citizenship = fields.Char(string='Spouse Citizenship')
-    spouse_birthday = fields.Date(string='Spouse Date of Birth')
-    spouse_mobile = fields.Char(string='Spouse Mobile No.')
+    spouse_citizenship = fields.Char(
+        related='spouse_contact_id.citizenship', string='Spouse Citizenship')
+    spouse_birthday = fields.Date(
+        related='spouse_contact_id.birthdate', string='Spouse Date of Birth')
+    spouse_mobile = fields.Char(
+        related='spouse_contact_id.mobile', string='Spouse Mobile No.')
     spouse_monthly_income = fields.Selection([
         ('50k', 'Below 50k'),
         ('100k', '50k-100k'),
@@ -178,75 +218,111 @@ class IBASCustomer(models.Model):
         ('201k', 'Above 200k'),
     ], string='Spouse Monthly Income')
 
-    spouse_age = fields.Char('Spouse Age')
-    spouse_place_of_birth = fields.Char('Spouse Place of Birth')
+    spouse_age = fields.Char(
+        related='spouse_contact_id.age', string='Spouse Age')
+    spouse_place_of_birth = fields.Char(
+        related='spouse_contact_id.place_of_birth', string='Spouse Place of Birth')
 
     spouse_sex = fields.Selection([
         ('male', 'Male'),
         ('female', 'Female'),
-    ], string='Spouse Sex')
+    ], string='Spouse Sex', related='spouse_contact_id.sex')
 
-    spouse_sss_no = fields.Char('Spouse SSS No.')
-    spouse_pag_ibig_no = fields.Char('Spouse Pag-ibig No.')
-    spouse_tin_no = fields.Char('Spouse Tin No.')
-    spouse_email = fields.Char('Spouse Email')
-    spouse_residence_landline = fields.Char('Spouse Residence Landline No.')
-    spouse_office_landline = fields.Char('Spouse Office Landline No.')
-    spouse_employer_name = fields.Char(string='Spouse Company/Business Name')
-    spouse_company_address = fields.Char('Spouse Company Address')
-    spouse_nature_business = fields.Char('Spouse Nature of Business')
+    spouse_sss_no = fields.Char(
+        related='spouse_contact_id.sss_no', string='Spouse SSS No.')
+    spouse_pag_ibig_no = fields.Char(
+        related='spouse_contact_id.pag_ibig_no', string='Spouse Pag-ibig No.')
+    spouse_tin_no = fields.Char(
+        related='spouse_contact_id.tin_no', string='Spouse Tin No.')
+    spouse_email = fields.Char(
+        related='spouse_contact_id.email', string='Spouse Email')
+    spouse_residence_landline = fields.Char(
+        related='spouse_contact_id.phone', string='Spouse Residence Landline No.')
+    spouse_office_landline = fields.Char(
+        related='spouse_contact_id.office_landline', string='Spouse Office Landline No.')
+    spouse_employer_name = fields.Char(
+        related='spouse_contact_id.employer_name', string='Spouse Company/Business Name')
+    spouse_company_address = fields.Char(
+        related='spouse_contact_id.company_address', string='Spouse Company Address')
+    spouse_nature_business = fields.Char(
+        related='spouse_contact_id.nature_business', string='Spouse Nature of Business')
     spouse_date_employed_established = fields.Date(
-        'Spouse Date Employed/Established')
+        related='spouse_contact_id.date_employed_established', string='Spouse Date Employed/Established')
     spouse_monthly_gross_salary = fields.Monetary(
-        'Spouse Monthly Gross Salary')
-    spouse_allowances = fields.Monetary('Spouse Allowances')
-    spouse_commisions = fields.Monetary('Spouse Commisions')
+        related='spouse_contact_id.monthly_gross_salary', string='Spouse Monthly Gross Salary')
+    spouse_allowances = fields.Monetary(
+        related='spouse_contact_id.allowances', string='Spouse Allowances')
+    spouse_commisions = fields.Monetary(
+        related='spouse_contact_id.commisions', string='Spouse Commisions')
     spouse_total_earnings = fields.Monetary(
         compute="_compute_spouse_earnings", string='Spouse Total')
 
     # SPA
     # Left
-
-    spa_street = fields.Char('SPA Street')
-    spa_street2 = fields.Char('SPA Street2')
-    spa_city = fields.Char('SPA City')
+    spa_contact_id = fields.Many2one('res.partner', string='Spa Name')
+    spa_lastname = fields.Char(
+        related='spa_contact_id.last_name', string='SPA Last Name')
+    spa_firstname = fields.Char(
+        related='spa_contact_id.first_name', string='SPA First Name')
+    spa_middlename = fields.Char(
+        related='spa_contact_id.middle_name', string='SPA Middle Name')
+    spa_suffix = fields.Char(
+        related='spa_contact_id.suffix', string='SPA Suffix')
+    spa_street = fields.Char(
+        related='spa_contact_id.street', string='SPA Street')
+    spa_street2 = fields.Char(
+        related='spa_contact_id.street2', string='SPA Street2')
+    spa_city = fields.Char(related='spa_contact_id.city', string='SPA City')
     spa_state_id = fields.Many2one(
-        'res.country.state', string="SPA State", domain="[('country_id','=', country_id)]")
-    spa_zip = fields.Char('Zip')
-    spa_country_id = fields.Many2one('res.country', string="SPA Country")
+        'res.country.state', string="SPA State", domain="[('country_id','=', country_id)]", related='spa_contact_id.state_id')
+    spa_zip = fields.Char(related='spa_contact_id.zip', string='Spa zip')
+    spa_country_id = fields.Many2one(
+        'res.country', string="SPA Country", related='spa_contact_id.country_id')
 
-    spa_name = fields.Char(string='SPA Name')
-    spa_citizenship = fields.Char(string='SPA Citizenship')
-    spa_birthday = fields.Date(string='SPA Date of Birth')
-    spa_mobile = fields.Char(string='SPA Mobile Number')
-    spa_contact = fields.Char(string='SPA Residence Landline No.')
+    spa_citizenship = fields.Char(
+        related='spa_contact_id.citizenship', string='SPA Citizenship')
+    spa_birthday = fields.Date(
+        related='spa_contact_id.birthdate', string='SPA Date of Birth')
+    spa_mobile = fields.Char(
+        related='spa_contact_id.mobile', string='SPA Mobile Number')
+    spa_contact = fields.Char(
+        related='spa_contact_id.phone', string='SPA Residence Landline No.')
     spa_relationship = fields.Char(string='Relationship to Buyer')
 
-    spa_age = fields.Char('SPA Age')
-    spa_place_of_birth = fields.Char('SPA Place of Birth')
+    spa_age = fields.Char(related='spa_contact_id.age', string='SPA Age')
+    spa_place_of_birth = fields.Char(
+        related='spa_contact_id.place_of_birth', string='SPA Place of Birth')
     spa_civil_status = fields.Selection([
         ('Single', 'Single'),
         ('Married', 'Married'),
         ('Widowed', 'Widowed'),
         ('Separated', 'Separated or Divorced'),
-    ], string='SPA Civil Status')
+    ], string='SPA Civil Status', related='spa_contact_id.civil_status')
 
     spa_sex = fields.Selection([
         ('male', 'Male'),
         ('female', 'Female'),
-    ], string='SPA Gender')
+    ], string='SPA Gender', related='spa_contact_id.sex')
     # Right
-    spa_email = fields.Char('SPA Email Address')
-    spa_office_landline = fields.Char('SPA Office Landline No.')
-    spa_sss_no = fields.Char('SPA SSS No.')
-    spa_pag_ibig_no = fields.Char('SPA Pag-IBIG No.')
-    spa_tin_no = fields.Char('SPA Tin No.')
-    spa_company_name = fields.Char(string='SPA Company/Business Name')
-    spa_company_address = fields.Char('SPA Company Address')
-    spa_nature_business = fields.Char('SPA Nature of Business')
-    spa_designation = fields.Char('SPA Designation')
+    spa_email = fields.Char(
+        related='spa_contact_id.email', string='SPA Email Address')
+    spa_office_landline = fields.Char(
+        related='spa_contact_id.office_landline', string='SPA Office Landline No.')
+    spa_sss_no = fields.Char(
+        related='spa_contact_id.sss_no', string='SPA SSS No.')
+    spa_pag_ibig_no = fields.Char(
+        related='spa_contact_id.pag_ibig_no', string='SPA Pag-IBIG No.')
+    spa_tin_no = fields.Char(
+        related='spa_contact_id.tin_no', string='SPA Tin No.')
+    spa_company_name = fields.Char(
+        related='spa_contact_id.employer_name', string='SPA Company/Business Name')
+    spa_company_address = fields.Char(
+        related='spa_contact_id.company_address', string='SPA Company Address')
+    spa_nature_business = fields.Char(
+        related='spa_contact_id.nature_business', string='SPA Nature of Business')
+    spa_designation = fields.Char(string='SPA Designation')
     spa_date_employed_established = fields.Date(
-        'SPA Date Employed/Established')
+        related='spa_contact_id.date_employed_established', string='SPA Date Employed/Established')
 
     # Financial References
 
