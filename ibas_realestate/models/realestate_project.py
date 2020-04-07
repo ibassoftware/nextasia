@@ -116,7 +116,7 @@ class PropertiesProjectProperty(models.Model):
         'ibas_realestate.requirement_contracted_sale_line', 'product_id', string='Contracted Sale')
 
     price_history_line_ids = fields.One2many(
-        'ibas_realestate.price_history_line', 'product_id', string='Contracted Sale')
+        'ibas_realestate.price_history_line', 'product_id', string='Price History')
 
     def tech_hold(self):
         if self.contracted_sale_line_ids:
