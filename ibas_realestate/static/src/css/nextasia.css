@@ -1,0 +1,68 @@
+.pl-1 {
+  padding-left: 1px;
+}
+
+.float-right {
+  float: right;
+}
+
+.float-left {
+  float: left;
+}
+
+.b-bottom-1 {
+  border-bottom: 1px solid black;
+}
+
+.b-left-1 {
+  border-left: 1px solid black;
+}
+
+.b-right-1 {
+  border-right: 1px solid black;
+}
+
+.b-left {
+  border-left: 3px solid black;
+}
+
+.b-right {
+  border-right: 3px solid black;
+}
+
+.b-top {
+  border-top: 3px solid black;
+}
+
+.b-bottom {
+  border-bottom: 3px solid black;
+}
+
+.center {
+  text-align: center;
+}
+
+.font-size-8 {
+  font-size: 8px;
+}
+
+.font-size-9 {
+  font-size: 9px;
+}
+
+.font-size-10 {
+  font-size: 10px;
+}
+
+.font-size-12 {
+  font-size: 12px;
+}
+
+.sub-title {
+  background-color: grey;
+  color: white;
+}
+
+.width-minus-1 {
+  width: calc(12% - 10px);
+}

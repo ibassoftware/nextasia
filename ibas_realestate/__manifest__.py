@@ -41,4 +41,6 @@
     'demo': [
         'demo/demo.xml',
     ],
+
+    'css': ['static/src/css/nextasia.css'],
 }
