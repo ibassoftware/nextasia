@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
 
@@ -25,10 +26,638 @@
     <template id="client_information_sheet">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
-                <t t-call="ibas_realestate.ibas_external_layout_boxed">
+                <t t-call="web.external_layout">
                     <div class="page">
-                        <p>sample</p>
-                    </div>
+                     <link rel="stylesheet" type="text/scss" href="/ibas_realestate/static/src/css/nextasia.css"/>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td class="b-left b-top b-bottom" style="width: 23%; padding-top: 5px; padding-left: 2px;">
+                                        <img src="/ibas_realestate/static/src/img/next_asia.png" width="95%"/>
+                                    </td>
+                                    <td class="b-top b-bottom center" style="width: 27%;">
+                                    <p class="font-size-10">Suite 1901 Richville Corporate Tower, <br/> Madrigal Business Park, Muntinlupa City 1780 </p>
+                                    </td>
+                                    <td colspan="2" class="b-top b-bottom b-right center" style="border-left: 0px;">
+                                    <p style="margin-top: 0; line-height: 0;"><span class="font-size-10">( NOTE: KINDLY HAVE ITEMS WITH * ACCOMPLISHED COMPLETELY )</span>
+                                     <br/> <span style="background: grey;font-size: 24px; color: white;">CLIENT INFORMATION SHEET</span> <br/> 
+                                    <span class="font-size-10"> (Revision 2019-001)</span></p>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td colspan="7" class="center sub-title b-right b-left b-bottom">RESERVED PROPERTY</td>
+                                </tr>
+                                <tr>   
+                                    <td class="b-left font-size-9" style="width: 12%;">
+                                        <span class="pl-1"> &#x2611; DUPLEX </span></td>
+                                    <td class="b-right-1 font-size-9" style="width: 11%;">
+                                        <span> &#x2611; SINGLE ATTACHED </span></td>
+                                    <td class="center font-size-9" style="width: 11%;">
+                                        <span> MODEL UNIT </span></td>
+                                    <td class="center font-size-9" style="width: 20%;">
+                                        <span> UNIT NO./BLK LOT </span></td>
+                                    <td class="center b-right-1 font-size-9" style="width: 30%;">SUBDIVISION</td>
+                                    <td class="center b-right font-size-9" style="width: 16%;">REVISION DATE</td>
+                                </tr>
+                                <tr>
+                                    <td class="b-left b-bottom-1 font-size-9">
+                                        <span class="pl-1"> &#x2611; TOWNHOUSE </span></td>
+                                    <td class="b-right-1 b-bottom-1 font-size-9">
+                                        <span> &#x2611; ROW HOUSE </span></td>
+                                    <td class="b-bottom-1 font-size-9"></td>
+                                    <td class="b-bottom-1 font-size-9"></td>
+                                    <td class="b-bottom-1 b-right-1 font-size-9"></td>
+                                    <td class="b-bottom-1 b-right font-size-9"></td>             
+                                </tr>
+                            </table>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td class="center b-left b-right-1 font-size-10" style="width: 23%;">
+                                        <span>LAST NAME</span></td>
+                                    <td class="center b-right-1 font-size-10" style="width: 32%;">FIRST NAME</td>
+                                    <td class="center b-right-1 font-size-10">MIDDLE NAME</td>
+                                    <td class="center b-right font-size-10" style="width: 16%;">SUFFIX</td>
+                                </tr>
+                                <tr>
+                                    <td class="center b-bottom-1 b-left b-right-1 font-size-12"><strong><span t-field="doc.last_name"/></strong></td>
+                                    <td class="center b-bottom-1 b-right-1 font-size-12"><strong><span t-field="doc.first_name"/></strong></td>
+                                    <td class="center b-bottom-1 b-right-1 font-size-12"><strong><span t-field="doc.middle_name"/></strong></td>
+                                    <td class="center b-bottom-1 b-right font-size-12"><strong><span t-field="doc.suffix"/></strong></td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td class="b-left font-size-9" style="width: 15%">
+                                        <span>RESIDENCE ADDRESS</span></td>
+                                    <td class="font-size-9" style="width: 8%"><span>HOUSE NO.</span></td>
+                                    <td class="center font-size-9" style="width: 23%">STREET NAME</td>
+                                    <td class="center font-size-9" style="width: 22%"><span>BARANGAY</span></td>
+                                    <td class="center font-size-9" style="width: 16%"><span>CITY/PROVINCE</span></td>
+                                    <td class="center b-right font-size-9" style="width: 16%">COUNTRY</td>
+                                </tr>
+                                <tr>
+                                    <td class="center b-bottom-1 b-left font-size-12"><strong></strong></td>
+                                    <td class="center b-bottom-1 font-size-12"><strong></strong></td>
+                                    <td class="center b-bottom-1 font-size-12"><strong><span t-field="doc.street"/></strong></td>
+                                    <td class="center b-bottom-1 font-size-12"><strong></strong></td>
+                                    <td class="center b-bottom-1 font-size-12"><strong><span t-field="doc.city"/></strong></td>
+                                    <td class="center b-bottom-1 font-size-12 b-right"><strong><span t-field="doc.country_id"/></strong></td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%;">
+                                <tr>
+                                   <td class="b-left font-size-10 b-right-1" style="width: 23%;">
+                                        <span class="pl-1">DURATION OF STAY (YYYY/MM)</span></td>
+                                   <td class="font-size-9" style="width: 9%;"><span class="pl-1">CURRENT</span></td>
+                                   <td class="font-size-9 b-right-1" style="width: 14%;"><span> &#x2611; OWNED </span></td>
+                                   <td class="font-size-9" style="width: 8%;"><span class="pl-1"> CIVIL STATUS</span></td>
+                                   <td class="font-size-9 b-right-1" style="width: 14%;"><span class="pl-1">  &#x2611; SINGLE</span></td>
+                                   <td class="font-size-9 b-right-1" style="width: 16%;"><span class="pl-1">GENDER</span></td>
+                                   <td class="b-right font-size-9" style="width: 16%;"><span class="pl-1">CITIZENSHIP</span></td>
+                                </tr>
+                                <tr>
+                                   <td class="b-left font-size-9 b-right-1"></td>
+                                   <td class="font-size-9"><span class="pl-1">HOME</span></td>
+                                   <td class="font-size-9 b-right-1"><span> &#x2610; RENTED </span></td>
+                                   <td class="font-size-9"></td>
+                                   <td class="font-size-9 b-right-1"><span class="pl-1">  &#x2611; MARRIED</span></td>
+                                   <td class="font-size-9 b-right-1"><span style="padding-left: 50px">  &#x2611; MALE</span></td>
+                                   <td class="b-right font-size-9"><span style="padding-left: 50px"> &#x2611;FILIPINO</span></td>
+                                </tr>
+                                <tr>
+                                   <td class="b-left font-size-10 b-right-1 b-bottom-1"></td>
+                                   <td class="font-size-9 b-bottom-1"><span class="pl-1">OWNERSHIP</span></td>
+                                   <td class="font-size-9 b-right-1 b-bottom-1"><span> &#x2610; LIVING WITH RELATIVES</span></td>
+                                   <td class="font-size-9 b-bottom-1"></td>
+                                   <td class="font-size-9 b-right-1 b-bottom-1"><span class="pl-1">  &#x2611; OTHERS:__________</span></td>
+                                   <td class="font-size-9 b-right-1 b-bottom-1"><span style="padding-left: 50px">  &#x2611; FEMALE</span></td>
+                                   <td class="b-right font-size-9 b-bottom-1"><span style="padding-left: 50px">  &#x2611; OTHERS:__________</span></td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td class="b-left font-size-9 b-right-1" style="width: 7%;">
+                                        <span class="pl-1">AGE</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 16%;">
+                                        <span class="pl-1">DATE OF BIRTH (MM/DD/YYYY)</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 9%;"><span class="pl-1">PLACE OF BIRTH</span></td>
+                                    <td class="font-size-9" style="width: 22%;"><span class="pl-1"> EDUCATIONAL ATTAINMENT </span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 14%;"><span class="pl-1">  &#x2611; COLLEGE GRADUATE</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 16%;"><span class="pl-1">SSS NO.</span></td>
+                                    <td class="b-right font-size-9" style="width: 16%;"><span class="pl-1">PAG-IBIG NO.</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="b-left font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-bottom-1" style="width: 12%;">
+                                        <span class="pl-1" style="padding-left: 50px">  &#x2611; HIGH SCHOOL GRADUATE</span></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1" style="width: 12%;"><span class="pl-1">  &#x2611; POST GRADUATE</span></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right b-bottom-1"></td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td class="b-left font-size-9 b-right-1" style="width: 23%;">
+                                        <span class="pl-1">EMAIL ADDRESS</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 23%;">
+                                        <span class="pl-1">RESISDENCE LANDLINE NO.</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 22%;">
+                                        <span class="pl-1">MOBILE NO.</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 16%;">
+                                        <span class="pl-1">OFFICE LANDLINE NO.</span></td>
+                                    <td class="font-size-9 b-right" style="width: 16%;">
+                                        <span class="pl-1">TIN NO.</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-size-9 b-left b-right-1 b-bottom-1">
+                                    <span>18</span></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right b-bottom-1"></td>
+                                </tr>
+                            </table>
+
+                            <table style="width: 100%">
+                                <tr>
+                                    <td class="b-left font-size-9 b-right-1" style="width: 23%;">
+                                        <span class="pl-1">COMPANY / BUSINESS NAME</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 29%;">
+                                        <span class="pl-1">COMPANY ADDRESS</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 16%;">
+                                        <span class="pl-1">NATURE OF BUSINESS</span></td>
+                                    <td class="font-size-8 b-right-1" style="width: 16%;">
+                                        <span class="pl-1">DATE EMPLOYED/ESTABLISHED</span></td>
+                                    <td class="font-size-9 b-right" style="width: 16%;">
+                                        <span class="pl-1">DESIGNATION</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-size-10 b-left b-right-1 b-bottom-1">
+                                    <span>18</span></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right b-bottom-1"></td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td class="b-bottom b-left font-size-9 b-right-1" style="width: 23%;">
+                                        <span class="pl-1">MONTHLY GROSS SALARY:______</span></td>
+                                    <td class="b-bottom font-size-9 b-right-1" style="width: 23%;">
+                                        <span class="pl-1">ALLOWANCES:______</span></td>
+                                    <td class="b-bottom font-size-9 b-right-1" style="width: 22%;">
+                                        <span class="pl-1">COMMISION/S:______</span></td>
+                                    <td class="b-bottom font-size-9 b-right-1" style="width: 16%;">
+                                        <span class="pl-1">OTHERS:_____</span></td>
+                                    <td class="b-bottom font-size-9 b-right" style="width: 16%;">
+                                        <span class="pl-1">TOTAL:______</span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" class="center sub-title b-right b-left b-bottom">SPOUSE INFORMATION</td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%">
+                                 <tr>
+                                    <td class="center b-left b-right-1 font-size-10" style="width: 23%;">LAST NAME</td>
+                                    <td class="center b-right-1 font-size-10" style="width: 32%;">FIRST NAME</td>
+                                    <td class="center b-right-1 font-size-10">MIDDLE NAME</td>
+                                    <td class="center b-right font-size-10" style="width: 16%;">SUFFIX</td>
+                                </tr>
+                                   <tr>
+                                    <td class="center b-bottom-1 b-left b-right-1 font-size-12"><strong><span t-field="doc.spouse_lastname"/></strong></td>
+                                    <td class="center b-bottom-1 b-right-1 font-size-12"><strong><span t-field="doc.spouse_firstname"/></strong></td>
+                                    <td class="center b-bottom-1 b-right-1 font-size-12"><strong><span t-field="doc.spouse_middlename"/></strong></td>
+                                    <td class="center b-bottom-1 b-right font-size-12"><strong><span t-field="doc.spouse_suffix"/></strong></td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td class="b-left font-size-9" style="width: 15%">
+                                        <span>RESIDENCE ADDRESS</span></td>
+                                    <td class="font-size-9" style="width: 8%"><span>HOUSE NO.</span></td>
+                                    <td class="center font-size-9" style="width: 23%">STREET NAME</td>
+                                    <td class="center font-size-9" style="width: 22%"><span>BARANGAY</span></td>
+                                    <td class="center font-size-9" style="width: 16%"><span>CITY/PROVINCE</span></td>
+                                    <td class="center b-right font-size-9" style="width: 16%">COUNTRY</td>
+                                </tr>
+                                <tr>
+                                    <td class="center b-bottom-1 b-left font-size-12"><strong></strong></td>
+                                    <td class="center b-bottom-1 font-size-12"><strong></strong></td>
+                                    <td class="center b-bottom-1 font-size-12"><strong><span t-field="doc.spouse_street"/></strong></td>
+                                    <td class="center b-bottom-1 font-size-12"><strong></strong></td>
+                                    <td class="center b-bottom-1 font-size-12"><strong><span t-field="doc.spouse_city"/></strong></td>
+                                    <td class="center b-bottom-1 font-size-12 b-right"><strong><span t-field="doc.spouse_country_id"/></strong></td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td class="b-left font-size-9" style="width: 8%;">CITIZENSHIP</td>
+                                    <td class="font-size-9 b-right-1" style="width: 15%;"><span> &#x2610; FILIPINO</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 6%;"><span> AGE</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 16%;"><span>DATE OF BIRTH(MM/DD/YYYY)</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 10%;"><span>PLACE OF BIRTH</span></td>
+                                    <td class="font-size-9" style="width: 5%;"><span>GENDER</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 8%;"><span> &#x2610; MALE</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 16%;"><span>SSS NO.</span></td>
+                                    <td class="font-size-9 b-right" style="width: 16%;"><span>PAG-IBIG NO.</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="b-left font-size-9 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"><span> &#x2610; OTHERS:________</span></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"><span> &#x2610; FEMALE</span></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right b-bottom-1"></td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td class="b-left font-size-9 b-right-1" style="width: 23%;">
+                                        <span class="pl-1">EMAIL ADDRESS</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 23%;">
+                                        <span class="pl-1">RESISDENCE LANDLINE NO.</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 22%;">
+                                        <span class="pl-1">MOBILE NO.</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 16%;">
+                                        <span class="pl-1">OFFICE LANDLINE NO.</span></td>
+                                    <td class="font-size-9 b-right" style="width: 16%;">
+                                        <span class="pl-1">TIN NO.</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-size-9 b-left b-right-1 b-bottom-1">
+                                    <span>18</span></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right b-bottom-1"></td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td class="b-left font-size-9 b-right-1" style="width: 23%;">
+                                        <span class="pl-1">COMPANY / BUSINESS NAME</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 29%;">
+                                        <span class="pl-1">COMPANY ADDRESS</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 16%;">
+                                        <span class="pl-1">NATURE OF BUSINESS</span></td>
+                                    <td class="font-size-8 b-right-1" style="width: 16%;">
+                                        <span class="pl-1">DATE EMPLOYED/ESTABLISHED</span></td>
+                                    <td class="font-size-9 b-right" style="width: 16%;">
+                                        <span class="pl-1">DESIGNATION</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-size-10 b-left b-right-1 b-bottom-1">
+                                    <span>18</span></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right b-bottom-1"></td>
+                                </tr>
+                            </table>
+                             <table style="width: 100%">
+                                <tr>
+                                    <td class="b-bottom b-left font-size-9 b-right-1" style="width: 23%;">
+                                        <span class="pl-1">MONTHLY GROSS SALARY:______</span></td>
+                                    <td class="b-bottom font-size-9 b-right-1" style="width: 23%;">
+                                        <span class="pl-1">ALLOWANCES:______</span></td>
+                                    <td class="b-bottom font-size-9 b-right-1" style="width: 22%;">
+                                        <span class="pl-1">COMMISION/S:______</span></td>
+                                    <td class="b-bottom font-size-9 b-right-1" style="width: 16%;">
+                                        <span class="pl-1">OTHERS:_____</span></td>
+                                    <td class="b-bottom font-size-9 b-right" style="width: 16%;">
+                                        <span class="pl-1">TOTAL:______</span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" class="center sub-title b-right b-left b-bottom">CO-BUYER INFORMATION</td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%">
+                                 <tr>
+                                    <td class="center b-left b-right-1 font-size-10" style="width: 23%;">LAST NAME</td>
+                                    <td class="center b-right-1 font-size-10" style="width: 32%;">FIRST NAME</td>
+                                    <td class="center b-right-1 font-size-10">MIDDLE NAME</td>
+                                    <td class="center b-right font-size-10" style="width: 16%;">SUFFIX</td>
+                                </tr>
+                                   <tr>
+                                    <td class="center b-bottom-1 b-left b-right-1 font-size-12"><strong><span t-field="doc.cb_lastname"/></strong></td>
+                                    <td class="center b-bottom-1 b-right-1 font-size-12"><strong><span t-field="doc.cb_firstname"/></strong></td>
+                                    <td class="center b-bottom-1 b-right-1 font-size-12"><strong><span t-field="doc.cb_middlename"/></strong></td>
+                                    <td class="center b-bottom-1 b-right font-size-12"><strong><span t-field="doc.cb_suffix"/></strong></td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td class="b-left font-size-9" style="width: 15%">
+                                        <span>RESIDENCE ADDRESS</span></td>
+                                    <td class="font-size-9" style="width: 8%"><span>HOUSE NO.</span></td>
+                                    <td class="center font-size-9" style="width: 23%">STREET NAME</td>
+                                    <td class="center font-size-9" style="width: 22%"><span>BARANGAY</span></td>
+                                    <td class="center font-size-9" style="width: 16%"><span>CITY/PROVINCE</span></td>
+                                    <td class="center b-right font-size-9" style="width: 16%">COUNTRY</td>
+                                </tr>
+                                <tr>
+                                    <td class="center b-bottom-1 b-left font-size-12"><strong></strong></td>
+                                    <td class="center b-bottom-1 font-size-12"><strong></strong></td>
+                                    <td class="center b-bottom-1 font-size-12"><strong><span t-field="doc.cb_street"/></strong></td>
+                                    <td class="center b-bottom-1 font-size-12"><strong></strong></td>
+                                    <td class="center b-bottom-1 font-size-12"><strong><span t-field="doc.cb_city"/></strong></td>
+                                    <td class="center b-bottom-1 font-size-12 b-right"><strong><span t-field="doc.cb_country_id"/></strong></td>
+                                </tr>
+                            </table>
+                             <table style="width: 100%;">
+                                <tr>
+                                   <td class="b-left font-size-10 b-right-1" style="width: 23%;">
+                                        <span class="pl-1">DURATION OF STAY (YYYY/MM)</span></td>
+                                   <td class="font-size-9" style="width: 9%;"><span class="pl-1">CURRENT</span></td>
+                                   <td class="font-size-9 b-right-1" style="width: 14%;"><span> &#x2611; OWNED </span></td>
+                                   <td class="font-size-9" style="width: 8%;"><span class="pl-1"> CIVIL STATUS</span></td>
+                                   <td class="font-size-9 b-right-1" style="width: 14%;"><span class="pl-1">  &#x2611; SINGLE</span></td>
+                                   <td class="font-size-9 b-right-1" style="width: 16%;"><span class="pl-1">GENDER</span></td>
+                                   <td class="b-right font-size-9" style="width: 16%;"><span class="pl-1">CITIZENSHIP</span></td>
+                                </tr>
+                                <tr>
+                                   <td class="b-left font-size-9 b-right-1"></td>
+                                   <td class="font-size-9"><span class="pl-1">HOME</span></td>
+                                   <td class="font-size-9 b-right-1"><span> &#x2610; RENTED </span></td>
+                                   <td class="font-size-9"></td>
+                                   <td class="font-size-9 b-right-1"><span class="pl-1">  &#x2611; MARRIED</span></td>
+                                   <td class="font-size-9 b-right-1"><span style="padding-left: 50px">  &#x2611; MALE</span></td>
+                                   <td class="b-right font-size-9"><span style="padding-left: 50px"> &#x2611;FILIPINO</span></td>
+                                </tr>
+                                <tr>
+                                   <td class="b-left font-size-10 b-right-1 b-bottom-1"></td>
+                                   <td class="font-size-9 b-bottom-1"><span class="pl-1">OWNERSHIP</span></td>
+                                   <td class="font-size-9 b-right-1 b-bottom-1"><span> &#x2610; LIVING WITH RELATIVES</span></td>
+                                   <td class="font-size-9 b-bottom-1"></td>
+                                   <td class="font-size-9 b-right-1 b-bottom-1"><span class="pl-1">  &#x2611; OTHERS:__________</span></td>
+                                   <td class="font-size-9 b-right-1 b-bottom-1"><span style="padding-left: 50px">  &#x2611; FEMALE</span></td>
+                                   <td class="b-right font-size-9 b-bottom-1"><span style="padding-left: 50px">  &#x2611; OTHERS:__________</span></td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td class="b-left font-size-9 b-right-1" style="width: 7%;">
+                                        <span class="pl-1">AGE</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 16%;">
+                                        <span class="pl-1">DATE OF BIRTH (MM/DD/YYYY)</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 9%;"><span class="pl-1">PLACE OF BIRTH</span></td>
+                                    <td class="font-size-9" style="width: 22%;"><span class="pl-1"> EDUCATIONAL ATTAINMENT </span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 14%;"><span class="pl-1">  &#x2611; COLLEGE GRADUATE</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 16%;"><span class="pl-1">SSS NO.</span></td>
+                                    <td class="b-right font-size-9" style="width: 16%;"><span class="pl-1">PAG-IBIG NO.</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="b-left font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-bottom-1" style="width: 12%;">
+                                        <span class="pl-1" style="padding-left: 50px">  &#x2611; HIGH SCHOOL GRADUATE</span></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1" style="width: 12%;"><span class="pl-1">  &#x2611; POST GRADUATE</span></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right b-bottom-1"></td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td class="b-left font-size-9 b-right-1" style="width: 23%;">
+                                        <span class="pl-1">EMAIL ADDRESS</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 23%;">
+                                        <span class="pl-1">RESISDENCE LANDLINE NO.</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 22%;">
+                                        <span class="pl-1">MOBILE NO.</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 16%;">
+                                        <span class="pl-1">OFFICE LANDLINE NO.</span></td>
+                                    <td class="font-size-9 b-right" style="width: 16%;">
+                                        <span class="pl-1">TIN NO.</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-size-9 b-left b-right-1 b-bottom-1">
+                                    <span>18</span></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right b-bottom-1"></td>
+                                </tr>
+                            </table>
+
+                            <table style="width: 100%">
+                                <tr>
+                                    <td class="b-left font-size-9 b-right-1" style="width: 23%;">
+                                        <span class="pl-1">COMPANY / BUSINESS NAME</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 29%;">
+                                        <span class="pl-1">COMPANY ADDRESS</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 16%;">
+                                        <span class="pl-1">NATURE OF BUSINESS</span></td>
+                                    <td class="font-size-8 b-right-1" style="width: 16%;">
+                                        <span class="pl-1">DATE EMPLOYED/ESTABLISHED</span></td>
+                                    <td class="font-size-9 b-right" style="width: 16%;">
+                                        <span class="pl-1">DESIGNATION</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-size-10 b-left b-right-1 b-bottom-1">
+                                    <span>18</span></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right b-bottom-1"></td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td class="b-bottom b-left font-size-9 b-right-1" style="width: 23%;">
+                                        <span class="pl-1">MONTHLY GROSS SALARY:______</span></td>
+                                    <td class="b-bottom font-size-9 b-right-1" style="width: 23%;">
+                                        <span class="pl-1">ALLOWANCES:______</span></td>
+                                    <td class="b-bottom font-size-9 b-right-1" style="width: 22%;">
+                                        <span class="pl-1">COMMISION/S:______</span></td>
+                                    <td class="b-bottom font-size-9 b-right-1" style="width: 16%;">
+                                        <span class="pl-1">OTHERS:_____</span></td>
+                                    <td class="b-bottom font-size-9 b-right" style="width: 16%;">
+                                        <span class="pl-1">TOTAL:______</span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" class="center sub-title b-right b-left b-bottom">SPECIAL POWER OF ATTORNEY INFORMATION</td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%">
+                                 <tr>
+                                    <td class="center b-left b-right-1 font-size-10" style="width: 23%;">LAST NAME</td>
+                                    <td class="center b-right-1 font-size-10" style="width: 32%;">FIRST NAME</td>
+                                    <td class="center b-right-1 font-size-10">MIDDLE NAME</td>
+                                    <td class="center b-right font-size-10" style="width: 16%;">SUFFIX</td>
+                                </tr>
+                                   <tr>
+                                    <td class="center b-bottom-1 b-left b-right-1 font-size-12"><strong><span t-field="doc.spa_lastname"/></strong></td>
+                                    <td class="center b-bottom-1 b-right-1 font-size-12"><strong><span t-field="doc.spa_firstname"/></strong></td>
+                                    <td class="center b-bottom-1 b-right-1 font-size-12"><strong><span t-field="doc.spa_middlename"/></strong></td>
+                                    <td class="center b-bottom-1 b-right font-size-12"><strong><span t-field="doc.spa_suffix"/></strong></td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td class="b-left font-size-9" style="width: 15%">
+                                        <span>RESIDENCE ADDRESS</span></td>
+                                    <td class="font-size-9" style="width: 8%"><span>HOUSE NO.</span></td>
+                                    <td class="center font-size-9" style="width: 23%">STREET NAME</td>
+                                    <td class="center font-size-9" style="width: 22%"><span>BARANGAY</span></td>
+                                    <td class="center font-size-9" style="width: 16%"><span>CITY/PROVINCE</span></td>
+                                    <td class="center b-right font-size-9" style="width: 16%">COUNTRY</td>
+                                </tr>
+                                <tr>
+                                    <td class="center b-bottom-1 b-left font-size-12"><strong></strong></td>
+                                    <td class="center b-bottom-1 font-size-12"><strong></strong></td>
+                                    <td class="center b-bottom-1 font-size-12"><strong><span t-field="doc.spa_street"/></strong></td>
+                                    <td class="center b-bottom-1 font-size-12"><strong></strong></td>
+                                    <td class="center b-bottom-1 font-size-12"><strong><span t-field="doc.spa_city"/></strong></td>
+                                    <td class="center b-bottom-1 font-size-12 b-right"><strong><span t-field="doc.spa_country_id"/></strong></td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td class="b-left font-size-9" style="width: 8%;">CITIZENSHIP</td>
+                                    <td class="font-size-9 b-right-1" style="width: 15%;"><span> &#x2610; FILIPINO</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 6%;"><span> AGE</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 16%;"><span>DATE OF BIRTH(MM/DD/YYYY)</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 10%;"><span>PLACE OF BIRTH</span></td>
+                                    <td class="font-size-9" style="width: 5%;"><span>GENDER</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 6%;"><span> &#x2610; MALE</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 8%;"><span>CIVIL STATUS</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 10%;"><span> &#x2611; SINGLE</span></td>
+                                    <td class="font-size-9 b-right" style="width: 16%;"><span>RELATIONSHIP TO BUYER</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="b-left font-size-9 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"><span> &#x2610; OTHERS:________</span></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"><span> &#x2610; FEMALE</span></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"><span> &#x2611; MARRIED</span></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"><span> &#x2611; OTHERS:_____</span></td>
+                                    <td class="font-size-9 b-right b-bottom-1"></td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td class="b-left font-size-9 b-right-1" style="width: 23%;">
+                                        <span class="pl-1">EMAIL ADDRESS</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 23%;">
+                                        <span class="pl-1">RESISDENCE LANDLINE NO.</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 22%;">
+                                        <span class="pl-1">MOBILE NO.</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 16%;">
+                                        <span class="pl-1">OFFICE LANDLINE NO.</span></td>
+                                    <td class="font-size-9 b-right" style="width: 16%;">
+                                        <span class="pl-1"><span>SSS TIN NO.</span></span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-size-9 b-left b-right-1 b-bottom-1">
+                                    <span>18</span></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right b-bottom-1"></td>
+                                </tr>
+                            </table>
+
+                            <table style="width: 100%">
+                                <tr>
+                                    <td class="b-left font-size-9 b-right-1" style="width: 23%;">
+                                        <span class="pl-1">COMPANY / BUSINESS NAME</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 29%;">
+                                        <span class="pl-1">COMPANY ADDRESS</span></td>
+                                    <td class="font-size-9 b-right-1" style="width: 16%;">
+                                        <span class="pl-1">NATURE OF BUSINESS</span></td>
+                                    <td class="font-size-8 b-right-1" style="width: 16%;">
+                                        <span class="pl-1">DATE EMPLOYED/ESTABLISHED</span></td>
+                                    <td class="font-size-9 b-right" style="width: 16%;">
+                                        <span class="pl-1">DESIGNATION</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-size-10 b-left b-right-1 b-bottom-1">
+                                    <span>18</span></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-10 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right b-bottom-1"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" class="center sub-title b-right b-left b-bottom">FINANCIAL REFERENCES</td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td colspan="5" class="font-size-9 b-right b-left b-bottom-1">Loans:</td>
+                                </tr>
+                                <tr>
+                                    <td class="center font-size-9 b-left b-right-1 b-bottom-1">Name of Institution</td>
+                                    <td class="center font-size-9 b-right-1 b-bottom-1">Type of Loan</td>
+                                    <td class="center font-size-9 b-right-1 b-bottom-1">Date Granted/Paid</td>
+                                    <td class="center font-size-9 b-right-1 b-bottom-1">Outstanding Balance</td>
+                                    <td class="center font-size-9 b-right b-bottom-1">Monthly Amortization</td>
+                                </tr>
+                                <tr>
+                                    <td><p><![CDATA[&nbsp;]]></p></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" class="font-size-9 b-right b-left b-bottom-1">Credit Cards:</td>
+                                </tr>
+                                 <tr>
+                                    <td class="center font-size-9 b-left b-right-1 b-bottom-1">Card Issuer</td>
+                                    <td class="center font-size-9 b-right-1 b-bottom-1">Credit Card Number</td>
+                                    <td class="center font-size-9 b-right-1 b-bottom-1">Credit Limit</td>
+                                    <td colspan="2" class="center font-size-9 b-right-1 b-bottom-1">Name of Card(if other than the buyer)</td>
+                                </tr>
+                                 <tr>
+                                    <td colspan="5" class="center sub-title b-right b-left b-bottom">PERSONAL REFERENCES</td>
+                                </tr>
+                                 <tr>
+                                    <td class="center font-size-9 b-left b-right-1 b-bottom-1">Name</td>
+                                    <td class="center font-size-9 b-right-1 b-bottom-1">Relationship to buyer</td>
+                                    <td class="center font-size-9 b-right-1 b-bottom-1">Residence Address</td>
+                                    <td class="center font-size-9 b-right-1 b-bottom-1">Office Address</td>
+                                    <td class="center font-size-9 b-right b-bottom-1">Contact Number</td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td class="b-left b-right b-top font-size-10">BROKER/REALITY:</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="b-left b-right font-size-10">AGENT:</td>
+                                    <td>__________________________</td>
+                                    <td>__________________________</td>
+                                    <td>__________________________</td>
+                                </tr>
+                                <tr>
+                                    <td class="b-left b-right font-size-10">SALES MANGER:</td>
+                                    <td>BUYER SIGNATURE OVER</td>
+                                    <td>SPOUSE SIGNATURE OVER</td>
+                                    <td>CO-BUYER SIGNATURE OVER</td>
+                                </tr>
+                                <tr>
+                                    <td class="b-left b-right b-bottom font-size-10">NALI COORDINATOR</td>
+                                    <td>PRINTED NAME/DATE</td>
+                                    <td>PRINTED NAME/DATE</td>
+                                    <td>PRINTED NAME/DATE</td>
+                                </tr>
+                            </table>
+                    </div> 
                 </t>
             </t>
         </t>
