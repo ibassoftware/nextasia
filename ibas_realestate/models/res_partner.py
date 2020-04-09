@@ -17,7 +17,7 @@ class IBASCustomer(models.Model):
     suffix = fields.Char('Suffix')
 
     phone = fields.Char(string='Residence Landline No.')
-    mobile = fields.Char(string='Mobile No.')
+    mobile = fields.Char(string='Mobile No.', required=True)
 
     # Principal Buyer
     age = fields.Char('Age')

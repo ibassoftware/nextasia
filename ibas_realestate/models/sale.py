@@ -92,7 +92,7 @@ class IBASSale(models.Model):
 
     pre_selling_price = fields.Float(string='Pre Selling Price')
     discount_amount = fields.Float(string='Discount')
-    list_price = fields.Float(string='Discounted Price')
+    list_price = fields.Float(string='Selling Price')
 
     downpayment = fields.Monetary(string='Downpayment')
     reservation_amount = fields.Monetary(string='Reservation')
@@ -102,7 +102,7 @@ class IBASSale(models.Model):
     @api.onchange('list_price')
     def _onchange_list_price(self):
         for rec in self:
-            rec.downpayment = rec.list_price * 0.20 - 50000
+            rec.downpayment = rec.list_price * 0.10 - 50000
             rec.reservation_amount = 50000
             rec.closing_fees = rec.list_price * 0.05
 

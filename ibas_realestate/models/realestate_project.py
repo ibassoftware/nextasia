@@ -4,6 +4,8 @@ import logging
 
 from odoo import _, api, fields, models
 from odoo.exceptions import Warning, UserError, ValidationError
+# from lxml import etree
+# import simplejson
 
 _logger = logging.getLogger(__name__)
 
@@ -67,7 +69,8 @@ class PropertiesProjectProperty(models.Model):
         ('reserved', 'Reservation Sale'),
         ('booked', 'Booked Sale'),
         ('contracted', 'Contracted Sale'),
-        ('hold', 'Tech Hold'),
+        ('proceed', 'Loan Proceeds'),
+        ('accept', 'Acceptance'),
     ], string='Status', default='open', tracking=True)
 
     customer = fields.Many2one('res.partner', string='Customer')
@@ -118,11 +121,36 @@ class PropertiesProjectProperty(models.Model):
     price_history_line_ids = fields.One2many(
         'ibas_realestate.price_history_line', 'product_id', string='Price History')
 
+    on_hold = fields.Boolean('Tech Hold')
+
     def tech_hold(self):
+        self.on_hold = True
+
+    def release_hold(self):
+        self.on_hold = False
+
+    # @api.model
+    # def fields_view_get(self, view_id=None, view_type=False, toolbar=False, submenu=False):
+    #    context = self._context
+    #   res = super(PropertiesProjectProperty, self).fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar,
+    #                                                                 submenu = submenu)
+
+    #    if context.get('turn_view_readonly'):  # Check for context value
+    #        doc = etree.XML(res['arch'])
+        # Applies only for form view
+        # All the view fields to readonly
+    #        for node in doc.xpath("//field"):
+    #            node.set('readonly', '1')
+    #            node.set('modifiers', simplejson.dumps({"readonly": True}))
+
+    #       res['arch'] = etree.tostring(doc)
+    #   return res
+
+    def loan_proceeds(self):
         if self.contracted_sale_line_ids:
             for line in self.contracted_sale_line_ids:
                 if line.complied == True:
-                    self.state = 'hold'
+                    self.state = 'proceed'
                 else:
                     raise ValidationError(
                         'All Contracted Sale Requirements has not been Complied')
@@ -264,7 +292,15 @@ class IBASPropertyRequirementReservationLine(models.Model):
         'ibas_realestate.client_requirement', string='Reservation', domain=[('stage', '=', 'reservation')])
     compliance_date = fields.Date(string='Date Complied')
     requirement_file = fields.Binary(string='File Attachment')
-    complied = fields.Boolean(string='Complied')
+    complied = fields.Boolean(compute='_compute_complied', string='Complied')
+
+    @api.depends('requirement_file')
+    def _compute_complied(self):
+        for rec in self:
+            if rec.requirement_file:
+                rec.complied = True
+            else:
+                rec.complied = False
 
 # booked sale
 
@@ -279,7 +315,15 @@ class IBASPropertyRequirementBookedSaleLine(models.Model):
         'ibas_realestate.client_requirement', string='Booked Sale', domain=[('stage', '=', 'booked')])
     compliance_date = fields.Date(string='Date Complied')
     requirement_file = fields.Binary(string='File Attachment')
-    complied = fields.Boolean(string='Complied')
+    complied = fields.Boolean(compute='_compute_complied', string='Complied')
+
+    @api.depends('requirement_file')
+    def _compute_complied(self):
+        for rec in self:
+            if rec.requirement_file:
+                rec.complied = True
+            else:
+                rec.complied = False
 
 # contracted sale
 
@@ -294,7 +338,15 @@ class IBASPropertyRequirementContractedSaleLine(models.Model):
         'ibas_realestate.client_requirement', string='Contracted Sale', domain=[('stage', '=', 'contracted')])
     compliance_date = fields.Date(string='Date Complied')
     requirement_file = fields.Binary(string='File Attachment')
-    complied = fields.Boolean(string='Complied')
+    complied = fields.Boolean(compute='_compute_complied', string='Complied')
+
+    @api.depends('requirement_file')
+    def _compute_complied(self):
+        for rec in self:
+            if rec.requirement_file:
+                rec.complied = True
+            else:
+                rec.complied = False
 
 # Price History
 
