@@ -55,16 +55,19 @@
     <field name="arch" type="xml">
       <form string="Property">
       <header>
-        <button string="Tech Hold" name="tech_hold" type="object" class="oe_highlight" states="contracted"/>
         <button string="Get Requirements" name="get_requirements" type="object" class="oe_highlight" attrs="{'invisible' :[('reservation_line_ids', '!=', [])]}"/>
+        <button string="Tech Hold" name="tech_hold" type="object" class="oe_highlight" context="{'turn_view_readonly':True}"/>
+        <button string="Release Tech Hold" name="release_hold" type="object" class="oe_highlight" invisible="context.get('turn_view_readonly',False)"/>
         <button string="Process Booked Sale" name="booked_sale" type="object" class="oe_highlight" states="reserved"/>
         <button string="Process Contracted Sale" name="contracted_sale" type="object" class="oe_highlight" states="booked"/>
         <button string="Back to Reservation" name="back_to_reservation" type="object" states="booked"/>
         <button string="Back to Booked" name="back_to_booked" type="object" states="contracted"/>
+        <button string="Proceeds Loans" name="loan_proceeds" type="object" class="oe_highlight" states="contracted"/>
         <field name="state" widget="statusbar"/>
       </header>
         <sheet>
         <strong><field name="name" invisible="1"/></strong>
+        <field name="on_hold"/>
           <group>
             <group>
             <field name="project_id" required="1"/>
@@ -104,7 +107,7 @@
               <field name="requirement" options="{'no_open':1,'no_create':1,'no_create_edit':1}"/>
               <field name="compliance_date"/>
               <field name="requirement_file"/>
-              <field name="complied"/>
+              <field name="complied" attrs="{'readonly': [('requirement_file','!=', False)]}"/>
             </tree>
           </field>
         </group>
@@ -114,7 +117,7 @@
             <tree editable="bottom">
               <field name="requirement" options="{'no_open':1,'no_create':1,'no_create_edit':1}"/>
               <field name="compliance_date"/>
-              <field name="requirement_file"/>
+              <field name="requirement_file" attrs="{'readonly': [('requirement_file','!=', False)]}"/>
               <field name="complied"/>
             </tree>
           </field>
@@ -125,7 +128,7 @@
             <tree editable="bottom">
               <field name="requirement" options="{'no_open':1,'no_create':1,'no_create_edit':1}"/>
               <field name="compliance_date"/>
-              <field name="requirement_file"/>
+              <field name="requirement_file" attrs="{'readonly': [('requirement_file','!=', False)]}"/>
               <field name="complied"/>
             </tree>
           </field>

@@ -25,7 +25,7 @@
                 <field name="dp_terms"/>
                 <field name="is_cash"/>
                 <field name="reservation_amount"/>
-                <field name="closing_fees"/>
+                <field name="closing_fees" invisible="1"/>
                 <field name="discount_spotdp"/>
                 <field name="interest_rate"></field>
                 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+      <record model="ir.module.category" id="ibas_realestate_module">
+            <field name="name">Real Estate</field>
+            <field name="description">User access level for the ibas realestate module</field>
+            <field name="sequence">3</field>
+        </record>
+
+        <record id="group_ibas_realestate_administrator" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="category_id" ref="ibas_realestate_module"/>
+            <!-- field name="users" eval="[(4, ref('base.user_root'))]"/> -->
+        </record>
+
+        <record id="group_ibas_realestate_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="ibas_realestate_module"/>
+        </record>
+
+    </data>
+</odoo>
