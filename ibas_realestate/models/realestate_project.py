@@ -4,8 +4,6 @@ import logging
 
 from odoo import _, api, fields, models
 from odoo.exceptions import Warning, UserError, ValidationError
-# from lxml import etree
-# import simplejson
 
 _logger = logging.getLogger(__name__)
 
@@ -128,23 +126,6 @@ class PropertiesProjectProperty(models.Model):
 
     def release_hold(self):
         self.on_hold = False
-
-    # @api.model
-    # def fields_view_get(self, view_id=None, view_type=False, toolbar=False, submenu=False):
-    #    context = self._context
-    #   res = super(PropertiesProjectProperty, self).fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar,
-    #                                                                 submenu = submenu)
-
-    #    if context.get('turn_view_readonly'):  # Check for context value
-    #        doc = etree.XML(res['arch'])
-        # Applies only for form view
-        # All the view fields to readonly
-    #        for node in doc.xpath("//field"):
-    #            node.set('readonly', '1')
-    #            node.set('modifiers', simplejson.dumps({"readonly": True}))
-
-    #       res['arch'] = etree.tostring(doc)
-    #   return res
 
     def loan_proceeds(self):
         if self.contracted_sale_line_ids:
