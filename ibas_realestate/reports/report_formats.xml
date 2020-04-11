@@ -16,7 +16,7 @@
             <field name="format">custom</field>
             <field name="orientation">Portrait</field>
             <field name="margin_top">5</field>
-            <field name="margin_bottom">3</field>
+            <field name="margin_bottom">7</field>
             <field name="margin_left">3</field>
             <field name="margin_right">3</field>
             <field name="header_line" eval="False"/>

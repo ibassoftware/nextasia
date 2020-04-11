@@ -39,7 +39,7 @@
                             <field name="date"/>
                             <field name="payment_amount" sum="Monthly DP"/>
                             <field name="closing_fees" sum="Closing Fees" invisible="1"/>
-                            <field name="total" sum="Total"/>
+                            <field name="total" sum="Total" invisible="1"/>
                         </tree>
                     </field>    
                     <group>

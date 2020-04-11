@@ -127,6 +127,10 @@ class PropertiesProjectProperty(models.Model):
     def release_hold(self):
         self.on_hold = False
 
+    def acceptance(self):
+        for rec in self:
+            rec.state = 'accept'
+
     def loan_proceeds(self):
         if self.contracted_sale_line_ids:
             for line in self.contracted_sale_line_ids:
@@ -228,6 +232,10 @@ class PropertiesProjectProperty(models.Model):
     def back_to_booked(self):
         for rec in self:
             rec.state = 'booked'
+
+    def back_to_contracted(self):
+        for rec in self:
+            rec.state = 'contracted'
 
      ####
 
