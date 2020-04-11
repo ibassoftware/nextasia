@@ -30,23 +30,25 @@
                     <div class="page">
                      <link rel="stylesheet" type="text/scss" href="/ibas_realestate/static/src/css/nextasia.css"/>
                             <table style="width: 100%;">
-                                <tr>
+                                <tr style="margin-top: 0;">
                                     <td class="b-left b-top b-bottom" style="width: 23%; padding-top: 5px; padding-left: 2px;">
                                         <img src="/ibas_realestate/static/src/img/next_asia.png" width="95%"/>
                                     </td>
                                     <td class="b-top b-bottom center" style="width: 27%;">
                                     <p class="font-size-10">Suite 1901 Richville Corporate Tower, <br/> Madrigal Business Park, Muntinlupa City 1780 </p>
                                     </td>
-                                    <td colspan="2" class="b-top b-bottom b-right center" style="border-left: 0px;">
-                                    <p style="margin-top: 0; line-height: 0;"><span class="font-size-10">( NOTE: KINDLY HAVE ITEMS WITH * ACCOMPLISHED COMPLETELY )</span>
-                                     <br/> <span style="background: grey;font-size: 24px; color: white;">CLIENT INFORMATION SHEET</span> <br/> 
-                                    <span class="font-size-10"> (Revision 2019-001)</span></p>
+                                    <td colspan="2" class="b-top b-bottom b-right center" style="border-left: 0px; margin: 0; line-height: 1px">
+                                    <span class="font-size-10">( NOTE: KINDLY HAVE ITEMS WITH * ACCOMPLISHED COMPLETELY )</span>
+                                    <br/>
+                                    <span style="background: grey;font-size: 24px; color: white; line-height: 1px ">CLIENT INFORMATION SHEET</span>
+                                    <br/>
+                                    <span class="font-size-10"> (Revision 2019-001)</span>
                                     </td>
                                 </tr>
                             </table>
                             <table style="width: 100%;">
                                 <tr>
-                                    <td colspan="7" class="center sub-title b-right b-left b-bottom">RESERVED PROPERTY</td>
+                                    <td colspan="7" class="center sub-title b-right b-left b-bottom font-size-12"><strong>RESERVED PROPERTY</strong></td>
                                 </tr>
                                 <tr>   
                                     <td class="b-left font-size-9" style="width: 12%;">
@@ -217,7 +219,7 @@
                                         <span class="pl-1">TOTAL:______</span></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="5" class="center sub-title b-right b-left b-bottom">SPOUSE INFORMATION</td>
+                                    <td colspan="5" class="center sub-title b-right b-left b-bottom font-size-12"><strong>SPOUSE INFORMATION</strong></td>
                                 </tr>
                             </table>
                             <table style="width: 100%">
@@ -335,7 +337,7 @@
                                         <span class="pl-1">TOTAL:______</span></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="5" class="center sub-title b-right b-left b-bottom">CO-BUYER INFORMATION</td>
+                                    <td colspan="5" class="center sub-title b-right b-left b-bottom font-size-12"><strong>CO-BUYER INFORMATION</strong></td>
                                 </tr>
                             </table>
                             <table style="width: 100%">
@@ -483,7 +485,7 @@
                                         <span class="pl-1">TOTAL:______</span></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="5" class="center sub-title b-right b-left b-bottom">SPECIAL POWER OF ATTORNEY INFORMATION</td>
+                                    <td colspan="5" class="center sub-title b-right b-left b-bottom font-size-12"><strong>SPECIAL POWER OF ATTORNEY INFORMATION</strong></td>
                                 </tr>
                             </table>
                             <table style="width: 100%">
@@ -590,7 +592,7 @@
                                     <td class="font-size-9 b-right b-bottom-1"></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="5" class="center sub-title b-right b-left b-bottom">FINANCIAL REFERENCES</td>
+                                    <td colspan="5" class="center sub-title b-right b-left b-bottom font-size-12"><strong>FINANCIAL REFERENCES</strong></td>
                                 </tr>
                             </table>
                             <table style="width: 100%">
@@ -605,11 +607,25 @@
                                     <td class="center font-size-9 b-right b-bottom-1">Monthly Amortization</td>
                                 </tr>
                                 <tr>
-                                    <td><p><![CDATA[&nbsp;]]></p></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td class="font-size-9 b-left b-right-1 b-bottom-1"><![CDATA[&nbsp;]]></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right b-bottom-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-size-9 b-left b-right-1 b-bottom-1"><![CDATA[&nbsp;]]></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right b-bottom-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-size-9 b-left b-right-1 b-bottom-1"><![CDATA[&nbsp;]]></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right b-bottom-1"></td>
                                 </tr>
                                 <tr>
                                     <td colspan="5" class="font-size-9 b-right b-left b-bottom-1">Credit Cards:</td>
@@ -620,8 +636,29 @@
                                     <td class="center font-size-9 b-right-1 b-bottom-1">Credit Limit</td>
                                     <td colspan="2" class="center font-size-9 b-right-1 b-bottom-1">Name of Card(if other than the buyer)</td>
                                 </tr>
+                                  <tr>
+                                    <td class="font-size-9 b-left b-right-1 b-bottom-1"><![CDATA[&nbsp;]]></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right b-bottom-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-size-9 b-left b-right-1 b-bottom-1"><![CDATA[&nbsp;]]></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right b-bottom-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-size-9 b-left b-right-1 b-bottom-1"><![CDATA[&nbsp;]]></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right b-bottom-1"></td>
+                                </tr>
                                  <tr>
-                                    <td colspan="5" class="center sub-title b-right b-left b-bottom">PERSONAL REFERENCES</td>
+                                    <td colspan="5" class="center sub-title b-right b-left b-bottom font-size-12"><strong>PERSONAL REFERENCES</strong></td>
                                 </tr>
                                  <tr>
                                     <td class="center font-size-9 b-left b-right-1 b-bottom-1">Name</td>
@@ -630,33 +667,57 @@
                                     <td class="center font-size-9 b-right-1 b-bottom-1">Office Address</td>
                                     <td class="center font-size-9 b-right b-bottom-1">Contact Number</td>
                                 </tr>
+                                 <tr>
+                                    <td class="font-size-9 b-left b-right-1 b-bottom-1"><![CDATA[&nbsp;]]></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right b-bottom-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-size-9 b-left b-right-1 b-bottom-1"><![CDATA[&nbsp;]]></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right b-bottom-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-size-9 b-left b-right-1 b-bottom-1"><![CDATA[&nbsp;]]></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right-1 b-bottom-1"></td>
+                                    <td class="font-size-9 b-right b-bottom-1"></td>
+                                </tr>
                             </table>
+                            <br/>
                             <table style="width: 100%">
                                 <tr>
-                                    <td class="b-left b-right b-top font-size-10">BROKER/REALITY:</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td style="width: 25%" class="b-left b-right b-top font-size-10">BROKER/REALITY:</td>
+                                    <td style="width: 25%"></td>
+                                    <td style="width: 25%"></td>
+                                    <td style="width: 25%"></td>
                                 </tr>
                                 <tr>
                                     <td class="b-left b-right font-size-10">AGENT:</td>
-                                    <td>__________________________</td>
-                                    <td>__________________________</td>
-                                    <td>__________________________</td>
+                                    <td class="center">__________________________</td>
+                                    <td class="center">__________________________</td>
+                                    <td class="center">__________________________</td>
                                 </tr>
                                 <tr>
                                     <td class="b-left b-right font-size-10">SALES MANGER:</td>
-                                    <td>BUYER SIGNATURE OVER</td>
-                                    <td>SPOUSE SIGNATURE OVER</td>
-                                    <td>CO-BUYER SIGNATURE OVER</td>
+                                    <td class="center font-size-10">BUYER SIGNATURE OVER</td>
+                                    <td class="center font-size-10">SPOUSE SIGNATURE OVER</td>
+                                    <td class="center font-size-10">CO-BUYER SIGNATURE OVER</td>
                                 </tr>
                                 <tr>
-                                    <td class="b-left b-right b-bottom font-size-10">NALI COORDINATOR</td>
-                                    <td>PRINTED NAME/DATE</td>
-                                    <td>PRINTED NAME/DATE</td>
-                                    <td>PRINTED NAME/DATE</td>
+                                    <td class="b-left b-right b-bottom font-size-10">NALI COORDINATOR:</td>
+                                    <td class="center font-size-10">PRINTED NAME/DATE</td>
+                                    <td class="center font-size-10">PRINTED NAME/DATE</td>
+                                    <td class="center font-size-10">PRINTED NAME/DATE</td>
                                 </tr>
                             </table>
+                        <p style="page-break-after:always;">   </p>
+                            <p> Test New Page  </p>    
                     </div> 
                 </t>
             </t>
