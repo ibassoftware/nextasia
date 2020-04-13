@@ -28,6 +28,7 @@
         'security/ibas_realestate_security.xml',
         'wizard/update_sale_price_wiz_views.xml',
         'reports/client_information_report.xml',
+        'reports/sample_computation_report.xml',
         'reports/report_formats.xml',
         'views/views.xml',
         'views/sale.xml',

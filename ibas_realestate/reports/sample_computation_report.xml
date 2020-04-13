@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <template id="sample_computation">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <link rel="stylesheet" type="text/scss" href="/ibas_realestate/static/src/css/nextasia.css"/>
+                            <table style="width: 100%;">
+                                <tr style="margin-top: 0;">
+                                    <td style="width: 23%; padding-top: 5px; padding-left: 2px;">
+                                        <img src="/ibas_realestate/static/src/img/next_asia.png" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>1901 Richville Corporate Tower, Madrigal Business</span>
+                                        <span>Park, Alabang Zapote Road, Muntinlupa City 1780</span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td colspan="3" class="center bg-tomato" style="color: white; font-size: 24px"><strong><span>COMPUTATION</span></strong></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><span class="center">Date:</span></td>
+                                    <td><span class="center">Apr 02, 2020</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span>Project Name:</span></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>NEXTASIA SAN PABLO</td>
+                                    <td><span class="center">Date of Reservation:</span></td>
+                                    <td><span>Apr 02, 2020</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="b-bottom">Brgy.Soledad San Pablo City, Laguna</td>
+                                    <td class="b-bottom"><span class="center">Terms</span></td>
+                                    <td class="b-bottom"><span class="center">Monthly 18</span></td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td style="width: 50%">Client's Name:________________</td>
+                                    <td style="width: 50%">Block No. 10</td>
+                                </tr> 
+                                <tr>
+                                    <td></td>
+                                    <td>Lot No.</td>
+                                </tr> 
+                                <tr>
+                                    <td>House Model:</td>
+                                    <td>Lot Area(sqm): 119</td>
+                                </tr>
+                                 <tr>
+                                    <td>Lot Class:</td>
+                                    <td>Floor Area(sqm): 45</td>
+                                </tr> 
+                                 <tr>
+                                    <td></td>
+                                    <td></td>
+                                </tr> 
+                                 <tr>
+                                    <td>Pre Selling Price</td>
+                                    <td>Reservation:________________</td>
+                                </tr> 
+                                 <tr>
+                                    <td>Discount</td>
+                                    <td>Downpayment</td>
+                                </tr> 
+                                 <tr>
+                                    <td class="b-bottom">Discouted Price</td>
+                                    <td class="b-bottom">Discount on Spot DP:</td>
+                                </tr>   
+                            </table>
+                            <br/>
+                            <table style="width: 70%; align-self: center;">
+                                <tr>
+                                    <td class="bg-tomato center font-size-14 b-bottom b-left b-top" style="color: white;"><strong><span>DESCRIPTION</span></strong></td>
+                                    <td class="bg-tomato center font-size-14 b-top b-bottom" style="color: white;"><strong><span>DATE</span></strong></td>
+                                    <td class="bg-tomato center font-size-14 b-top b-bottom b-right" style="color: white;"><strong><span>AMOUNT</span></strong></td>
+                                </tr>
+                                <tr t-foreach='doc.sc_ids' t-as='sc'>
+                                    <td>
+                                        
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </t>
+                </t>    
+            </t>
+    </template>
+    </data>
+</odoo>

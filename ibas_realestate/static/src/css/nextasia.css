@@ -58,6 +58,10 @@
   font-size: 12px;
 }
 
+.font-size-14 {
+  font-size: 14px;
+}
+
 .sub-title {
   background-color: grey;
   color: white;
@@ -65,4 +69,8 @@
 
 .width-minus-1 {
   width: calc(12% - 10px);
+}
+
+.bg-tomato {
+  background-color: brown;
 }

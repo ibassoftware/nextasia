@@ -55,16 +55,16 @@
     <field name="arch" type="xml">
       <form string="Property">
       <header>
-        <button string="Tech Hold" name="tech_hold" type="object" class="oe_highlight" attrs="{'invisible' :['|',('on_hold', '=', True),('state','=', 'accept')]}" confirm="This will Locked all editable fields. Are you sure you want to continue?"/>
-        <button string="Release Hold" name="release_hold" type="object" class="oe_highlight" attrs="{'invisible' :[('on_hold', '=', False)]}" groups="ibas_realestate.group_ibas_realestate_administrator" confirm="This will UnLocked all editable fields. Are you sure you want to continue?"/>
+        <button string="Tech Hold" name="tech_hold" type="object" class="oe_highlight" attrs="{'invisible' :['|',('on_hold', '=', True),('state','=', 'accept')]}" confirm="This will put this property in Tech Hold. Are you sure you want to continue?" groups="ibas_realestate.group_ibas_realestate_administrator,ibas_realestate.group_ibas_realestate_manager,ibas_realestate.group_ibas_realestate_user"/>
+        <button string="Release Hold" name="release_hold" type="object" class="oe_highlight" attrs="{'invisible' :[('on_hold', '=', False)]}" confirm="This will release this property in Tech Hold. Are you sure you want to continue?" groups="ibas_realestate.group_ibas_realestate_administrator"/>
         <button string="Get Requirements" name="get_requirements" type="object" class="oe_highlight" attrs="{'invisible' :['|',('reservation_line_ids', '!=', []),('state','=','open')]}"/>
         <button string="Confirm" name="booked_sale" type="object" class="oe_highlight" attrs="{'invisible' :['|',('on_hold', '=', True),('state','!=','reserved')]}"/>
         <button string="Revert" name="back_to_reservation" type="object" attrs="{'invisible' :['|',('on_hold', '=', True),('state','!=','booked')]}"/>
         <button string="Confirm" name="contracted_sale" type="object" class="oe_highlight" attrs="{'invisible' :['|',('on_hold', '=', True),('state','!=','booked')]}"/>
         <button string="Revert" name="back_to_booked" type="object" attrs="{'invisible' :['|',('on_hold', '=', True),('state','!=','contracted')]}"/>
-        <button string="Confirm" name="loan_proceeds" type="object" class="oe_highlight" attrs="{'invisible' :['|',('on_hold', '=', True),('state','!=','contracted')]}"/>
+        <button string="Confirm" name="loan_proceeds" type="object" class="oe_highlight" attrs="{'invisible' :['|',('on_hold', '=', True),('state','!=','contracted')]}" groups="ibas_realestate.group_ibas_realestate_administrator,ibas_realestate.group_ibas_realestate_manager"/>
         <button string="Revert" name="back_to_contracted" type="object" attrs="{'invisible' :['|',('on_hold', '=', True),('state','!=','proceed')]}"/>
-        <button string="Confirm" name="acceptance" type="object" class="oe_highlight" attrs="{'invisible' :['|',('on_hold', '=', True),('state','!=','proceed')]}"/>
+        <button string="Confirm" name="acceptance" type="object" class="oe_highlight" attrs="{'invisible' :['|',('on_hold', '=', True),('state','!=','proceed')]}" groups="ibas_realestate.group_ibas_realestate_administrator"/>
         <field name="state" widget="statusbar"  statusbar_visible="open,reserved,booked,contracted"/>
       </header>
         <sheet>
@@ -72,29 +72,29 @@
         <field name="on_hold" invisible="1"/>
           <group>
             <group>
-            <field name="project_id" attrs="{'readonly' :['|',('on_hold', '=', True),('state','=', 'accept')]}" required="1"/>
-            <field name="block" attrs="{'readonly' :['|',('on_hold', '=', True),('state','=', 'accept')]}" required="1"/>
-            <field name="lot" attrs="{'readonly' :['|',('on_hold', '=', True),('state','=', 'accept')]}" required="1"/>
-            <field name="phase" attrs="{'readonly' :['|',('on_hold', '=', True),('state','=', 'accept')]}" required="1"/>
-            <field name="propmodel_id" attrs="{'readonly' :['|',('on_hold', '=', True),('state','=', 'accept')]}" required="1"/>
-            <field name="propclass_id" attrs="{'readonly' :['|',('on_hold', '=', True),('state','=', 'accept')]}" required="1"/>
-            <field name="floor_area" attrs="{'readonly' :['|',('on_hold', '=', True),('state','=', 'accept')]}" required="1"/>
-            <field name="lot_area" attrs="{'readonly' :['|',('on_hold', '=', True),('state','=', 'accept')]}" required="1"/>
-            <field name="list_price" attrs="{'readonly' :['|',('on_hold', '=', True),('state','=', 'accept')]}" widget="monetary"/>
-            <field name="preselling_price" attrs="{'readonly' :['|',('on_hold', '=', True),('state','=', 'accept')]}" widget="monetary"/>
-            <field name="responsible" attrs="{'readonly' :['|',('on_hold', '=', True),('state','=', 'accept')]}"/>
-            <field name="dp_terms" attrs="{'readonly' :['|',('on_hold', '=', True),('state','=', 'accept')]}" required="1"/>
-            <field name="categ_id" attrs="{'readonly' :['|',('on_hold', '=', True),('state','=', 'accept')]}"/>        
+            <field name="project_id" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
+            <field name="block" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
+            <field name="lot" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
+            <field name="phase" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
+            <field name="propmodel_id" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
+            <field name="propclass_id" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
+            <field name="floor_area" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
+            <field name="lot_area" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
+            <field name="list_price" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" widget="monetary"/>
+            <field name="preselling_price" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" widget="monetary"/>
+            <field name="responsible" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}"/>
+            <field name="dp_terms" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
+            <field name="categ_id" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}"/>        
             </group>
             <group>
             <!-- <field name="is_a_property"/> -->
-              <field name="customer" attrs="{'readonly' :['|',('on_hold', '=', True),('state','=', 'accept')]}"/>
-              <field name="financing_type" attrs="{'readonly' :['|',('on_hold', '=', True),('state','=', 'accept')]}"/>
-              <field name="contractor" attrs="{'readonly' :['|',('on_hold', '=', True),('state','=', 'accept')]}"/>
-              <field name="construction_start_date" attrs="{'readonly' :['|',('on_hold', '=', True),('state','=', 'accept')]}"/>
-              <field name="construction_end_date" attrs="{'readonly' :['|',('on_hold', '=', True),('state','=', 'accept')]}"/>
-              <field name="actual_construction_complete_date" attrs="{'readonly' :['|',('on_hold', '=', True),('state','=', 'accept')]}"/>
-              <field name="last_dp_date" attrs="{'readonly' :['|',('on_hold', '=', True),('state','=', 'accept')]}"/>
+              <field name="customer" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}"/>
+              <field name="financing_type" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}"/>
+              <field name="contractor" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}"/>
+              <field name="construction_start_date" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}"/>
+              <field name="construction_end_date" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}"/>
+              <field name="actual_construction_complete_date" attrs="{'readonly' :['|','|',('on_hold', '=', True),('state','=', 'accept'),('state','=','proceed')]}"/>
+              <field name="last_dp_date" attrs="{'readonly' :['|','|',('on_hold', '=', True),('state','=', 'accept'),('state','=','proceed')]}"/>
             </group>
           </group>
         </sheet>
@@ -126,7 +126,18 @@
         </group>
         <group>
         <label for='contracted_sale_line_ids' string="CONTRACTED SALE" colspan="5" style="font-size:13px; padding: 5px; vertical-align: middle; margin-top:0px; text-align:left; background-color: green; color:white; border:1px solid grey;"/>
-        <field name="contracted_sale_line_ids" nolabel="1" attrs="{'readonly': ['|',('state','!=','contracted'),('on_hold','=',True)]}">
+        <field name="contracted_sale_line_ids" nolabel="1" attrs="{'readonly': ['|',('state','!=','proceed'),('on_hold','=',True)]}">
+            <tree editable="bottom">
+              <field name="requirement" options="{'no_open':1,'no_create':1,'no_create_edit':1}"/>
+              <field name="compliance_date"/>
+              <field name="requirement_file"/>
+              <field name="complied" attrs="{'readonly': [('requirement_file','!=', False)]}"/>
+            </tree>
+          </field>
+        </group>
+        <group>
+        <label for='loan_proceeds_line_ids' string="LOAN PROCEEDS" colspan="5" style="font-size:13px; padding: 5px; vertical-align: middle; margin-top:0px; text-align:left; background-color: green; color:white; border:1px solid grey;"/>
+        <field name="loan_proceeds_line_ids" nolabel="1" attrs="{'readonly': ['|',('state','!=','proceed'),('on_hold','=',True)]}">
             <tree editable="bottom">
               <field name="requirement" options="{'no_open':1,'no_create':1,'no_create_edit':1}"/>
               <field name="compliance_date"/>
@@ -138,7 +149,7 @@
         </page>
         <page string="Price History">
           <div colspan="5" col="5" style="padding: 5px; margin-right: 5px; margin-top: 3px; border: 1px solid black">
-            <button name="%(action_ibas_realestate_update_sale_price_wiz)d" colspan="5" type="action" string="Update Price" class="oe_highlight"/>
+            <button name="%(action_ibas_realestate_update_sale_price_wiz)d" colspan="5" type="action" string="Update Price" class="oe_highlight" attrs="{'invisible' :[('state', '!=', 'open')]}"/>
           </div>
           <group>
           <field name="price_history_line_ids" nolabel="1" attrs="{'readonly' :['|',('on_hold', '=', True),('state','=', 'accept')]}">

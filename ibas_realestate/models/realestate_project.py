@@ -2,7 +2,7 @@
 
 import logging
 
-from odoo import _, api, fields, models
+from odoo import _, api, fields, models, exceptions
 from odoo.exceptions import Warning, UserError, ValidationError
 
 _logger = logging.getLogger(__name__)
@@ -116,10 +116,20 @@ class PropertiesProjectProperty(models.Model):
     contracted_sale_line_ids = fields.One2many(
         'ibas_realestate.requirement_contracted_sale_line', 'product_id', string='Contracted Sale')
 
+    loan_proceeds_line_ids = fields.One2many(
+        'ibas_realestate.requirement_loan_proceeds_line', 'product_id', string='Loan Proceeds')
+
     price_history_line_ids = fields.One2many(
         'ibas_realestate.price_history_line', 'product_id', string='Price History')
 
     on_hold = fields.Boolean('Tech Hold')
+
+    @api.constrains('name')
+    def _check_name(self):
+        name = self.search(
+            [('name', '=like', self.name), ('id', '!=', self.id)])
+        if name:
+            raise ValidationError(_("Duplicate Record"))
 
     def tech_hold(self):
         self.on_hold = True
@@ -138,7 +148,7 @@ class PropertiesProjectProperty(models.Model):
                     self.state = 'proceed'
                 else:
                     raise ValidationError(
-                        'All Contracted Sale Requirements has not been Complied')
+                        'Not all Reservation Requirements are submitted. Please upload submitted files before confirming.')
         else:
             raise ValidationError(
                 'There are no Contracted Sale requirements in the list')
@@ -179,7 +189,7 @@ class PropertiesProjectProperty(models.Model):
                     self.state = 'booked'
                 else:
                     raise ValidationError(
-                        'All Reservation Requirements has not been Complied')
+                        'Not all Reservation Requirements are submitted. Please upload submitted files before confirming.')
         else:
             raise ValidationError(
                 'There are no Reservation requirements in the list')
@@ -209,7 +219,7 @@ class PropertiesProjectProperty(models.Model):
                     self.state = 'contracted'
                 else:
                     raise ValidationError(
-                        'All Booked Sale Requirements has not been Complied')
+                        'Not all Reservation Requirements are submitted. Please upload submitted files before confirming.')
         else:
             raise ValidationError(
                 'There are no Booked Sale requirements in the list')
@@ -266,7 +276,7 @@ class IBASRequirementModel(models.Model):
     name = fields.Char(string='Name', required=True)
     default_requirement = fields.Boolean(string='Default')
     stage = fields.Selection([('reservation', 'Reservation'),
-                              ('booked', 'Booked Sale'), ('contracted', 'Contracted Sale')], string="Stage")
+                              ('booked', 'Booked Sale'), ('contracted', 'Contracted Sale'), ('proceeds', 'Loan Proceeds')], string="Stage")
 
 # reservation
 
@@ -337,6 +347,27 @@ class IBASPropertyRequirementContractedSaleLine(models.Model):
             else:
                 rec.complied = False
 
+
+class IBASPropertyRequirementLoanProceedsLine(models.Model):
+    _name = 'ibas_realestate.requirement_loan_proceeds_line'
+    _description = 'Requirement Loan Proceeds Line'
+
+    parent_id = fields.Many2one('res.partner', string="customer")
+    product_id = fields.Many2one('product.product', string='Property')
+    requirement = fields.Many2one(
+        'ibas_realestate.client_requirement', string='Loan Proceeds', domain=[('stage', '=', 'proceed')])
+    compliance_date = fields.Date(string='Date Complied')
+    requirement_file = fields.Binary(string='File Attachment')
+    complied = fields.Boolean(compute='_compute_complied', string='Complied')
+
+    @api.depends('requirement_file')
+    def _compute_complied(self):
+        for rec in self:
+            if rec.requirement_file:
+                rec.complied = True
+            else:
+                rec.complied = False
+
 # Price History
 
 
@@ -358,3 +389,7 @@ class PropertyClass(models.Model):
     _description = 'Property Class'
 
     name = fields.Char(string='Class', required=True)
+    _sql_constraints = [
+        ('unique_properties_name', 'UNIQUE(name)',
+         'You can not have two properties')
+    ]
