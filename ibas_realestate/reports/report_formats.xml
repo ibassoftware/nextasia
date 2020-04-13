@@ -9,6 +9,15 @@
             name="ibas_realestate.client_information_sheet"
             file="ibas_realestate.client_information_sheet"
         />
+
+        <report
+            id="action_report_ibas_sample_computation"
+            model="sale.order"
+            string="Sample Computation"
+            report_type="qweb-pdf"
+            name="ibas_realestate.sample_computation"
+            file="ibas_realestate.sample_computation"
+        />
         <!-- Report Paper Formats -->
         <record id="paperformat_client_information" model="report.paperformat">
             <field name="name">Client Information</field>
@@ -24,9 +33,26 @@
             <field name="dpi">90</field>
         </record>
 
+        <record id="paperformat_sample_computation" model="report.paperformat">
+            <field name="name">Sample Computation</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">7</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">3</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">25</field>
+            <field name="dpi">90</field>
+        </record>
+
         <!-- Apply Paper Formats -->
         <record id="ibas_realestate.action_report_ibas_client_information" model="ir.actions.report">
             <field name="paperformat_id" ref="ibas_realestate.paperformat_client_information" />
+        </record>
+        <record id="ibas_realestate.action_report_ibas_sample_computation" model="ir.actions.report">
+            <field name="paperformat_id" ref="ibas_realestate.paperformat_sample_computation"/>
         </record>
     </data>
 </odoo>
