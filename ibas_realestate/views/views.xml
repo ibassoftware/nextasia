@@ -55,7 +55,7 @@
     <field name="arch" type="xml">
       <form string="Property">
       <header>
-        <button string="Tech Hold" name="tech_hold" type="object" class="oe_highlight" attrs="{'invisible' :['|',('on_hold', '=', True),('state','=', 'accept')]}" confirm="This will put this property in Tech Hold. Are you sure you want to continue?" groups="ibas_realestate.group_ibas_realestate_administrator,ibas_realestate.group_ibas_realestate_manager,ibas_realestate.group_ibas_realestate_user"/>
+        <button string="Tech Hold" name="tech_hold" type="object" class="oe_highlight" attrs="{'invisible' :['|',('on_hold', '=', True),('state','=', 'accept')]}" confirm="This will put this property in Tech Hold. Are you sure you want to continue?" groups="ibas_realestate.group_ibas_realestate_administrator"/>
         <button string="Release Hold" name="release_hold" type="object" class="oe_highlight" attrs="{'invisible' :[('on_hold', '=', False)]}" confirm="This will release this property in Tech Hold. Are you sure you want to continue?" groups="ibas_realestate.group_ibas_realestate_administrator"/>
         <button string="Get Requirements" name="get_requirements" type="object" class="oe_highlight" attrs="{'invisible' :['|',('reservation_line_ids', '!=', []),('state','=','open')]}"/>
         <button string="Confirm" name="booked_sale" type="object" class="oe_highlight" attrs="{'invisible' :['|',('on_hold', '=', True),('state','!=','reserved')]}"/>
@@ -126,7 +126,7 @@
         </group>
         <group>
         <label for='contracted_sale_line_ids' string="CONTRACTED SALE" colspan="5" style="font-size:13px; padding: 5px; vertical-align: middle; margin-top:0px; text-align:left; background-color: green; color:white; border:1px solid grey;"/>
-        <field name="contracted_sale_line_ids" nolabel="1" attrs="{'readonly': ['|',('state','!=','proceed'),('on_hold','=',True)]}">
+        <field name="contracted_sale_line_ids" nolabel="1" attrs="{'readonly': ['|',('state','!=','contracted'),('on_hold','=',True)]}">
             <tree editable="bottom">
               <field name="requirement" options="{'no_open':1,'no_create':1,'no_create_edit':1}"/>
               <field name="compliance_date"/>

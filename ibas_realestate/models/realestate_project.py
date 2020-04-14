@@ -2,7 +2,7 @@
 
 import logging
 
-from odoo import _, api, fields, models, exceptions
+from odoo import _, api, fields, models
 from odoo.exceptions import Warning, UserError, ValidationError
 
 _logger = logging.getLogger(__name__)
@@ -24,6 +24,8 @@ class IBASREProject(models.Model):
 class PropertiesProjectProperty(models.Model):
     _inherit = 'product.product'
     _description = 'Real Estate Properties'
+    _sql_constraints = [('name_uniq', 'unique (name)',
+                         'Duplicate products not allowed !')]
 
     is_a_property = fields.Boolean(string='Is A Property')
 
@@ -125,11 +127,19 @@ class PropertiesProjectProperty(models.Model):
     on_hold = fields.Boolean('Tech Hold')
 
     @api.constrains('name')
-    def _check_name(self):
-        name = self.search(
-            [('name', '=like', self.name), ('id', '!=', self.id)])
+    def _check_names(self):
+        name = self.env['product.template'].search(
+            [('name', '=', self.name)])
         if name:
-            raise ValidationError(_("Duplicate Record"))
+            for n in name:
+                if n.id != self.id:
+                    raise ValidationError("Duplicate Record")
+
+    def unlink(self):
+        for rec in self:
+            if rec.name:
+                raise UserError(_('You cannot delete record.'))
+            return super(PropertiesProjectProperty, self).unlink()
 
     def tech_hold(self):
         self.on_hold = True
@@ -138,10 +148,27 @@ class PropertiesProjectProperty(models.Model):
         self.on_hold = False
 
     def acceptance(self):
-        for rec in self:
-            rec.state = 'accept'
+        if self.loan_proceeds_line_ids:
+            for line in self.loan_proceeds_line_ids:
+                if line.complied == True:
+                    self.state = 'accept'
+                else:
+                    raise ValidationError(
+                        'Not all Reservation Requirements are submitted. Please upload submitted files before confirming.')
+        else:
+            raise ValidationError(
+                'There are no Booked Sale requirements in the list')
 
     def loan_proceeds(self):
+        client_reqs = self.env['ibas_realestate.client_requirement'].search(
+            [('default_requirement', '=', True), ('stage', '=', 'proceeds')])
+        client_lines = []
+        if self.state == 'contracted':
+            for req in client_reqs:
+                client_line = {
+                    'requirement': req.id
+                }
+                client_lines.append(client_line)
         if self.contracted_sale_line_ids:
             for line in self.contracted_sale_line_ids:
                 if line.complied == True:
@@ -151,7 +178,16 @@ class PropertiesProjectProperty(models.Model):
                         'Not all Reservation Requirements are submitted. Please upload submitted files before confirming.')
         else:
             raise ValidationError(
-                'There are no Contracted Sale requirements in the list')
+                'There are no Booked Sale requirements in the list')
+
+        if len(client_lines) > 0:
+            loan_proceeds_lines = []
+            for client in client_lines:
+                if not self.loan_proceeds_line_ids:
+                    loan_proceeds_lines.append((0, 0, client))
+            self.update({'loan_proceeds_line_ids': loan_proceeds_lines})
+        else:
+            raise UserError('There are no client requirements')
 
     def get_requirements(self):
         for rec in self:
@@ -189,7 +225,7 @@ class PropertiesProjectProperty(models.Model):
                     self.state = 'booked'
                 else:
                     raise ValidationError(
-                        'Not all Reservation Requirements are submitted. Please upload submitted files before confirming.')
+                        'Not all Booked Sale Requirements are submitted. Please upload submitted files before confirming.')
         else:
             raise ValidationError(
                 'There are no Reservation requirements in the list')
@@ -219,7 +255,7 @@ class PropertiesProjectProperty(models.Model):
                     self.state = 'contracted'
                 else:
                     raise ValidationError(
-                        'Not all Reservation Requirements are submitted. Please upload submitted files before confirming.')
+                        'Not all Contracted Sale Requirements are submitted. Please upload submitted files before confirming.')
         else:
             raise ValidationError(
                 'There are no Booked Sale requirements in the list')
