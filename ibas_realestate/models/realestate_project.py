@@ -128,8 +128,8 @@ class PropertiesProjectProperty(models.Model):
 
     @api.constrains('name')
     def _check_names(self):
-        name = self.env['product.template'].search(
-            [('name', '=', self.name)])
+        name = self.env['product.product'].search(
+            [('name', '=', self.name), ('phase', '=', self.phase)])
         if name:
             for n in name:
                 if n.id != self.id:
@@ -154,10 +154,18 @@ class PropertiesProjectProperty(models.Model):
                     self.state = 'accept'
                 else:
                     raise ValidationError(
-                        'Not all Reservation Requirements are submitted. Please upload submitted files before confirming.')
+                        'Not all Loan Proceeds Requirements are submitted. Please upload submitted files before confirming.')
         else:
             raise ValidationError(
-                'There are no Booked Sale requirements in the list')
+                'There are no Loan proceeds requirements in the list')
+
+        sale_obj = self.env['sale.order']
+        sale_order = sale_obj.search(
+            [('unit_id', '=', self.id), ('state', '=', 'sale')])
+
+        if sale_order:
+            for sale in sale_order:
+                sale.state = 'done'
 
     def loan_proceeds(self):
         client_reqs = self.env['ibas_realestate.client_requirement'].search(
@@ -175,10 +183,10 @@ class PropertiesProjectProperty(models.Model):
                     self.state = 'proceed'
                 else:
                     raise ValidationError(
-                        'Not all Reservation Requirements are submitted. Please upload submitted files before confirming.')
+                        'Not all Contracted Requirements are submitted. Please upload submitted files before confirming.')
         else:
             raise ValidationError(
-                'There are no Booked Sale requirements in the list')
+                'There are no Contracted Sale requirements in the list')
 
         if len(client_lines) > 0:
             loan_proceeds_lines = []
@@ -225,10 +233,10 @@ class PropertiesProjectProperty(models.Model):
                     self.state = 'booked'
                 else:
                     raise ValidationError(
-                        'Not all Booked Sale Requirements are submitted. Please upload submitted files before confirming.')
+                        'Not all Reservation Sale Requirements are submitted. Please upload submitted files before confirming.')
         else:
             raise ValidationError(
-                'There are no Reservation requirements in the list')
+                'There are no Reservation Sale requirements in the list')
 
         if len(client_lines) > 0:
             booked_lines = []
@@ -255,7 +263,7 @@ class PropertiesProjectProperty(models.Model):
                     self.state = 'contracted'
                 else:
                     raise ValidationError(
-                        'Not all Contracted Sale Requirements are submitted. Please upload submitted files before confirming.')
+                        'Not all Booked Sale Requirements are submitted. Please upload submitted files before confirming.')
         else:
             raise ValidationError(
                 'There are no Booked Sale requirements in the list')

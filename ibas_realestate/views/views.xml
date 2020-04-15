@@ -62,7 +62,7 @@
         <button string="Revert" name="back_to_reservation" type="object" attrs="{'invisible' :['|',('on_hold', '=', True),('state','!=','booked')]}"/>
         <button string="Confirm" name="contracted_sale" type="object" class="oe_highlight" attrs="{'invisible' :['|',('on_hold', '=', True),('state','!=','booked')]}"/>
         <button string="Revert" name="back_to_booked" type="object" attrs="{'invisible' :['|',('on_hold', '=', True),('state','!=','contracted')]}"/>
-        <button string="Confirm" name="loan_proceeds" type="object" class="oe_highlight" attrs="{'invisible' :['|',('on_hold', '=', True),('state','!=','contracted')]}" groups="ibas_realestate.group_ibas_realestate_administrator,ibas_realestate.group_ibas_realestate_manager"/>
+        <button string="Confirm" name="loan_proceeds" type="object" class="oe_highlight" attrs="{'invisible' :['|',('on_hold', '=', True),('state','!=','contracted')]}" confirm="This will put this property in Loan Proceeds. Are you sure you want to continue?" groups="ibas_realestate.group_ibas_realestate_administrator,ibas_realestate.group_ibas_realestate_manager"/>
         <button string="Revert" name="back_to_contracted" type="object" attrs="{'invisible' :['|',('on_hold', '=', True),('state','!=','proceed')]}"/>
         <button string="Confirm" name="acceptance" type="object" class="oe_highlight" attrs="{'invisible' :['|',('on_hold', '=', True),('state','!=','proceed')]}" groups="ibas_realestate.group_ibas_realestate_administrator"/>
         <field name="state" widget="statusbar"  statusbar_visible="open,reserved,booked,contracted"/>
