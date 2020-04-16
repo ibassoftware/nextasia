@@ -74,5 +74,21 @@
 
         </field>
     </record>
+
+    <record id="ibas_sale_view_quotation_tree" model="ir.ui.view">
+        <field name="name">sale.order.view.quotation.tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='name']" position="after">
+                <field name='unit_id'/>
+            </xpath>
+
+            <xpath expr="//field[@name='commitment_date']" position="replace">
+            </xpath>
+
+        </field>
+    </record>
 </data>
 </odoo>
