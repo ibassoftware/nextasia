@@ -15,7 +15,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span>1901 Richville Corporate Tower, Madrigal Business</span>
+                                        <span>1901 Richville Corporate Tower, Madrigal Business</span> <br/>
                                         <span>Park, Alabang Zapote Road, Muntinlupa City 1780</span>
                                     </td>
                                 </tr>
@@ -25,9 +25,9 @@
                                     <td colspan="3" class="center bg-tomato" style="color: white; font-size: 24px"><strong><span>COMPUTATION</span></strong></td>
                                 </tr>
                                 <tr>
-                                    <td></td>
-                                    <td><span class="center">Date:</span></td>
-                                    <td><span class="center">Apr 02, 2020</span></td>
+                                    <td style="width: 60%;"></td>
+                                    <td style="width: 20%;"><span class="center">Date:</span></td>
+                                    <td style="width: 20%;"><span class="center">Apr 02, 2020</span></td>
                                 </tr>
                                 <tr>
                                     <td><span>Project Name:</span></td>
@@ -47,20 +47,28 @@
                             </table>
                             <table style="width: 100%">
                                 <tr>
-                                    <td style="width: 50%">Client's Name:________________</td>
-                                    <td style="width: 50%">Block No. 10</td>
+                                    <td style="width: 20%">Client's Name:</td>
+                                    <td style="width: 30%"></td>
+                                    <td style="width: 25%; text-align:right;">Block No.</td>
+                                    <td style="width: 25%" class="center">10</td>
                                 </tr> 
                                 <tr>
                                     <td></td>
-                                    <td>Lot No.</td>
+                                    <td></td>
+                                    <td style="text-align:right;">Lot No.:</td>
+                                    <td class="center">50</td>
                                 </tr> 
                                 <tr>
                                     <td>House Model:</td>
-                                    <td>Lot Area(sqm): 119</td>
+                                    <td class="center"><strong>AMINA</strong></td>
+                                    <td style="text-align:right;">Lot Area(sqm):</td>
+                                     <td class="center">119</td>
                                 </tr>
                                  <tr>
                                     <td>Lot Class:</td>
-                                    <td>Floor Area(sqm): 45</td>
+                                    <td class="center"><strong>AMINA</strong></td>
+                                    <td style="text-align:right;">Floor Area(sqm):</td>
+                                    <td class="center">45</td>
                                 </tr> 
                                  <tr>
                                     <td></td>
@@ -68,30 +76,151 @@
                                 </tr> 
                                  <tr>
                                     <td>Pre Selling Price</td>
-                                    <td>Reservation:________________</td>
+                                    <td style="text-align:right;"> 2,387,000.00</td>
+                                    <td style="text-align:right;">Reservation:</td>
+                                    <td class="b-bottom-1" style="text-align:right;">7,500.00</td>
                                 </tr> 
                                  <tr>
-                                    <td>Discount</td>
-                                    <td>Downpayment</td>
+                                    <td>Discount:</td>
+                                    <td style="text-align:right;"> 2,387,000.00</td>
+                                    <td style="text-align:right;">Downpayment:</td>
+                                    <td class="b-bottom-1" style="text-align:right;">7,500.00</td>
                                 </tr> 
-                                 <tr>
-                                    <td class="b-bottom">Discouted Price</td>
-                                    <td class="b-bottom">Discount on Spot DP:</td>
-                                </tr>   
+                                <tr>
+                                    <td>Discouted Price:</td>
+                                    <td class="b-bottom b-right b-left b-top" style="text-align:right;"> 2,387,000.00</td>
+                                    <td style="text-align:right;">Discount on Spot DP:</td>
+                                    <td class="b-bottom-1" style="text-align:right;">0.00</td>
+                                </tr> 
+                            </table>
+                            <hr class="line"/>
+                            <table style="width: 70%; margin-left: auto; margin-right: auto;">
+                                <tr>
+                                    <td class="bg-tomato center font-size-14 b-bottom b-left b-top" style="color: white; width: 22%;"><strong><span>DESCRIPTION</span></strong></td>
+                                    <td class="bg-tomato center font-size-14 b-top b-bottom" style="color: white; width: 24%;"><strong><span>DATE</span></strong></td>
+                                    <td class="bg-tomato center font-size-14 b-top b-bottom b-right" style="color: white; width: 24%;"><strong><span>AMOUNT</span></strong></td>
+                                </tr>
+                                <tr class="striped" t-foreach='doc.sc_ids' t-as='sc'>
+                                    <td class="center b-left"> <span t-field="sc.description"/> </td>
+                                    <td class="center"> <span t-field="sc.date"/> </td>
+                                    <td class="center b-right"> <span t-field="sc.payment_amount"/> </td>
+                                </tr>
+                                <tr>
+                                    <td class="b-left b-bottom b-top"></td>
+                                    <td class="b-bottom b-top"></td>
+                                    <td class="center b-bottom b-right b-top"> <t t-esc="'{:,.2f}'.format(sum(total.payment_amount for total in doc.sc_ids))" /> Php </td>
+                                </tr>
+                                
+                            </table>
+                            <table style="width: 70%; margin-left: auto; margin-right: auto;">
+                            <tr>
+                                <td class="center"><i>Letter of Guarantee from Financing Institution</i></td>
+                            </tr>
+                            
+                            </table>
+                
+                            <table style="width: 70%; margin-left: auto; margin-right: auto;">
+                            <tr>
+                                <td class="center"><span>BANK FINANCING</span></td>
+                            </tr>
+                            
+                            </table>
+                             <table style="width: 70%; margin-left: auto; margin-right: auto;">
+                            <tr>
+                                <td style="width: 35%;" class="center"><span></span></td>
+                                <td style="width: 18%;" class="center"><i>Monthly Amortization</i></td>
+                                <td style="width: 17%;" class="center"><i>Required Income</i></td>
+                            </tr>
+                            <tr>
+                                <td class="b-left-1 b-top-1 b-right-1 b-bottom-1"><i>Interest rate fixed for 3 yrs: 8%; 15 years</i></td>
+                                <td class="b-top-1 b-right-1 b-bottom-1"><i>18,664</i></td>
+                                <td class="b-top-1 b-right-1 b-bottom-1"><i>62,213</i></td>
+                            </tr>
+                             <tr>
+                                <td class="b-left-1 b-top-1 b-right-1 b-bottom-1"><i>Interest rate fixed for 3 yrs: 8%; 20 years</i></td>
+                                <td class="b-top-1 b-right-1 b-bottom-1"><i>16,336</i></td>
+                                <td class="b-top-1 b-right-1 b-bottom-1"><i>54,452</i></td>
+                            </tr>
+                            </table>
+                            <table style="width: 70%; margin-left: auto; margin-right: auto;">
+                            <tr>
+                                <td class="center"><span>PAG-IBIG FINANCING</span></td>
+                            </tr>
+                            
+                            </table>
+                             <table style="width: 70%; margin-left: auto; margin-right: auto;">
+                            <tr>
+                                <td style="width: 35%;" class="center"><span></span></td>
+                                <td style="width: 18%;" class="center"><i>Monthly Amortization</i></td>
+                                <td style="width: 17%;" class="center"><i>Required Income</i></td>
+                            </tr>
+                            <tr>
+                                <td class="b-left-1 b-top-1 b-right-1 b-bottom-1"><i>Interest rate fixed for 3 yrs: 6.375%; 20 years</i></td>
+                                <td class="b-top-1 b-right-1 b-bottom-1"><i>14,418</i></td>
+                                <td class="b-top-1 b-right-1 b-bottom-1"><i>41,193</i></td>
+                            </tr>
+                            <tr>
+                                <td class="b-left-1 b-top-1 b-right-1 b-bottom-1"><i>Interest rate fixed for 3 yrs: 6.375%; 25 years</i></td>
+                                <td class="b-top-1 b-right-1 b-bottom-1"><i>13,035</i></td>
+                                <td class="b-top-1 b-right-1 b-bottom-1"><i>37,242</i></td>
+                            </tr>
+                            <tr>
+                                <td class="b-left-1 b-top-1 b-right-1 b-bottom-1"><i>Interest rate fixed for 3 yrs: 6.375%; 30 years</i></td>
+                                <td class="b-top-1 b-right-1 b-bottom-1"><i>12,184</i></td>
+                                <td class="b-top-1 b-right-1 b-bottom-1"><i>34,812</i></td>
+                            </tr>
+                            </table>
+                            <div>
+                            <p class="font-size-10"> 
+                                <span><strong>Note:</strong></span> <br/>
+                                - All payments should be made directly to NEXT ASIALAND, INC. <br/>
+                                - Reservation is only valid for 30 days and strictly NON-REFUNDABLE. <br/>
+                                - Downpayment shall be covered by postdated checks. <br/>
+                                - The above monthly amortization is computed based on the prevailing interest rate of the Financing Institution for the term indicated and subject for re-pricing on the 4th year onwards. <br/>
+                                - Notwithstanding the above payment terms, all outstanding balance shall become due and demandable upon notice of turnover. <br/>
+                                - In the event that there is an increase in the amount of Other Charges as dictated by government agencies, the Seller shall have the right to charge the Purchaser an amount proportionate to or corresponding to the said increase. <br/>
+                                - The actual interest rate is only estimated and will be subjected for actual computation by the bank or pag-ibig. <br/>
+                                - This 10% downpayment and 90% loanable amount scheme is only for Developer's Acrredited Banks and Pag-Ibig. <br/>
+                                - This OFFICIAL COMPUTATION is only valid and binding if signed by the duly authorized signatories. <br/>
+                                - The 3% interest rate is applicable only for clients under provincial rate with maximum 12K and manila rate wit 15K gross income per month otherwise 6.375% shall follow. <br/>
+                            </p>
+                            </div>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td style="width: 29%">Conforme:</td>
+                                    <td style="width: 1%"> </td>
+                                    <td style="width: 29%"></td>
+                                    <td style="width: 1%"> </td>
+                                    <td style="width: 19%">Prepared by:</td>
+                                    <td style="width: 1%"> </td>
+                                    <td style="width: 20%">Noted By:</td>
+                                </tr>
+                                <tr>
+                                    <td class="b-bottom-1"><![CDATA[&nbsp;]]></td>
+                                    <td></td>
+                                    <td class="b-bottom-1"></td>
+                                    <td></td>
+                                    <td class="b-bottom-1"></td>
+                                    <td></td>
+                                    <td class="b-bottom-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="center font-size-12">BUYER SIGNATURE OVER PRINTED</td>
+                                    <td></td>
+                                    <td class="center font-size-12">SPOUSE/CO-BUYER SIGNATURE OVER</td>
+                                    <td></td>
+                                    <td class="center font-size-12">ASM/BSM</td>
+                                    <td></td>
+                                    <td class="center font-size-12">ACCOUNTING</td>
+                                </tr>
                             </table>
                             <br/>
-                            <table style="width: 70%; align-self: center;">
-                                <tr>
-                                    <td class="bg-tomato center font-size-14 b-bottom b-left b-top" style="color: white;"><strong><span>DESCRIPTION</span></strong></td>
-                                    <td class="bg-tomato center font-size-14 b-top b-bottom" style="color: white;"><strong><span>DATE</span></strong></td>
-                                    <td class="bg-tomato center font-size-14 b-top b-bottom b-right" style="color: white;"><strong><span>AMOUNT</span></strong></td>
-                                </tr>
-                                <tr t-foreach='doc.sc_ids' t-as='sc'>
-                                    <td>
-                                        
-                                    </td>
-                                </tr>
-                            </table>
+                            <div>
+                                <p class="center font-size-10"> DISCLAIMER: THIS COMPUTATION IS FOR GENERAL ESTIMATE ONLY. 
+                                THE ABOVE ESTIMATED EXPENSES ARE ROUGH ESTIMATE ONLY. THE ACTUAL TAXES WILL BE SUBJECT <br/>
+                                FOR ACTUAL COMPUTATION BY THE CITY TREASURER OFFICE AND BY DULY ASSIGN ONETT OFFICER OF THE BIR. BANK FEES NOT INCLUDED.
+                                </p>
+                            </div>
                         </div>
                     </t>
                 </t>    
