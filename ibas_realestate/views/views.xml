@@ -38,7 +38,7 @@
   <menuitem
     id="ibas_re_menu"
     name="Real Estate"
-    web_icon="ibas_realestate,static/src/img/house.png"
+    web_icon="ibas_realestate,static/src/img/na_logo.png"
     sequence="10"/>
 
     <menuitem

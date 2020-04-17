@@ -235,7 +235,7 @@
               <page name="spouse" string="Spouse Info"  attrs="{'invisible': [('is_company','=', True)]}">
                     <group>
                         <group>
-                            <field name='spouse_contact_id'/>
+                            <field name='spouse_contact_id' attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
                             <field name="spouse_lastname" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
                             <field name="spouse_firstname" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
                             <field name="spouse_middlename" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
