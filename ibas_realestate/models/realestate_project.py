@@ -34,13 +34,14 @@ class PropertiesProjectProperty(models.Model):
     company_id = fields.Many2one('res.company', string='Company',  required=True,
                                  default=lambda self: self.env.company.id)
 
-    @api.onchange('project_id', 'block', 'lot')
+    @api.onchange('project_id', 'block', 'lot', 'phase')
     def _compute_name(self):
         for rec in self:
             if rec.is_a_property:
                 for rec in self:
                     try:
-                        rec.name = rec.project_id.name + ' Block ' + rec.block + ' Lot ' + rec.lot
+                        rec.name = rec.project_id.name + ' Block ' + \
+                            rec.block + ' Lot ' + rec.lot + ' Phase' + rec.phase
                     except:
                         pass
 
@@ -129,7 +130,7 @@ class PropertiesProjectProperty(models.Model):
     @api.constrains('name')
     def _check_names(self):
         name = self.env['product.product'].search(
-            [('name', '=', self.name), ('phase', '=', self.phase)])
+            [('name', '=', self.name)])
         if name:
             for n in name:
                 if n.id != self.id:

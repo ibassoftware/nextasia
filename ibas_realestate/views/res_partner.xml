@@ -35,6 +35,48 @@
                 </group>
                     
                 </page>
+                <page name="spouse" string="Spouse Info"  attrs="{'invisible': [('is_company','=', True)]}">
+                    <group>
+                        <group>
+                            <field name='spouse_contact_id' attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
+                            <field name="spouse_lastname" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
+                            <field name="spouse_firstname" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
+                            <field name="spouse_middlename" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
+                            <field name="spouse_suffix" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
+                            <label for="spouse_street" string="Spouse Address"/>
+                            <div class="o_address_format">
+                                <field name="spouse_street" placeholder="Street..." class="o_address_street" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
+                                <field name="spouse_street2" placeholder="Street 2..." class="o_address_street" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
+                                <field name="spouse_city" placeholder="City" class="o_address_city" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
+                                <field name="spouse_state_id" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;: True}" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}" context="{'country_id': country_id, 'zip': zip}"/>
+                                <field name="spouse_zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
+                                <field name="spouse_country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
+                            </div>
+                            <field name="spouse_citizenship" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
+                            <field name="spouse_birthday" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
+                            <field name="spouse_mobile" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
+                            <field name="spouse_age" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
+                            <field name="spouse_place_of_birth" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
+                            <field name="spouse_sex" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
+                            <field name="spouse_monthly_gross_salary" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
+                            <field name="spouse_allowances" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
+                            <field name="spouse_commisions" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
+                            <field name="spouse_total_earnings" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
+                        </group>
+                        <group>
+                            <field name="spouse_sss_no" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
+                            <field name="spouse_pag_ibig_no" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
+                            <field name="spouse_tin_no" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
+                            <field name="spouse_email" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
+                            <field name="spouse_residence_landline" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
+                            <field name="spouse_office_landline" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
+                            <field name="spouse_employer_name" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
+                            <field name="spouse_company_address" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
+                            <field name="spouse_nature_business" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
+                            <field name="spouse_date_employed_established" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
+                        </group>
+                    </group>
+                </page>
                 <page string="Co-Buyer Info" attrs="{'invisible': [('is_company','=', True)]}">
                     <group>
                         <group>
@@ -85,6 +127,47 @@
                         </group>
                     </group>
                 </page>
+                <page name="spa" string="SPA Info" attrs="{'invisible': [('is_company','=', True)]}">
+                    <group>
+                        <group>
+                            <field name="spa_contact_id"/>
+                            <field name="spa_lastname"/>
+                            <field name="spa_firstname"/>
+                            <field name="spa_middlename"/>
+                            <field name="spa_suffix"/>
+                            <label for="spa_street" string="SPA Address"/>
+                            <div class="o_address_format">
+                                <field name="spa_street" placeholder="Street..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="spa_street2" placeholder="Street 2..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="spa_city" placeholder="City" class="o_address_city" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="spa_state_id" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" context="{'country_id': country_id, 'zip': zip}"/>
+                                <field name="spa_zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="spa_country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                            </div>
+                            <field name="spa_citizenship"/>
+                            <field name="spa_birthday"/>
+                            <field name="spa_age"/>
+                            <field name="spa_place_of_birth"/>
+                            <field name="spa_civil_status"/>
+                            <field name="spa_sex"/>
+                            <field name="spa_mobile"/>
+                            <field name="spa_contact"/>
+                            <field name="spa_relationship"/>
+                        </group>
+                        <group>
+                            <field name="spa_email"/>
+                            <field name="spa_office_landline"/>
+                            <field name="spa_sss_no"/>
+                            <field name="spa_pag_ibig_no"/>
+                            <field name="spa_tin_no"/>
+                            <field name="spa_company_name"/>
+                            <field name="spa_company_address"/>
+                            <field name="spa_nature_business"/>
+                            <field name="spa_designation"/>
+                            <field name="spa_date_employed_established"/>
+                        </group>
+                    </group>
+                </page>
                 <page string="Financial References" attrs="{'invisible': [('is_company','=', True)]}">
                    
                         <group string="Loans">
@@ -109,6 +192,26 @@
                             </field>
                         </group>
                 
+                </page>
+                 <page string="Personal References" attrs="{'invisible': [('is_company','=', True)]}">
+                   <group>
+                        <field name="personal_ref_ids" nolabel="1">
+                            <tree editable="bottom">
+                            <field name="per_name"/>
+                            <field name="per_relation_buyer"/>
+                            <field name="per_residence_address"/>
+                            <field name="per_office_address"/>
+                            <field name="per_contact_number"/>
+                            </tree>
+                        </field>
+                   </group> 
+                   <!-- <group>
+                        <field name="per_name"/>
+                        <field name="per_relation_buyer"/>
+                        <field name="per_residence_address"/>
+                        <field name="per_office_address"/>
+                        <field name="per_contact_number"/>
+                    </group> -->
                 </page>
                 <page string="Requirements" attrs="{'invisible': [('is_company','=', True)]}">
                     <group>
@@ -145,26 +248,7 @@
                     </field>
                     </group>
                 </page>
-                <page string="Personal References" attrs="{'invisible': [('is_company','=', True)]}">
-                   <group>
-                        <field name="personal_ref_ids" nolabel="1">
-                            <tree editable="bottom">
-                            <field name="per_name"/>
-                            <field name="per_relation_buyer"/>
-                            <field name="per_residence_address"/>
-                            <field name="per_office_address"/>
-                            <field name="per_contact_number"/>
-                            </tree>
-                        </field>
-                   </group> 
-                   <!-- <group>
-                        <field name="per_name"/>
-                        <field name="per_relation_buyer"/>
-                        <field name="per_residence_address"/>
-                        <field name="per_office_address"/>
-                        <field name="per_contact_number"/>
-                    </group> -->
-                </page>
+               
             </xpath>
             <xpath expr="//field[@name='category_id']" position="after">
                 <field name="age"/>
@@ -231,92 +315,6 @@
                 <field name="source_awareness"/>
             </xpath>
            
-            <xpath expr="//page[@name='sales_purchases']" position="before">
-              <page name="spouse" string="Spouse Info"  attrs="{'invisible': [('is_company','=', True)]}">
-                    <group>
-                        <group>
-                            <field name='spouse_contact_id' attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
-                            <field name="spouse_lastname" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
-                            <field name="spouse_firstname" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
-                            <field name="spouse_middlename" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
-                            <field name="spouse_suffix" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
-                            <label for="spouse_street" string="Spouse Address"/>
-                            <div class="o_address_format">
-                                <field name="spouse_street" placeholder="Street..." class="o_address_street" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
-                                <field name="spouse_street2" placeholder="Street 2..." class="o_address_street" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                                <field name="spouse_city" placeholder="City" class="o_address_city" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
-                                <field name="spouse_state_id" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;: True}" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}" context="{'country_id': country_id, 'zip': zip}"/>
-                                <field name="spouse_zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
-                                <field name="spouse_country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
-                            </div>
-                            <field name="spouse_citizenship" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
-                            <field name="spouse_birthday" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
-                            <field name="spouse_mobile" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                            <field name="spouse_age" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                            <field name="spouse_place_of_birth" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                            <field name="spouse_sex" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
-                            <field name="spouse_monthly_gross_salary" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                            <field name="spouse_allowances" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                            <field name="spouse_commisions" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                            <field name="spouse_total_earnings" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                        </group>
-                        <group>
-                            <field name="spouse_sss_no" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                            <field name="spouse_pag_ibig_no" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
-                            <field name="spouse_tin_no" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                            <field name="spouse_email" attrs="{'readonly': [('civil_status','!=', 'Married')],'required': [('civil_status','=', 'Married')]}"/>
-                            <field name="spouse_residence_landline" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                            <field name="spouse_office_landline" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                            <field name="spouse_employer_name" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                            <field name="spouse_company_address" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                            <field name="spouse_nature_business" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                            <field name="spouse_date_employed_established" attrs="{'readonly': [('civil_status','!=', 'Married')]}"/>
-                        </group>
-                    </group>
-                </page>
-
-                <page name="spa" string="SPA Info" attrs="{'invisible': [('is_company','=', True)]}">
-                    <group>
-                        <group>
-                            <field name="spa_contact_id"/>
-                            <field name="spa_lastname"/>
-                            <field name="spa_firstname"/>
-                            <field name="spa_middlename"/>
-                            <field name="spa_suffix"/>
-                            <label for="spa_street" string="SPA Address"/>
-                            <div class="o_address_format">
-                                <field name="spa_street" placeholder="Street..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                <field name="spa_street2" placeholder="Street 2..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                <field name="spa_city" placeholder="City" class="o_address_city" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                <field name="spa_state_id" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" context="{'country_id': country_id, 'zip': zip}"/>
-                                <field name="spa_zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                <field name="spa_country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                            </div>
-                            <field name="spa_citizenship"/>
-                            <field name="spa_birthday"/>
-                            <field name="spa_age"/>
-                            <field name="spa_place_of_birth"/>
-                            <field name="spa_civil_status"/>
-                            <field name="spa_sex"/>
-                            <field name="spa_mobile"/>
-                            <field name="spa_contact"/>
-                            <field name="spa_relationship"/>
-                        </group>
-                        <group>
-                            <field name="spa_email"/>
-                            <field name="spa_office_landline"/>
-                            <field name="spa_sss_no"/>
-                            <field name="spa_pag_ibig_no"/>
-                            <field name="spa_tin_no"/>
-                            <field name="spa_company_name"/>
-                            <field name="spa_company_address"/>
-                            <field name="spa_nature_business"/>
-                            <field name="spa_designation"/>
-                            <field name="spa_date_employed_established"/>
-                        </group>
-                    </group>
-                </page>
-            </xpath>
         </field>
     </record>
 </data>

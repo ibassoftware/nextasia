@@ -25,24 +25,19 @@
                                     <td colspan="3" class="center bg-tomato" style="color: white; font-size: 24px"><strong><span>COMPUTATION</span></strong></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 60%;"></td>
+                                    <td style="width: 60%;"><span>Project Name:</span></td>
                                     <td style="width: 20%;"><span class="center">Date:</span></td>
-                                    <td style="width: 20%;"><span class="center">Apr 02, 2020</span></td>
+                                    <td style="width: 20%;"><span class="center" t-field="doc.date_order"/></td>
                                 </tr>
                                 <tr>
-                                    <td><span>Project Name:</span></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>NEXTASIA SAN PABLO</td>
+                                    <td><strong><span t-field="doc.project_id"/></strong></td>
                                     <td><span class="center">Date of Reservation:</span></td>
-                                    <td><span>Apr 02, 2020</span></td>
+                                    <td><span class="center" t-field="doc.sc_ids[0].date"/></td>
                                 </tr>
                                 <tr>
                                     <td class="b-bottom">Brgy.Soledad San Pablo City, Laguna</td>
                                     <td class="b-bottom"><span class="center">Terms</span></td>
-                                    <td class="b-bottom"><span class="center">Monthly 18</span></td>
+                                    <td class="b-bottom"><span class="center" t-field="doc.dp_terms"/></td>
                                 </tr>
                             </table>
                             <table style="width: 100%">
@@ -50,25 +45,24 @@
                                     <td style="width: 20%">Client's Name:</td>
                                     <td style="width: 30%"></td>
                                     <td style="width: 25%; text-align:right;">Block No.</td>
-                                    <td style="width: 25%" class="center">10</td>
+                                    <td style="width: 25%" class="center"><span t-field="doc.unit_id.block"/></td>
                                 </tr> 
                                 <tr>
-                                    <td></td>
-                                    <td></td>
+                                    <td colspan="2" class="center"> <strong><span t-field="doc.partner_id"/></strong></td>     
                                     <td style="text-align:right;">Lot No.:</td>
-                                    <td class="center">50</td>
+                                    <td class="center"><span t-field="doc.unit_id.lot"/></td>
                                 </tr> 
                                 <tr>
                                     <td>House Model:</td>
-                                    <td class="center"><strong>AMINA</strong></td>
+                                    <td class="center"><strong><span t-field="doc.unit_id.propmodel_id"/></strong></td>
                                     <td style="text-align:right;">Lot Area(sqm):</td>
-                                     <td class="center">119</td>
+                                     <td class="center"><span t-field="doc.unit_id.lot_area"/></td>
                                 </tr>
                                  <tr>
-                                    <td>Lot Class:</td>
-                                    <td class="center"><strong>AMINA</strong></td>
+                                    <td>Type:</td>
+                                    <td class="center"><strong><span t-field="doc.unit_id.propclass_id"/></strong></td>
                                     <td style="text-align:right;">Floor Area(sqm):</td>
-                                    <td class="center">45</td>
+                                    <td class="center"><span t-field="doc.unit_id.floor_area"/></td>
                                 </tr> 
                                  <tr>
                                     <td></td>
@@ -76,21 +70,21 @@
                                 </tr> 
                                  <tr>
                                     <td>Pre Selling Price</td>
-                                    <td style="text-align:right;"> 2,387,000.00</td>
+                                    <td style="text-align:right;"> <span t-field="doc.unit_id.preselling_price"/></td>
                                     <td style="text-align:right;">Reservation:</td>
-                                    <td class="b-bottom-1" style="text-align:right;">7,500.00</td>
+                                    <td class="b-bottom-1" style="text-align:right;"><span t-field="doc.sc_ids[0].payment_amount"/></td>
                                 </tr> 
                                  <tr>
                                     <td>Discount:</td>
-                                    <td style="text-align:right;"> 2,387,000.00</td>
+                                    <td style="text-align:right;"> <span t-esc="'{:,.2f}'.format(doc.discount_amount)"/> Php</td>
                                     <td style="text-align:right;">Downpayment:</td>
-                                    <td class="b-bottom-1" style="text-align:right;">7,500.00</td>
+                                    <td class="b-bottom-1" style="text-align:right;"><span t-field="doc.downpayment"/></td>
                                 </tr> 
                                 <tr>
-                                    <td>Discouted Price:</td>
-                                    <td class="b-bottom b-right b-left b-top" style="text-align:right;"> 2,387,000.00</td>
+                                    <td>Discounted Price:</td>
+                                    <td class="b-bottom b-right b-left b-top" style="text-align:right;"><span t-esc="'{:,.2f}'.format(doc.list_price)"/> Php</td>
                                     <td style="text-align:right;">Discount on Spot DP:</td>
-                                    <td class="b-bottom-1" style="text-align:right;">0.00</td>
+                                    <td class="b-bottom-1" style="text-align:right;"><span t-field="doc.discount_spotdp"/></td>
                                 </tr> 
                             </table>
                             <hr class="line"/>
@@ -101,9 +95,9 @@
                                     <td class="bg-tomato center font-size-14 b-top b-bottom b-right" style="color: white; width: 24%;"><strong><span>AMOUNT</span></strong></td>
                                 </tr>
                                 <tr class="striped" t-foreach='doc.sc_ids' t-as='sc'>
-                                    <td class="center b-left"> <span t-field="sc.description"/> </td>
-                                    <td class="center"> <span t-field="sc.date"/> </td>
-                                    <td class="center b-right"> <span t-field="sc.payment_amount"/> </td>
+                                    <td class="center b-left font-size-14"> <span t-field="sc.description"/> </td>
+                                    <td class="center font-size-14"> <span t-field="sc.date"/> </td>
+                                    <td class="center b-right font-size-14"> <span t-field="sc.payment_amount"/> </td>
                                 </tr>
                                 <tr>
                                     <td class="b-left b-bottom b-top"></td>
@@ -121,53 +115,53 @@
                 
                             <table style="width: 70%; margin-left: auto; margin-right: auto;">
                             <tr>
-                                <td class="center"><span>BANK FINANCING</span></td>
+                                <td class="center font-size-12"><span>BANK FINANCING</span></td>
                             </tr>
                             
                             </table>
                              <table style="width: 70%; margin-left: auto; margin-right: auto;">
                             <tr>
                                 <td style="width: 35%;" class="center"><span></span></td>
-                                <td style="width: 18%;" class="center"><i>Monthly Amortization</i></td>
-                                <td style="width: 17%;" class="center"><i>Required Income</i></td>
+                                <td style="width: 18%;" class="center font-size-12"><i>Monthly Amortization</i></td>
+                                <td style="width: 17%;" class="center font-size-12"><i>Required Income</i></td>
                             </tr>
                             <tr>
-                                <td class="b-left-1 b-top-1 b-right-1 b-bottom-1"><i>Interest rate fixed for 3 yrs: 8%; 15 years</i></td>
-                                <td class="b-top-1 b-right-1 b-bottom-1"><i>18,664</i></td>
-                                <td class="b-top-1 b-right-1 b-bottom-1"><i>62,213</i></td>
+                                <td class="b-left-1 b-top-1 b-right-1 b-bottom-1 font-size-12"><i>Interest rate fixed for 3 yrs: 8%; 15 years</i></td>
+                                <td class="b-top-1 b-right-1 b-bottom-1 font-size-12"><i>18,664</i></td>
+                                <td class="b-top-1 b-right-1 b-bottom-1 font-size-12"><i>62,213</i></td>
                             </tr>
                              <tr>
-                                <td class="b-left-1 b-top-1 b-right-1 b-bottom-1"><i>Interest rate fixed for 3 yrs: 8%; 20 years</i></td>
-                                <td class="b-top-1 b-right-1 b-bottom-1"><i>16,336</i></td>
-                                <td class="b-top-1 b-right-1 b-bottom-1"><i>54,452</i></td>
+                                <td class="b-left-1 b-top-1 b-right-1 b-bottom-1 font-size-12"><i>Interest rate fixed for 3 yrs: 8%; 20 years</i></td>
+                                <td class="b-top-1 b-right-1 b-bottom-1 font-size-12"><i>16,336</i></td>
+                                <td class="b-top-1 b-right-1 b-bottom-1 font-size-12"><i>54,452</i></td>
                             </tr>
                             </table>
                             <table style="width: 70%; margin-left: auto; margin-right: auto;">
                             <tr>
-                                <td class="center"><span>PAG-IBIG FINANCING</span></td>
+                                <td class="center font-size-12"><span>PAG-IBIG FINANCING</span></td>
                             </tr>
                             
                             </table>
                              <table style="width: 70%; margin-left: auto; margin-right: auto;">
                             <tr>
                                 <td style="width: 35%;" class="center"><span></span></td>
-                                <td style="width: 18%;" class="center"><i>Monthly Amortization</i></td>
-                                <td style="width: 17%;" class="center"><i>Required Income</i></td>
+                                <td style="width: 18%;" class="center font-size-12"><i>Monthly Amortization</i></td>
+                                <td style="width: 17%;" class="center font-size-12"><i>Required Income</i></td>
                             </tr>
                             <tr>
-                                <td class="b-left-1 b-top-1 b-right-1 b-bottom-1"><i>Interest rate fixed for 3 yrs: 6.375%; 20 years</i></td>
-                                <td class="b-top-1 b-right-1 b-bottom-1"><i>14,418</i></td>
-                                <td class="b-top-1 b-right-1 b-bottom-1"><i>41,193</i></td>
+                                <td class="b-left-1 b-top-1 b-right-1 b-bottom-1 font-size-12"><i>Interest rate fixed for 3 yrs: 6.375%; 20 years</i></td>
+                                <td class="b-top-1 b-right-1 b-bottom-1 font-size-12"><i>14,418</i></td>
+                                <td class="b-top-1 b-right-1 b-bottom-1 font-size-12"><i>41,193</i></td>
                             </tr>
                             <tr>
-                                <td class="b-left-1 b-top-1 b-right-1 b-bottom-1"><i>Interest rate fixed for 3 yrs: 6.375%; 25 years</i></td>
-                                <td class="b-top-1 b-right-1 b-bottom-1"><i>13,035</i></td>
-                                <td class="b-top-1 b-right-1 b-bottom-1"><i>37,242</i></td>
+                                <td class="b-left-1 b-top-1 b-right-1 b-bottom-1 font-size-12"><i>Interest rate fixed for 3 yrs: 6.375%; 25 years</i></td>
+                                <td class="b-top-1 b-right-1 b-bottom-1 font-size-12"><i>13,035</i></td>
+                                <td class="b-top-1 b-right-1 b-bottom-1 font-size-12"><i>37,242</i></td>
                             </tr>
                             <tr>
-                                <td class="b-left-1 b-top-1 b-right-1 b-bottom-1"><i>Interest rate fixed for 3 yrs: 6.375%; 30 years</i></td>
-                                <td class="b-top-1 b-right-1 b-bottom-1"><i>12,184</i></td>
-                                <td class="b-top-1 b-right-1 b-bottom-1"><i>34,812</i></td>
+                                <td class="b-left-1 b-top-1 b-right-1 b-bottom-1 font-size-12"><i>Interest rate fixed for 3 yrs: 6.375%; 30 years</i></td>
+                                <td class="b-top-1 b-right-1 b-bottom-1 font-size-12"><i>12,184</i></td>
+                                <td class="b-top-1 b-right-1 b-bottom-1 font-size-12"><i>34,812</i></td>
                             </tr>
                             </table>
                             <div>
