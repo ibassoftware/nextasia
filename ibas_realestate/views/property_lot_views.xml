@@ -1,0 +1,54 @@
+<odoo>
+    <data>
+        <record id="ibas_realestate_property_lot_form" model="ir.ui.view">
+            <field name="name">ibas_realestate.property_lot.form</field> 
+            <field name="model">ibas_realestate.property_lot</field>
+            <field name="arch" type="xml">
+                <form string="Lot">
+                    <field name="name"/>
+                </form> 
+            </field> 
+        </record>
+
+        <record id="ibas_realestate_property_lot_tree" model="ir.ui.view">
+            <field name="name">ibas_realestate.property_lot.tree</field> 
+            <field name="model">ibas_realestate.property_lot</field>
+            <field name="arch" type="xml">
+                <tree string="Lot" editable="top">
+                    <field name="name"/>
+                </tree> 
+            </field> 
+        </record>
+
+        <record id="ibas_realestate_property_lot_search" model="ir.ui.view">
+            <field name="name">ibas_realestate.property_lot.search</field> 
+            <field name="model">ibas_realestate.property_lot</field>
+            <field name="arch" type="xml">
+                <search string="Lot">
+                    <field name="name"/>
+                </search> 
+            </field> 
+        </record>
+
+
+        <record id="open_ibas_realestate_property_lot" model="ir.actions.act_window">
+            <field name="name"> Lot</field> 
+            <field name="res_model">ibas_realestate.property_lot</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+               <p class="o_view_nocontent_smiling_face">
+                    Create a Lot        
+               </p> 
+            </field> 
+        </record>
+
+
+        <menuitem id="menu_ibas_realestate_property_lot" 
+              name= "Lot" 
+              groups="group_ibas_realestate_administrator" 
+              parent="ibas_realestate.ibas_re_menu"
+              action="open_ibas_realestate_property_lot"
+              sequence="31"/>
+
+    </data>
+</odoo>

@@ -103,7 +103,7 @@ class IBASSale(models.Model):
     def _onchange_list_price(self):
         for rec in self:
             rec.downpayment = rec.list_price * 0.10 - 50000
-            rec.reservation_amount = 50000
+            rec.reservation_amount = 5000 #50000
             rec.closing_fees = rec.list_price * 0.05
 
     sc_ids = fields.One2many(
@@ -188,7 +188,7 @@ class IBASSale(models.Model):
         compute='_compute_monthly_10', string='Monthly Amortization 10 Years')
 
     interest_rate = fields.Float(
-        string='Interest Rate', default=0.075, digits=(3, 3))
+        string='Interest Rate', default=0.06375, digits=(5, 5)) #default=0.075, digits=(3, 3)
 
     @api.depends('loanable_amount', 'interest_rate')
     def _compute_monthly_10(self):
@@ -199,11 +199,22 @@ class IBASSale(models.Model):
     monthly_20 = fields.Monetary(
         compute='_compute_monthly_20', string='Monthly Amortization 20 Years')
 
+    monthly_30 = fields.Monetary(
+        compute='_compute_monthly_30', string='Monthly Amortization 30 Years')
+
+
     @api.depends('loanable_amount', 'interest_rate')
     def _compute_monthly_20(self):
         for rec in self:
             rec.monthly_20 = calculate_amortization_amount(
                 rec.loanable_amount, rec.interest_rate / 12, 240)
+
+    @api.depends('loanable_amount', 'interest_rate')
+    def _compute_monthly_30(self):
+        for rec in self:
+            rec.monthly_30 = calculate_amortization_amount(
+                rec.loanable_amount, rec.interest_rate / 12, 360)
+
 
     loanable_amount = fields.Monetary(
         compute='_compute_loanable_amount', string='Loanable Amount')

@@ -37,6 +37,7 @@
         'views/templates.xml',
         'views/property_class_views.xml',
         'views/property_model_views.xml',
+        'views/property_lot_views.xml',
 
     ],
     # only loaded in demonstration mode

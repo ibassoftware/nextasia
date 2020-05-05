@@ -5,7 +5,7 @@
         <field name="name">ibas_realestate_property_class_form</field>
         <field name="model">ibas_realestate.property_class</field>
         <field name="arch" type="xml">
-            <form string="Property Class">
+            <form string="Property Type">
                 <sheet>
                     <group>
                         <field name="name"/>
@@ -16,7 +16,7 @@
     </record>
 
     <record id="action_ibas_realestate_property_class" model="ir.actions.act_window">
-        <field name="name">Property Class</field>
+        <field name="name">Property Type</field>
         <field name="res_model">ibas_realestate.property_class</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[]</field>
