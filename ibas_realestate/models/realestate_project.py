@@ -130,6 +130,12 @@ class PropertiesProjectProperty(models.Model):
 
     on_hold = fields.Boolean('Tech Hold')
 
+
+    list_price = fields.Float(
+        'Selling Price', default=1.0,
+        digits='Product Price',
+        help="Price at which the product is sold to customers.")
+
     @api.constrains('name')
     def _check_names(self):
         name = self.env['product.product'].search(

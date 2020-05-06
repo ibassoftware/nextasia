@@ -81,7 +81,7 @@
             <field name="proplot_id" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
             <field name="floor_area" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
             <field name="lot_area" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
-            <field name="list_price" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" widget="monetary" string="Selling Price"/>
+            <field name="list_price" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" widget="monetary"/>
             <!--
             <field name="preselling_price" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" widget="monetary"/>
             -->
