@@ -15,8 +15,8 @@
                     }" />  
             </xpath>
             <xpath expr="//field[@name='partner_id']" position="after">
-                <field name="pre_selling_price" widget="monetary"/>
-                <field name="discount_amount" widget="monetary"/>
+                <field name="pre_selling_price" widget="monetary" invisible="1"/>
+                <field name="discount_amount" widget="monetary" invisible="1"/>
                 <field name="list_price" widget="monetary"/>
             </xpath>
 
@@ -47,6 +47,7 @@
                     <field name="loanable_amount"/>
                     <field name="monthly_10"/>
                      <field name="monthly_20"/>
+                     <field name="monthly_30"/>
                     </group>
                     </group>
                 </page>

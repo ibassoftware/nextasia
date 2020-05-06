@@ -128,6 +128,7 @@
                     </group>
                 </page>
                 <page name="spa" string="SPA Info" attrs="{'invisible': [('is_company','=', True)]}">
+                    <!--<group attrs="{'readonly': [('have_spa','!=', True)]}">-->
                     <group>
                         <group>
                             <field name="spa_contact_id"/>
@@ -256,6 +257,7 @@
                 <field name="education_attain"/>
                 <field name="office_landline"/>
                 <field name="have_co_buyer"/>
+                <!--<field name="have_spa"/>-->
             </xpath>
 
             <xpath expr="//field[@name='name']" position="replace">
