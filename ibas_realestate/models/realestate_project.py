@@ -34,14 +34,14 @@ class PropertiesProjectProperty(models.Model):
     company_id = fields.Many2one('res.company', string='Company',  required=True,
                                  default=lambda self: self.env.company.id)
 
-    @api.onchange('project_id', 'block', 'lot', 'phase')
+    @api.onchange('project_id', 'block', 'lot', 'propmodel_id')
     def _compute_name(self):
         for rec in self:
             if rec.is_a_property:
                 for rec in self:
                     try:
                         rec.name = rec.project_id.name + ' Block ' + \
-                            rec.block + ' Lot ' + rec.lot + ' Phase' + rec.phase
+                            rec.block + ' Lot ' + rec.lot + '-' + rec.propmodel_id.name
                     except:
                         pass
 
@@ -124,6 +124,9 @@ class PropertiesProjectProperty(models.Model):
 
     price_history_line_ids = fields.One2many(
         'ibas_realestate.price_history_line', 'product_id', string='Price History')
+
+    proplot_id = fields.Many2one(
+        'ibas_realestate.property_lot', string = 'Lot Class')
 
     on_hold = fields.Boolean('Tech Hold')
 
@@ -438,3 +441,8 @@ class PropertyClass(models.Model):
         ('unique_properties_name', 'UNIQUE(name)',
          'You can not have two properties')
     ]
+
+class LotClass(models.Model):
+    _name = 'ibas_realestate.property_lot'
+
+    name = fields.Char(string='Lot Class', required=True)
