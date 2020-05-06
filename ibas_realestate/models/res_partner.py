@@ -29,7 +29,7 @@ class IBASCustomer(models.Model):
     ], string="Educational Attainment")
     office_landline = fields.Char('Office Landline No.')
     have_co_buyer = fields.Boolean('Does he/she have a Co-buyer?')
-    #have_spa = fields.Boolean('Does he/she have an SPA?')
+    have_spa = fields.Boolean('Does he/she have an SPA?')
 
     sss_no = fields.Char('SSS No.')
     pag_ibig_no = fields.Char('Pag-ibig No.')
