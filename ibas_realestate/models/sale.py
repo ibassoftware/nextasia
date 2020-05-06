@@ -102,7 +102,7 @@ class IBASSale(models.Model):
     @api.onchange('list_price')
     def _onchange_list_price(self):
         for rec in self:
-            rec.downpayment = rec.list_price * 0.10 - 50000
+            rec.downpayment = rec.list_price * 0.10 - 5000 #50000
             rec.reservation_amount = 5000 #50000
             rec.closing_fees = rec.list_price * 0.05
 
