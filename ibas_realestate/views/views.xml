@@ -191,7 +191,7 @@
         <field name="name"/>
         <field name="project_id"/>
         <field name="customer"/>
-        <field name="so_selling_price" sum="Total Selling Price"/>        
+        <field name="list_price" sum="Total Selling Price"/>        
         <field name="phase"/>
         <field name="propmodel_id"/>
         <field name="propclass_id"/>
