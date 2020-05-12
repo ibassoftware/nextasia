@@ -81,7 +81,7 @@
             <field name="proplot_id" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
             <field name="floor_area" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
             <field name="lot_area" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
-            <field name="list_price" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" widget="monetary" string="Selling Price"/>
+            <field name="list_price" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" widget="monetary"/>
             <!--
             <field name="preselling_price" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" widget="monetary"/>
             -->
@@ -98,6 +98,9 @@
               <field name="construction_end_date" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}"/>
               <field name="actual_construction_complete_date" attrs="{'readonly' :['|','|',('on_hold', '=', True),('state','=', 'accept'),('state','=','proceed')]}"/>
               <field name="last_dp_date" attrs="{'readonly' :['|','|',('on_hold', '=', True),('state','=', 'accept'),('state','=','proceed')]}"/>
+
+              <field name="reservation_date" attrs="{'readonly' :['|','|',('on_hold', '=', True),('state','=', 'accept'),('state','=','proceed')]}"/>
+
             </group>
           </group>
         </sheet>
@@ -188,6 +191,7 @@
         <field name="name"/>
         <field name="project_id"/>
         <field name="customer"/>
+        <field name="list_price" sum="Total Selling Price"/>        
         <field name="phase"/>
         <field name="propmodel_id"/>
         <field name="propclass_id"/>
@@ -212,6 +216,42 @@
       </xpath>
     </field>
   </record>
+
+
+  <record id="ibas_product_search_form_view" model="ir.ui.view">
+    <field name="name">ibas.product.product.search</field>
+    <field name="model">product.product</field>
+    <field name="inherit_id" ref="product.product_search_form_view"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='categ_id']" position="after">
+        <!--<filter string="Year Reserve" name="year" context="{'group_by':'reservation_date:year'}"/>-->
+        <filter string="Month" domain="[]"  name="rmonthgrp" context="{'group_by':'reservation_date:month'}"/>
+        <filter string="State" name="stategrp" context="{'group_by':'state'}"/>
+
+        <filter string="Reserve Group" domain="[('state', '!=', 'open')]"  name="resmonthgrp" context="{'group_by':'reservation_date:month'}"/>
+      </xpath>
+    </field>
+  </record>
+
+  <!-- Custom Filters -->
+  <record id="filter_product_realst_prop" model="ir.filters">
+      <field name="name">By Month and Status w/o Available Status</field>
+      <field name="model_id">product.product</field>
+      <field name="domain">[('state','!=', 'open'), ('is_a_property','=', True)]</field>
+      <field name="user_id" eval="False"/>
+      <field name="action_id" eval="False"/>
+      <field name="context">{'group_by': ['reservation_date:month', 'state']}</field>
+  </record>  
+
+
+  <record id="filter_product_realst_prop_all" model="ir.filters">
+      <field name="name">By Month and Status</field>
+      <field name="model_id">product.product</field>
+      <field name="domain">[('is_a_property','=', True)]</field>
+      <field name="user_id" eval="False"/>
+      <field name="action_id" eval="False"/>
+      <field name="context">{'group_by': ['reservation_date:month', 'state']}</field>
+  </record>  
 
   <record id="ire_ibas_property_action" model="ir.actions.act_window">
     <field name="name">Properties</field>

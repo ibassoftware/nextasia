@@ -128,44 +128,51 @@
                     </group>
                 </page>
                 <page name="spa" string="SPA Info" attrs="{'invisible': [('is_company','=', True)]}">
-                    <!--<group attrs="{'readonly': [('have_spa','!=', True)]}">-->
                     <group>
                         <group>
-                            <field name="spa_contact_id"/>
-                            <field name="spa_lastname"/>
-                            <field name="spa_firstname"/>
-                            <field name="spa_middlename"/>
-                            <field name="spa_suffix"/>
-                            <label for="spa_street" string="SPA Address"/>
+                            <field name="spa_contact_id" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                            <field name="spa_lastname" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                            <field name="spa_firstname" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                            <field name="spa_middlename" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                            <field name="spa_suffix" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                            <label for="spa_street" string="SPA Address" attrs="{'readonly': [('have_spa','!=', True)]}"/>
                             <div class="o_address_format">
-                                <field name="spa_street" placeholder="Street..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                <field name="spa_street2" placeholder="Street 2..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                <field name="spa_city" placeholder="City" class="o_address_city" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                <field name="spa_state_id" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" context="{'country_id': country_id, 'zip': zip}"/>
-                                <field name="spa_zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                <field name="spa_country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="spa_street" placeholder="Street..." class="o_address_street" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                                <field name="spa_street2" placeholder="Street 2..." class="o_address_street" attrs="{'readonly': [ ('have_spa','!=', True)]}"/>
+                                <field name="spa_city" placeholder="City" class="o_address_city" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                                <field name="spa_state_id" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;: True}" attrs="{'readonly': [('have_spa','!=', True)]}" context="{'country_id': country_id, 'zip': zip}"/>
+                                <field name="spa_zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                                <field name="spa_country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('have_spa','!=', True)]}"/>                                
+                                <!--
+                                <field name="spa_street" placeholder="Street..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False), ('have_spa','!=', True)]}"/>
+                                <field name="spa_street2" placeholder="Street 2..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False), ('have_spa','!=', True)]}"/>
+                                <field name="spa_city" placeholder="City" class="o_address_city" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False), ('have_spa','!=', True)]}"/>
+                                <field name="spa_state_id" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False), ('have_spa','!=', True)]}" context="{'country_id': country_id, 'zip': zip}"/>
+                                <field name="spa_zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False), ('have_spa','!=', True)]}"/>
+                                <field name="spa_country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False), ('have_spa','!=', True)]}"/>
+                                -->
                             </div>
-                            <field name="spa_citizenship"/>
-                            <field name="spa_birthday"/>
-                            <field name="spa_age"/>
-                            <field name="spa_place_of_birth"/>
-                            <field name="spa_civil_status"/>
-                            <field name="spa_sex"/>
-                            <field name="spa_mobile"/>
-                            <field name="spa_contact"/>
-                            <field name="spa_relationship"/>
+                            <field name="spa_citizenship" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                            <field name="spa_birthday" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                            <field name="spa_age" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                            <field name="spa_place_of_birth" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                            <field name="spa_civil_status" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                            <field name="spa_sex" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                            <field name="spa_mobile" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                            <field name="spa_contact" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                            <field name="spa_relationship" attrs="{'readonly': [('have_spa','!=', True)]}"/>
                         </group>
                         <group>
-                            <field name="spa_email"/>
-                            <field name="spa_office_landline"/>
-                            <field name="spa_sss_no"/>
-                            <field name="spa_pag_ibig_no"/>
-                            <field name="spa_tin_no"/>
-                            <field name="spa_company_name"/>
-                            <field name="spa_company_address"/>
-                            <field name="spa_nature_business"/>
-                            <field name="spa_designation"/>
-                            <field name="spa_date_employed_established"/>
+                            <field name="spa_email" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                            <field name="spa_office_landline" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                            <field name="spa_sss_no" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                            <field name="spa_pag_ibig_no" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                            <field name="spa_tin_no" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                            <field name="spa_company_name" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                            <field name="spa_company_address" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                            <field name="spa_nature_business" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                            <field name="spa_designation" attrs="{'readonly': [('have_spa','!=', True)]}"/>
+                            <field name="spa_date_employed_established" attrs="{'readonly': [('have_spa','!=', True)]}"/>
                         </group>
                     </group>
                 </page>
@@ -257,7 +264,7 @@
                 <field name="education_attain"/>
                 <field name="office_landline"/>
                 <field name="have_co_buyer"/>
-                <!--<field name="have_spa"/>-->
+                <field name="have_spa"/>
             </xpath>
 
             <xpath expr="//field[@name='name']" position="replace">
