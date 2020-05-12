@@ -130,6 +130,15 @@ class PropertiesProjectProperty(models.Model):
 
     on_hold = fields.Boolean('Tech Hold')
 
+    reservation_date = fields.Date('Date Reserved')
+
+    sale_order_id = fields.One2many('sale.order', 'unit_id', string='Sale Order')
+
+    so_selling_price = fields.Float(string='Selling Price')
+
+
+
+
 
     list_price = fields.Float(
         'Selling Price', default=1.0,

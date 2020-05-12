@@ -24,6 +24,9 @@ class IBASSale(models.Model):
         if self.unit_id:
             self.unit_id.state = 'open'
             self.unit_id.customer = False
+            self.unit_id.reservation_date = False
+            self.unit_id.so_selling_price = 0.00
+
         return self.write({'state': 'cancel'})
 
     def action_confirm(self):
@@ -46,6 +49,8 @@ class IBASSale(models.Model):
         if self.unit_id:
             self.unit_id.state = 'reserved'
             self.unit_id.customer = self.partner_id
+            self.unit_id.reservation_date = self.date_order
+            self.unit_id.so_selling_price = self.list_price
             for prop in self.unit_id:
                 prop.update({
                     'price_history_line_ids': [(0, 0, {
