@@ -69,21 +69,29 @@
                                     <td></td>
                                 </tr> 
                                  <tr>
-                                    <td>Pre Selling Price</td>
+                                    <td>Selling Price</td>
+                                    <td style="text-align:right;"> <span t-field="doc.list_price"/></td>
+                                    <!--
                                     <td style="text-align:right;"> <span t-field="doc.unit_id.preselling_price"/></td>
+                                    -->
                                     <td style="text-align:right;">Reservation:</td>
                                     <td class="b-bottom-1" style="text-align:right;"><span t-field="doc.sc_ids[0].payment_amount"/></td>
                                 </tr> 
                                  <tr>
+                                    <td>Discounted Price:</td>
+                                    <td class="b-bottom b-right b-left b-top" style="text-align:right;"><span t-esc="'{:,.2f}'.format(doc.list_price - doc.discount_spotdp)"/> Php</td>
+                                    <!--
                                     <td>Discount:</td>
                                     <td style="text-align:right;"> <span t-esc="'{:,.2f}'.format(doc.discount_amount)"/> Php</td>
+                                    -->
                                     <td style="text-align:right;">Downpayment:</td>
                                     <td class="b-bottom-1" style="text-align:right;"><span t-field="doc.downpayment"/></td>
                                 </tr> 
                                 <tr>
-                                    <td>Discounted Price:</td>
-                                    <td class="b-bottom b-right b-left b-top" style="text-align:right;"><span t-esc="'{:,.2f}'.format(doc.list_price)"/> Php</td>
-                                    <td style="text-align:right;">Discount on Spot DP:</td>
+                                    <td/>
+                                    <td/>                                    
+
+                                    <td style="text-align:right;">Spot DP Discount:</td>
                                     <td class="b-bottom-1" style="text-align:right;"><span t-field="doc.discount_spotdp"/></td>
                                 </tr> 
                             </table>
@@ -125,6 +133,10 @@
                                 <td class="b-left-1 b-top-1 b-right-1 b-bottom-1 font-size-12"><i>Interest rate fixed for 20 years</i></td>
                                 <td class="b-top-1 b-right-1 b-bottom-1 font-size-12" style="text-align: right;"><i><span t-field="doc.monthly_20"/></i></td>
                             </tr>
+                            <tr>
+                                <td class="b-left-1 b-top-1 b-right-1 b-bottom-1 font-size-12"><i>Interest rate fixed for 30 years</i></td>
+                                <td class="b-top-1 b-right-1 b-bottom-1 font-size-12" style="text-align: right;"><i><span t-field="doc.monthly_30"/></i></td>
+                            </tr>                            
                             </table>
                           <!--  <table style="width: 70%; margin-left: auto; margin-right: auto;">
                             <tr>
