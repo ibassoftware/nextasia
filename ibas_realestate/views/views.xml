@@ -85,7 +85,9 @@
             <!--
             <field name="preselling_price" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" widget="monetary"/>
             -->
-            <field name="responsible" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}"/>
+            <field name="responsible" invisible="1"/>
+            <field name="responsible_emp_id" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}"/>
+            
             <field name="dp_terms" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
             <field name="categ_id" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}"/>        
             </group>

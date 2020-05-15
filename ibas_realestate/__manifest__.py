@@ -24,8 +24,9 @@
 
     # always loaded
     'data': [
-        'security/ir.model.access.csv',
         'security/ibas_realestate_security.xml',
+        'security/ir.model.access.csv',        
+        'data/sale_downpayment_rate.xml',
         'wizard/update_sale_price_wiz_views.xml',
         # 'reports/client_information_report.xml',
         'reports/sample_computation_report.xml',
@@ -38,7 +39,7 @@
         'views/property_class_views.xml',
         'views/property_model_views.xml',
         'views/property_lot_views.xml',
-
+        'views/ir_ui_menu.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

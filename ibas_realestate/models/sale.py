@@ -177,15 +177,42 @@ class IBASSale(models.Model):
         ('23', '23 Months'),
         ('24', '24 Months'),
 
-    ], string='DP Terms')
+    ], string='DP Terms',
+    states={'draft': [('readonly', False)], 'sent': [('readonly', False)]})
 
     is_cash = fields.Boolean(string='Cash DP')
+
+    downpayment_type = fields.Selection([('fixed', 'Fixed'),('percentage', 'Percentage')], string='Downpayment Type')
+    dp_per_rate = fields.Many2one('sale.downpayment.rate', string = 'DP Rate Percentage')
+    downpayment_per_rate = fields.Selection([('6_5', '6.5%'),('8_5', '8.5%'),('10', '10%')], string='DP Percentage Rate')
+
+
+    @api.onchange('downpayment_type', 'dp_per_rate')
+    def changeDownpaymentAmount(self):
+        if self.downpayment_type == 'fixed':
+            self.downpayment = self.list_price * 0.10 - 5000
+            rate = self.dp_per_rate = False
+        else:
+            if not self.dp_per_rate:
+                self.dp_per_rate = self.env.ref('ibas_realestate.rate_10_0').id
+
+            rate = self.dp_per_rate and self.dp_per_rate.rate / 100.00
+            amount = self.list_price * rate
+            amount = amount - self.reservation_amount
+            self.downpayment =  amount
+
+    @api.onchange('dp_terms')
+    def _onchange_dp_terms(self):
+        if self.unit_id:
+            self.unit_id.dp_terms = self.dp_terms
+
 
     @api.onchange('is_cash')
     def _onchange_is_cash(self):
         if self.unit_id:
             if self.is_cash:
                 self.dp_terms = '1'
+                self.unit_id.dp_terms = '1'
             else:
                 self.dp_terms = self.unit_id.dp_terms
 
@@ -224,7 +251,7 @@ class IBASSale(models.Model):
     loanable_amount = fields.Monetary(
         compute='_compute_loanable_amount', string='Loanable Amount')
 
-    @api.depends('list_price', 'downpayment')
+    @api.depends('list_price','downpayment')
     def _compute_loanable_amount(self):
         for rec in self:
             rec.loanable_amount = rec.list_price - rec.downpayment - rec.reservation_amount
@@ -250,3 +277,10 @@ class SalesSampleComputationLine(models.Model):
     def _compute_total(self):
         for rec in self:
             rec.total = rec.payment_amount + rec.closing_fees
+
+class SaleDownPaymentRate(models.Model):
+    _name = 'sale.downpayment.rate'
+    _description= 'Downpayment Rate'
+
+    name = fields.Char('Name', required=True)
+    rate = fields.Float(string='Rate %', digits=(5, 5))
