@@ -323,7 +323,12 @@
                 <field name="buying_reason"/>
                 <field name="source_awareness"/>
             </xpath>
-           
+
+
+            <field name="function" position="replace"/>
+            <field name="parent_id" position="replace">
+                <field name="parent_id" invisible="1"/>
+            </field>           
         </field>
     </record>
 </data>

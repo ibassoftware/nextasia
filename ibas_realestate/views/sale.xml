@@ -1,4 +1,3 @@
-
 <odoo>
 <data>
     <record id="ibas_sale_view_form" model="ir.ui.view">
@@ -20,8 +19,10 @@
                 <field name="list_price" widget="monetary"/>
             </xpath>
 
-            <xpath expr="//field[@name='payment_term_id']" position="after">
-                <field name="downpayment"/>
+            <xpath expr="//field[@name='payment_term_id']" position="after">            
+                <field name="downpayment_type"/>
+                <field name="dp_per_rate" attrs="{'invisible' :[('downpayment_type', '=', 'fixed')], 'required': [('downpayment_type', '!=', 'fixed')]}"/>
+                <field name="downpayment" attrs="{'readonly': [('downpayment_type', '!=', 'fixed')]}" force_save="1"/>
                 <field name="dp_terms"/>
                 <field name="is_cash"/>
                 <field name="reservation_amount"/>
@@ -91,5 +92,62 @@
 
         </field>
     </record>
+
+
+    <record id="sale_downpayment_rate_form" model="ir.ui.view">
+        <field name="name">sale.downpayment.rate.form</field> 
+        <field name="model">sale.downpayment.rate</field>
+        <field name="arch" type="xml">
+            <form string="Downpayment Rate">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="rate"/>
+                    </group>
+                </sheet>                
+            </form> 
+        </field> 
+    </record>
+
+    <record id="sale_downpayment_rate_tree" model="ir.ui.view">
+        <field name="name">sale.downpayment.rate.tree</field> 
+        <field name="model">sale.downpayment.rate</field>
+        <field name="arch" type="xml">
+            <tree string="Downpayment Rate">
+                <field name="name"/>
+                <field name="rate"/>                
+            </tree> 
+        </field> 
+    </record>
+
+    <record id="sale_downpayment_rate_search" model="ir.ui.view">
+        <field name="name">sale.downpayment.rate.search</field> 
+        <field name="model">sale.downpayment.rate</field>
+        <field name="arch" type="xml">
+            <search string="Downpayment Rate">
+                <field name="name"/>
+                <field name="rate"/>                
+            </search>
+        </field> 
+    </record>
+
+    <record id="open_sale_downpayment_rate" model="ir.actions.act_window">
+        <field name="name"> Downpayment Rate</field> 
+        <field name="res_model">sale.downpayment.rate</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+           <p class="o_view_nocontent_smiling_face">
+            Create a Downpayment Rate        
+           </p> 
+        </field> 
+    </record>
+
+
+    <menuitem id="menu_sale_downpayment_rate" 
+      name= "Down Payment Rate" 
+      groups="base.group_system" 
+      parent="sale.menu_sale_config"
+      action="open_sale_downpayment_rate"
+      sequence="99"/>
 </data>
 </odoo>

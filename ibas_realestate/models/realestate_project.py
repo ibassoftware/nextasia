@@ -53,6 +53,7 @@ class PropertiesProjectProperty(models.Model):
     preselling_price = fields.Monetary(string='Pre Selling Price')
 
     responsible = fields.Many2one('res.users', string='Account Officer')
+    responsible_emp_id = fields.Many2one('hr.employee', string='Account Officer')
     contractor = fields.Many2one('res.partner', string='Contractor')
     construction_start_date = fields.Date(string='Construction Start Date')
     construction_end_date = fields.Date(string='Construction End Date')

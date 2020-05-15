@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">    	
+		<record id="rate_6_5" model="sale.downpayment.rate">
+		    <field name="name">6.5%</field> 
+		    <field name="rate">6.5000</field>
+		</record>
+		<record id="rate_8_5" model="sale.downpayment.rate">
+		    <field name="name">8.5%</field> 
+		    <field name="rate">8.5000</field>
+		</record>
+		<record id="rate_10_0" model="sale.downpayment.rate">
+		    <field name="name">10.0%</field> 
+		    <field name="rate">10.0000</field>
+		</record>
+    	
+    </data>
+</odoo>
