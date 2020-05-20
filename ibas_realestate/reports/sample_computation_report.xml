@@ -27,12 +27,22 @@
                                 <tr>
                                     <td style="width: 60%;"><span>Project Name:</span></td>
                                     <td style="width: 20%;"><span class="center">Date:</span></td>
-                                    <td style="width: 20%;"><span class="center" t-field="doc.date_order"/></td>
+                                    
+                                    <td style="width: 20%;"><span class="center" t-field="doc.current_date"/></td>
+                                    <!--<td style="width: 20%;"><span class="center" t-field="doc.date_order"/></td>-->
                                 </tr>
                                 <tr>
                                     <td><strong><span t-field="doc.project_id"/></strong></td>
                                     <td><span class="center">Date of Reservation:</span></td>
-                                    <td><span class="center" t-field="doc.sc_ids[0].date"/></td>
+
+                                    <t t-if="doc.state=='draft'">
+                                        <td/>
+                                        
+                                    </t>
+                                    <t t-if="doc.state !='draft'">
+                                        <td style="width: 20%;"><span class="center" t-field="doc.date_order"/></td>
+                                    </t>
+                                    <!--<td><span class="center" t-field="doc.sc_ids[0].date"/></td>-->
                                 </tr>
                                 <tr>
                                     <td class="b-bottom">Brgy.Soledad San Pablo City, Laguna</td>
@@ -69,8 +79,8 @@
                                     <td></td>
                                 </tr> 
                                  <tr>
-                                    <td>Selling Price</td>
-                                    <td style="text-align:right;"> <span t-field="doc.list_price"/></td>
+                                    <td>Financing Type:</td>
+                                    <td class="center"><strong><span t-field="doc.financing_type"/></strong></td>
                                     <!--
                                     <td style="text-align:right;"> <span t-field="doc.unit_id.preselling_price"/></td>
                                     -->
@@ -78,8 +88,8 @@
                                     <td class="b-bottom-1" style="text-align:right;"><span t-field="doc.sc_ids[0].payment_amount"/></td>
                                 </tr> 
                                  <tr>
-                                    <td>Discounted Price:</td>
-                                    <td class="b-bottom b-right b-left b-top" style="text-align:right;"><span t-esc="'{:,.2f}'.format(doc.list_price - doc.discount_spotdp)"/> Php</td>
+                                    <td>Selling Price</td>
+                                    <td style="text-align:right;"> <span t-field="doc.list_price"/></td>
                                     <!--
                                     <td>Discount:</td>
                                     <td style="text-align:right;"> <span t-esc="'{:,.2f}'.format(doc.discount_amount)"/> Php</td>
@@ -88,8 +98,8 @@
                                     <td class="b-bottom-1" style="text-align:right;"><span t-field="doc.downpayment"/></td>
                                 </tr> 
                                 <tr>
-                                    <td/>
-                                    <td/>                                    
+                                    <td>Discounted Price:</td>
+                                    <td class="b-bottom b-right b-left b-top" style="text-align:right;"><span t-esc="'{:,.2f}'.format(doc.list_price - doc.discount_spotdp)"/> Php</td>
 
                                     <td style="text-align:right;">Spot DP Discount:</td>
                                     <td class="b-bottom-1" style="text-align:right;"><span t-field="doc.discount_spotdp"/></td>
@@ -125,18 +135,45 @@
                                 <td style="width: 35%;" class="center"><span></span></td>
                                 <td style="width: 35%;" class="center font-size-12"><i>Monthly Amortization</i></td>
                             </tr>
-                            <tr>
-                                <td class="b-left-1 b-top-1 b-right-1 b-bottom-1 font-size-12"><i>Interest rate fixed for 10 years</i></td>
-                                <td class="b-top-1 b-right-1 b-bottom-1 font-size-12" style="text-align: right;"><i><span t-field="doc.monthly_10"/></i></td>
-                            </tr>
-                            <tr>
-                                <td class="b-left-1 b-top-1 b-right-1 b-bottom-1 font-size-12"><i>Interest rate fixed for 20 years</i></td>
-                                <td class="b-top-1 b-right-1 b-bottom-1 font-size-12" style="text-align: right;"><i><span t-field="doc.monthly_20"/></i></td>
-                            </tr>
-                            <tr>
-                                <td class="b-left-1 b-top-1 b-right-1 b-bottom-1 font-size-12"><i>Interest rate fixed for 30 years</i></td>
-                                <td class="b-top-1 b-right-1 b-bottom-1 font-size-12" style="text-align: right;"><i><span t-field="doc.monthly_30"/></i></td>
-                            </tr>                            
+
+                            <t t-if="doc.financing_type =='phdmf'">
+                                <tr>
+                                    <td class="b-left-1 b-top-1 b-right-1 b-bottom-1 font-size-12"><i>Interest rate fixed for 5 years</i></td>
+                                    <td class="b-top-1 b-right-1 b-bottom-1 font-size-12" style="text-align: right;"><i><span t-field="doc.monthly_5"/></i></td>
+                                </tr>                                
+                                <tr>
+                                    <td class="b-left-1 b-top-1 b-right-1 b-bottom-1 font-size-12"><i>Interest rate fixed for 10 years</i></td>
+                                    <td class="b-top-1 b-right-1 b-bottom-1 font-size-12" style="text-align: right;"><i><span t-field="doc.monthly_10"/></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="b-left-1 b-top-1 b-right-1 b-bottom-1 font-size-12"><i>Interest rate fixed for 20 years</i></td>
+                                    <td class="b-top-1 b-right-1 b-bottom-1 font-size-12" style="text-align: right;"><i><span t-field="doc.monthly_20"/></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="b-left-1 b-top-1 b-right-1 b-bottom-1 font-size-12"><i>Interest rate fixed for 30 years</i></td>
+                                    <td class="b-top-1 b-right-1 b-bottom-1 font-size-12" style="text-align: right;"><i><span t-field="doc.monthly_30"/></i></td>
+                                </tr>
+                            </t>
+
+                            <t t-if="doc.financing_type =='bankf'">
+                                <tr>
+                                    <td class="b-left-1 b-top-1 b-right-1 b-bottom-1 font-size-12"><i>Interest rate fixed for 3 years</i></td>
+                                    <td class="b-top-1 b-right-1 b-bottom-1 font-size-12" style="text-align: right;"><i><span t-field="doc.monthly_3"/></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="b-left-1 b-top-1 b-right-1 b-bottom-1 font-size-12"><i>Interest rate fixed for 5 years</i></td>
+                                    <td class="b-top-1 b-right-1 b-bottom-1 font-size-12" style="text-align: right;"><i><span t-field="doc.monthly_5"/></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="b-left-1 b-top-1 b-right-1 b-bottom-1 font-size-12"><i>Interest rate fixed for 10 years</i></td>
+                                    <td class="b-top-1 b-right-1 b-bottom-1 font-size-12" style="text-align: right;"><i><span t-field="doc.monthly_10"/></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="b-left-1 b-top-1 b-right-1 b-bottom-1 font-size-12"><i>Interest rate fixed for 20 years</i></td>
+                                    <td class="b-top-1 b-right-1 b-bottom-1 font-size-12" style="text-align: right;"><i><span t-field="doc.monthly_20"/></i></td>
+                                </tr>                                
+                            </t>                            
+                            
                             </table>
                           <!--  <table style="width: 70%; margin-left: auto; margin-right: auto;">
                             <tr>

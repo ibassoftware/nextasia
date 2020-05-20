@@ -325,6 +325,36 @@ class PropertiesProjectProperty(models.Model):
         }
 
 
+    @api.model
+    def create(self, vals):
+        res = super(PropertiesProjectProperty, self).create(vals)
+        if res:
+            #Add Price History
+            price_history_line_model = self.env['ibas_realestate.price_history_line']
+
+            res_create = price_history_line_model.create({
+                            'product_id': res.id,
+                            'effective_date': fields.Datetime.now(),
+                            'selling_price': vals['list_price']})
+        return res
+
+    def write(self,vals):
+        for rec in self:
+            if 'list_price' in vals:
+                price_history_line_model = self.env['ibas_realestate.price_history_line']
+
+                validate_price = price_history_line_model.search([('product_id','=', rec.id)], order="id asc", limit=1)
+                if validate_price:
+                    if  vals['list_price'] < validate_price.selling_price:
+                        raise ValidationError("Selling Price is lower than the Original Price")
+                        
+                res_create = price_history_line_model.create({
+                            'product_id': rec.id,
+                            'effective_date': fields.Datetime.now(),
+                            'selling_price': vals['list_price']})
+        res = super(PropertiesProjectProperty, self).write(vals)
+        return res
+
 class IBASPropModel(models.Model):
     _name = 'ibas_realestate.propertymodel'
     _description = 'Property Model'
@@ -438,7 +468,7 @@ class IBASPropertyRequirementLoanProceedsLine(models.Model):
 class IBASPropertyPriceHistoryLine(models.Model):
     _name = 'ibas_realestate.price_history_line'
     _description = 'Price History'
-    _order = "effective_date desc"
+    _order = "effective_date asc"
 
     product_id = fields.Many2one('product.product', string='Property')
     effective_date = fields.Datetime(string='Effective Date')
