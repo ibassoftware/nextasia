@@ -16,6 +16,7 @@
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="pre_selling_price" widget="monetary" invisible="1"/>
                 <field name="discount_amount" widget="monetary" invisible="1"/>
+                <field name="financing_type" required="1"/>
                 <field name="list_price" widget="monetary"/>
             </xpath>
 
@@ -46,9 +47,11 @@
                     <group>
                     <group>
                     <field name="loanable_amount"/>
+                    <field name="monthly_3" attrs="{'invisible' :[('financing_type', '=', 'phdmf')]}"/>
+                    <field name="monthly_5"/>
                     <field name="monthly_10"/>
                      <field name="monthly_20"/>
-                     <field name="monthly_30"/>
+                     <field name="monthly_30" attrs="{'invisible' :[('financing_type', '!=', 'phdmf')]}"/>
                     </group>
                     </group>
                 </page>

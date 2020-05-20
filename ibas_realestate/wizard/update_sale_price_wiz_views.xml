@@ -10,7 +10,7 @@
           <group colspan="4" col="4">
               <field name="product_id" colspan="4" invisible="1"/>
               <field name="selling_price"/>
-              <field name="pre_selling_price"/>
+              <field name="pre_selling_price" invisible="1"/>
           </group>
           <footer>
             <button string="Update" name="update_price" type="object" class="btn-primary" confirm="This will update current Sale Price and Pre Selling Price. Are you sure you want to continue?"/>

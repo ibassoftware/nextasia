@@ -161,10 +161,10 @@
           </div>
           <group>
           <field name="price_history_line_ids" nolabel="1" attrs="{'readonly' :['|',('on_hold', '=', True),('state','=', 'accept')]}">
-            <tree editable="bottom">
+            <tree editable="bottom" default_order="effective_date desc">
               <field name="effective_date"/>
               <field name="selling_price"/>
-              <field name="pre_selling_price"/>
+              <field name="pre_selling_price" invisible="1"/>
               <field name="user_id"/>
             </tree>
           </field>
