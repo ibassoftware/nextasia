@@ -107,8 +107,8 @@ class IBASSale(models.Model):
     @api.onchange('list_price')
     def _onchange_list_price(self):
         for rec in self:
-            rec.downpayment = rec.list_price * 0.10 - 5000 #50000
-            rec.reservation_amount = 5000 #50000
+            rec.downpayment = rec.list_price * 0.10 - 5000  # 50000
+            rec.reservation_amount = 5000  # 50000
             rec.closing_fees = rec.list_price * 0.05
 
     sc_ids = fields.One2many(
@@ -178,15 +178,19 @@ class IBASSale(models.Model):
         ('24', '24 Months'),
 
     ], string='DP Terms',
-    states={'draft': [('readonly', False)], 'sent': [('readonly', False)]})
+        states={'draft': [('readonly', False)], 'sent': [('readonly', False)]})
 
     is_cash = fields.Boolean(string='Cash DP')
 
-    downpayment_type = fields.Selection([('fixed', 'Fixed'),('percentage', 'Percentage')], string='Downpayment Type')
-    dp_per_rate = fields.Many2one('sale.downpayment.rate', string = 'DP Rate Percentage')
-    downpayment_per_rate = fields.Selection([('6_5', '6.5%'),('8_5', '8.5%'),('10', '10%')], string='DP Percentage Rate')
+    downpayment_type = fields.Selection(
+        [('fixed', 'Fixed'), ('percentage', 'Percentage')], string='Downpayment Type')
+    dp_per_rate = fields.Many2one(
+        'sale.downpayment.rate', string='DP Rate Percentage')
+    downpayment_per_rate = fields.Selection(
+        [('6_5', '6.5%'), ('8_5', '8.5%'), ('10', '10%')], string='DP Percentage Rate')
 
-    financing_type = fields.Selection([('phdmf', 'Pag-IBIG'),('bankf', 'Bank Financing')], string='Financing Type', default='phdmf')
+    financing_type = fields.Selection(
+        [('phdmf', 'Pag-IBIG'), ('bankf', 'Bank Financing')], string='Financing Type', default='phdmf')
 
     @api.onchange('financing_type')
     def _Onchangefinancetype(self):
@@ -195,8 +199,6 @@ class IBASSale(models.Model):
             self.interest_rate = 0.06375
         else:
             self.interest_rate = 0.07500
-
-
 
     @api.onchange('downpayment_type', 'dp_per_rate')
     def changeDownpaymentAmount(self):
@@ -210,13 +212,12 @@ class IBASSale(models.Model):
             rate = self.dp_per_rate and self.dp_per_rate.rate / 100.00
             amount = self.list_price * rate
             amount = amount - self.reservation_amount
-            self.downpayment =  amount
+            self.downpayment = amount
 
     @api.onchange('dp_terms')
     def _onchange_dp_terms(self):
         if self.unit_id:
             self.unit_id.dp_terms = self.dp_terms
-
 
     @api.onchange('is_cash')
     def _onchange_is_cash(self):
@@ -230,18 +231,11 @@ class IBASSale(models.Model):
     monthly_3 = fields.Monetary(
         compute='_compute_monthly_3', string='Monthly Amortization 3 Years')
 
-
     monthly_5 = fields.Monetary(
         compute='_compute_monthly_5', string='Monthly Amortization 5 Years')
 
-
     monthly_10 = fields.Monetary(
         compute='_compute_monthly_10', string='Monthly Amortization 10 Years')
-
-    interest_rate = fields.Float(
-        string='Interest Rate', default=0.06375, digits=(5, 5)) #default=0.075, digits=(3, 3)
-
-    
 
     monthly_20 = fields.Monetary(
         compute='_compute_monthly_20', string='Monthly Amortization 20 Years')
@@ -249,47 +243,78 @@ class IBASSale(models.Model):
     monthly_30 = fields.Monetary(
         compute='_compute_monthly_30', string='Monthly Amortization 30 Years')
 
+    interest_rate = fields.Many2one(
+        'sale.interest.rate', string='Interest Rate')
+
+    @api.model
+    def default_get(self, fields):
+        res = super(IBASSale, self).default_get(fields)
+        res['interest_rate'] = 1
+        return res
+
     @api.depends('loanable_amount', 'interest_rate')
     def _compute_monthly_3(self):
-        for rec in self:
-            rec.monthly_3 = calculate_amortization_amount(
-                rec.loanable_amount, rec.interest_rate / 12, 36)
+        if self.interest_rate:
+            for rec in self:
+                rec.monthly_3 = calculate_amortization_amount(
+                    rec.loanable_amount, rec.interest_rate.rate / 12, 36)
+        else:
+            for rec in self:
+                rec.monthly_3 = calculate_amortization_amount(
+                    rec.loanable_amount, 0.06375 / 12, 36)
 
     @api.depends('loanable_amount', 'interest_rate')
     def _compute_monthly_5(self):
-        for rec in self:
-            rec.monthly_5 = calculate_amortization_amount(
-                rec.loanable_amount, rec.interest_rate / 12, 60)
+        if self.interest_rate:
+            for rec in self:
+                rec.monthly_5 = calculate_amortization_amount(
+                    rec.loanable_amount, rec.interest_rate.rate / 12, 60)
+        else:
+            for rec in self:
+                rec.monthly_5 = calculate_amortization_amount(
+                    rec.loanable_amount, 0.06375 / 12, 60)
 
     @api.depends('loanable_amount', 'interest_rate')
     def _compute_monthly_10(self):
-        for rec in self:
-            rec.monthly_10 = calculate_amortization_amount(
-                rec.loanable_amount, rec.interest_rate / 12, 120)
+        if self.interest_rate:
+            for rec in self:
+                rec.monthly_10 = calculate_amortization_amount(
+                    rec.loanable_amount, rec.interest_rate.rate / 12, 120)
+        else:
+            for rec in self:
+                rec.monthly_10 = calculate_amortization_amount(
+                    rec.loanable_amount, 0.06375 / 12, 120)
 
     @api.depends('loanable_amount', 'interest_rate')
     def _compute_monthly_20(self):
-        for rec in self:
-            rec.monthly_20 = calculate_amortization_amount(
-                rec.loanable_amount, rec.interest_rate / 12, 240)
+        if self.interest_rate:
+            for rec in self:
+                rec.monthly_20 = calculate_amortization_amount(
+                    rec.loanable_amount, rec.interest_rate.rate / 12, 240)
+        else:
+            for rec in self:
+                rec.monthly_20 = calculate_amortization_amount(
+                    rec.loanable_amount, 0.06375 / 12, 240)
 
     @api.depends('loanable_amount', 'interest_rate')
     def _compute_monthly_30(self):
-        for rec in self:
-            rec.monthly_30 = calculate_amortization_amount(
-                rec.loanable_amount, rec.interest_rate / 12, 360)
-
+        if self.interest_rate:
+            for rec in self:
+                rec.monthly_30 = calculate_amortization_amount(
+                    rec.loanable_amount, rec.interest_rate.rate / 12, 360)
+        else:
+            for rec in self:
+                rec.monthly_30 = calculate_amortization_amount(
+                    rec.loanable_amount, 0.06375 / 12, 360)
 
     loanable_amount = fields.Monetary(
         compute='_compute_loanable_amount', string='Loanable Amount')
 
-    @api.depends('list_price','downpayment')
+    @api.depends('list_price', 'downpayment')
     def _compute_loanable_amount(self):
         for rec in self:
             rec.loanable_amount = rec.list_price - rec.downpayment - rec.reservation_amount
-
-
-    #For Reports
+    # For Reports
     current_date = fields.Datetime('Date', compute='_compute_report_gen_date')
 
     def _compute_report_gen_date(self):
@@ -318,9 +343,18 @@ class SalesSampleComputationLine(models.Model):
         for rec in self:
             rec.total = rec.payment_amount + rec.closing_fees
 
+
 class SaleDownPaymentRate(models.Model):
     _name = 'sale.downpayment.rate'
-    _description= 'Downpayment Rate'
+    _description = 'Downpayment Rate'
+
+    name = fields.Char('Name', required=True)
+    rate = fields.Float(string='Rate %', digits=(5, 5))
+
+
+class SaleInterestRate(models.Model):
+    _name = 'sale.interest.rate'
+    _description = 'Interest Rate'
 
     name = fields.Char('Name', required=True)
     rate = fields.Float(string='Rate %', digits=(5, 5))

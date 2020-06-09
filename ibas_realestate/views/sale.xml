@@ -146,11 +146,69 @@
     </record>
 
 
+
+    <!-- Interest Rate -->
+    <record id="sale_interst_rate_form" model="ir.ui.view">
+        <field name="name">sale.interest.rate.form</field> 
+        <field name="model">sale.interest.rate</field>
+        <field name="arch" type="xml">
+            <form string="Interest Rate">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="rate"/>
+                    </group>
+                </sheet>                
+            </form> 
+        </field> 
+    </record>
+
+    <record id="sale_interest_rate_tree" model="ir.ui.view">
+        <field name="name">sale.interest.rate.tree</field> 
+        <field name="model">sale.interest.rate</field>
+        <field name="arch" type="xml">
+            <tree string="Interest Rate">
+                <field name="name"/>
+                <field name="rate"/>                
+            </tree> 
+        </field> 
+    </record>
+
+    <record id="sale_interest_rate_search" model="ir.ui.view">
+        <field name="name">sale.interest.rate.search</field> 
+        <field name="model">sale.interest.rate</field>
+        <field name="arch" type="xml">
+            <search string="Interest Rate">
+                <field name="name"/>
+                <field name="rate"/>                
+            </search>
+        </field> 
+    </record>
+
+    <record id="open_sale_interest_rate" model="ir.actions.act_window">
+        <field name="name"> Interest Rate</field> 
+        <field name="res_model">sale.interest.rate</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+           <p class="o_view_nocontent_smiling_face">
+            Create a Interest Rate        
+           </p> 
+        </field> 
+    </record>
+
+
     <menuitem id="menu_sale_downpayment_rate" 
       name= "Down Payment Rate" 
       groups="base.group_system" 
       parent="sale.menu_sale_config"
       action="open_sale_downpayment_rate"
       sequence="99"/>
+
+    <menuitem id="menu_sale_interest_rate" 
+      name= "Interest Rate" 
+      groups="base.group_system" 
+      parent="sale.menu_sale_config"
+      action="open_sale_interest_rate"
+      sequence="100"/>
 </data>
 </odoo>
