@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
-
+from openerp.exceptions import ValidationError
 from odoo import _, api, fields, models
 
 _logger = logging.getLogger(__name__)
@@ -39,6 +39,14 @@ class IBASCustomer(models.Model):
     nature_business = fields.Char('Nature of Business')
     date_employed_established = fields.Date('Date Employed/Established')
     monthly_gross_salary = fields.Monetary('Monthly Gross Salary')
+
+    @api.constrains('monthly_gross_salary')
+    def _require_monthly_gross_salary(self):
+        for record in self:
+            if record.monthly_gross_salary <= 0:
+                raise ValidationError(
+                    "Monthly Salary must not less than or equal %s" % record.monthly_gross_salary)
+
     allowances = fields.Monetary('Allowances')
     commisions = fields.Monetary('Commisions')
     total_earnings = fields.Monetary(

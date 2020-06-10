@@ -52,25 +52,25 @@
                             </table>
                             <table style="width: 100%">
                                 <tr>
-                                    <td style="width: 20%">Client's Name:</td>
-                                    <td style="width: 30%"></td>
-                                    <td style="width: 25%; text-align:right;">Block No.</td>
-                                    <td style="width: 25%" class="center"><span t-field="doc.unit_id.block"/></td>
+                                    <td style="width: 17%">Client's Name:</td>
+                                    <td style="width: 37%"> <strong><span t-field="doc.partner_id"/></strong> </td>
+                                    <td style="width: 23%; text-align:right;">Block No.</td>
+                                    <td style="width: 23%" class="center"><span t-field="doc.unit_id.block"/></td>
                                 </tr> 
                                 <tr>
-                                    <td colspan="2" class="center"> <strong><span t-field="doc.partner_id"/></strong></td>     
+                                    <td colspan="2"> </td>     
                                     <td style="text-align:right;">Lot No.:</td>
                                     <td class="center"><span t-field="doc.unit_id.lot"/></td>
                                 </tr> 
                                 <tr>
                                     <td>House Model:</td>
-                                    <td class="center"><strong><span t-field="doc.unit_id.propmodel_id"/></strong></td>
+                                    <td><strong><span t-field="doc.unit_id.propmodel_id"/></strong></td>
                                     <td style="text-align:right;">Lot Area(sqm):</td>
                                      <td class="center"><span t-field="doc.unit_id.lot_area"/></td>
                                 </tr>
                                  <tr>
                                     <td>Type:</td>
-                                    <td class="center"><strong><span t-field="doc.unit_id.propclass_id"/></strong></td>
+                                    <td><strong><span t-field="doc.unit_id.propclass_id"/></strong></td>
                                     <td style="text-align:right;">Floor Area(sqm):</td>
                                     <td class="center"><span t-field="doc.unit_id.floor_area"/></td>
                                 </tr> 
@@ -80,7 +80,7 @@
                                 </tr> 
                                  <tr>
                                     <td>Financing Type:</td>
-                                    <td class="center"><strong><span t-field="doc.financing_type"/></strong></td>
+                                    <td><strong><span t-field="doc.financing_type"/></strong></td>
                                     <!--
                                     <td style="text-align:right;"> <span t-field="doc.unit_id.preselling_price"/></td>
                                     -->
