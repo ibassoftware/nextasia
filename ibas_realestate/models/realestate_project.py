@@ -139,7 +139,6 @@ class PropertiesProjectProperty(models.Model):
 
     so_selling_price = fields.Float(string='Selling Price')
 
-
     list_price = fields.Float(
         'Selling Price', default=1.0,
         digits='Product Price',
@@ -213,8 +212,8 @@ class PropertiesProjectProperty(models.Model):
                 if not self.loan_proceeds_line_ids:
                     loan_proceeds_lines.append((0, 0, client))
             self.update({'loan_proceeds_line_ids': loan_proceeds_lines})
-        else:
-            raise UserError('There are no client requirements')
+        # else:
+        #    raise UserError('There are no client requirements')
 
     def get_requirements(self):
         for rec in self:
@@ -263,8 +262,8 @@ class PropertiesProjectProperty(models.Model):
                 if not self.booked_sale_line_ids:
                     booked_lines.append((0, 0, client))
             self.update({'booked_sale_line_ids': booked_lines})
-        else:
-            raise UserError('There are no client requirements')
+        # else:
+        #    raise UserError('There are no client requirements')
 
     def contracted_sale(self):
         client_reqs = self.env['ibas_realestate.client_requirement'].search(
@@ -293,8 +292,8 @@ class PropertiesProjectProperty(models.Model):
                 if not self.contracted_sale_line_ids:
                     contracted_lines.append((0, 0, client))
             self.update({'contracted_sale_line_ids': contracted_lines})
-        else:
-            raise UserError('There are no client requirements')
+        # else:
+        #    raise UserError('There are no client requirements')
 
     # back to
 
