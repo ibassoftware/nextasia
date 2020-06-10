@@ -102,7 +102,7 @@
               <field name="last_dp_date" attrs="{'readonly' :['|','|',('on_hold', '=', True),('state','=', 'accept'),('state','=','proceed')]}"/>
 
               <field name="reservation_date" attrs="{'readonly' :['|','|',('on_hold', '=', True),('state','=', 'accept'),('state','=','proceed')]}"/>
-
+              <field name="finishing_id"/>
             </group>
           </group>
         </sheet>

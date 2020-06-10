@@ -133,12 +133,12 @@ class PropertiesProjectProperty(models.Model):
     on_hold = fields.Boolean('Tech Hold')
 
     reservation_date = fields.Date('Date Reserved')
+    finishing_id = fields.Many2one('ibas_realestate.property_finishing', string='Finishing')
 
     sale_order_id = fields.One2many(
         'sale.order', 'unit_id', string='Sale Order')
 
     so_selling_price = fields.Float(string='Selling Price')
-
 
     list_price = fields.Float(
         'Selling Price', default=1.0,
@@ -494,6 +494,15 @@ class PropertyClass(models.Model):
         ('unique_properties_name', 'UNIQUE(name)',
          'You can not have two properties')
     ]
+
+# MENU  Type
+
+
+class PropertyFinishing(models.Model):
+    _name = 'ibas_realestate.property_finishing'
+    _description = 'Property Finishing'
+
+    name = fields.Char(string='Name', required=True)
 
 
 class LotClass(models.Model):

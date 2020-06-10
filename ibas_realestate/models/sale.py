@@ -249,7 +249,7 @@ class IBASSale(models.Model):
     @api.model
     def default_get(self, fields):
         res = super(IBASSale, self).default_get(fields)
-        res['interest_rate'] = 1
+        res['interest_rate'] = 2
         return res
 
     @api.depends('loanable_amount', 'interest_rate')

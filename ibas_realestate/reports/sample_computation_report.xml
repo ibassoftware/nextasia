@@ -58,19 +58,20 @@
                                     <td style="width: 23%" class="center"><span t-field="doc.unit_id.block"/></td>
                                 </tr> 
                                 <tr>
-                                    <td colspan="2"> </td>     
+                                    <td>House Model:</td>
+                                    <td><strong><span t-field="doc.unit_id.propmodel_id"/></strong></td>     
                                     <td style="text-align:right;">Lot No.:</td>
                                     <td class="center"><span t-field="doc.unit_id.lot"/></td>
                                 </tr> 
                                 <tr>
-                                    <td>House Model:</td>
-                                    <td><strong><span t-field="doc.unit_id.propmodel_id"/></strong></td>
+                                    <td>Type:</td>
+                                    <td><strong><span t-field="doc.unit_id.propclass_id"/></strong></td>
                                     <td style="text-align:right;">Lot Area(sqm):</td>
                                      <td class="center"><span t-field="doc.unit_id.lot_area"/></td>
                                 </tr>
                                  <tr>
-                                    <td>Type:</td>
-                                    <td><strong><span t-field="doc.unit_id.propclass_id"/></strong></td>
+                                    <td>Financing Type:</td>
+                                    <td><strong><span t-field="doc.financing_type"/></strong></td>
                                     <td style="text-align:right;">Floor Area(sqm):</td>
                                     <td class="center"><span t-field="doc.unit_id.floor_area"/></td>
                                 </tr> 
@@ -79,30 +80,42 @@
                                     <td></td>
                                 </tr> 
                                  <tr>
-                                    <td>Financing Type:</td>
-                                    <td><strong><span t-field="doc.financing_type"/></strong></td>
+                                    <td>Lot Class</td>
+                                    <td><strong><span t-field="doc.unit_id.proplot_id"/></strong></td>
                                     <!--
                                     <td style="text-align:right;"> <span t-field="doc.unit_id.preselling_price"/></td>
                                     -->
                                     <td style="text-align:right;">Reservation:</td>
                                     <td class="b-bottom-1" style="text-align:right;"><span t-field="doc.sc_ids[0].payment_amount"/></td>
-                                </tr> 
+                                </tr>
+
                                  <tr>
-                                    <td>Selling Price</td>
-                                    <td style="text-align:right;"> <span t-field="doc.list_price"/></td>
+                                    <td>Finishing</td>
+                                    <td><strong><span t-field="doc.unit_id.finishing_id"/></strong></td>
                                     <!--
                                     <td>Discount:</td>
                                     <td style="text-align:right;"> <span t-esc="'{:,.2f}'.format(doc.discount_amount)"/> Php</td>
                                     -->
                                     <td style="text-align:right;">Downpayment:</td>
                                     <td class="b-bottom-1" style="text-align:right;"><span t-field="doc.downpayment"/></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Selling Price</td>
+                                    <td style="text-align:right;"> <span t-field="doc.list_price"/></td>
+                                    <!--
+                                    <td>Discount:</td>
+                                    <td style="text-align:right;"> <span t-esc="'{:,.2f}'.format(doc.discount_amount)"/> Php</td>
+                                    -->
+                                    <td style="text-align:right;">Spot DP Discount:</td>
+                                    <td class="b-bottom-1" style="text-align:right;"><span t-field="doc.discount_spotdp"/></td>
                                 </tr> 
                                 <tr>
                                     <td>Discounted Price:</td>
                                     <td class="b-bottom b-right b-left b-top" style="text-align:right;"><span t-esc="'{:,.2f}'.format(doc.list_price - doc.discount_spotdp)"/> Php</td>
 
                                     <td style="text-align:right;">Spot DP Discount:</td>
-                                    <td class="b-bottom-1" style="text-align:right;"><span t-field="doc.discount_spotdp"/></td>
+                                    <td class="b-bottom-1" style="text-align:right;"></td>
                                 </tr> 
                             </table>
                             <hr class="line"/>
