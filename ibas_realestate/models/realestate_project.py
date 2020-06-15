@@ -19,6 +19,7 @@ class IBASREProject(models.Model):
     _description = 'Real Estate Project'
 
     name = fields.Char(string='Project Name', required=True)
+    address = fields.Char(string='Address')
 
 
 class PropertiesProjectProperty(models.Model):
@@ -395,7 +396,10 @@ class IBASPropertyRequirementReservationLine(models.Model):
     def _compute_complied(self):
         for rec in self:
             if rec.requirement_file:
-                rec.complied = True
+                rec.update({
+                    'complied': True,
+                    'compliance_date': fields.Date.today(),
+                })
             else:
                 rec.complied = False
 
@@ -418,7 +422,10 @@ class IBASPropertyRequirementBookedSaleLine(models.Model):
     def _compute_complied(self):
         for rec in self:
             if rec.requirement_file:
-                rec.complied = True
+                rec.update({
+                    'complied': True,
+                    'compliance_date': fields.Date.today(),
+                })
             else:
                 rec.complied = False
 
@@ -441,7 +448,10 @@ class IBASPropertyRequirementContractedSaleLine(models.Model):
     def _compute_complied(self):
         for rec in self:
             if rec.requirement_file:
-                rec.complied = True
+                rec.update({
+                    'complied': True,
+                    'compliance_date': fields.Date.today(),
+                })
             else:
                 rec.complied = False
 
@@ -462,7 +472,10 @@ class IBASPropertyRequirementLoanProceedsLine(models.Model):
     def _compute_complied(self):
         for rec in self:
             if rec.requirement_file:
-                rec.complied = True
+                rec.update({
+                    'complied': True,
+                    'compliance_date': fields.Date.today(),
+                })
             else:
                 rec.complied = False
 
