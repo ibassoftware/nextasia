@@ -19,6 +19,7 @@ class IBASREProject(models.Model):
     _description = 'Real Estate Project'
 
     name = fields.Char(string='Project Name', required=True)
+    address = fields.Char(string='Address')
 
 
 class PropertiesProjectProperty(models.Model):
@@ -53,7 +54,8 @@ class PropertiesProjectProperty(models.Model):
     preselling_price = fields.Monetary(string='Pre Selling Price')
 
     responsible = fields.Many2one('res.users', string='Account Officer')
-    responsible_emp_id = fields.Many2one('hr.employee', string='Account Officer')
+    responsible_emp_id = fields.Many2one(
+        'hr.employee', string='Account Officer')
     contractor = fields.Many2one('res.partner', string='Contractor')
     construction_start_date = fields.Date(string='Construction Start Date')
     construction_end_date = fields.Date(string='Construction End Date')
@@ -127,19 +129,16 @@ class PropertiesProjectProperty(models.Model):
         'ibas_realestate.price_history_line', 'product_id', string='Price History')
 
     proplot_id = fields.Many2one(
-        'ibas_realestate.property_lot', string = 'Lot Class')
+        'ibas_realestate.property_lot', string='Lot Class')
 
     on_hold = fields.Boolean('Tech Hold')
 
     reservation_date = fields.Date('Date Reserved')
 
-    sale_order_id = fields.One2many('sale.order', 'unit_id', string='Sale Order')
+    sale_order_id = fields.One2many(
+        'sale.order', 'unit_id', string='Sale Order')
 
     so_selling_price = fields.Float(string='Selling Price')
-
-
-
-
 
     list_price = fields.Float(
         'Selling Price', default=1.0,
@@ -214,8 +213,8 @@ class PropertiesProjectProperty(models.Model):
                 if not self.loan_proceeds_line_ids:
                     loan_proceeds_lines.append((0, 0, client))
             self.update({'loan_proceeds_line_ids': loan_proceeds_lines})
-        else:
-            raise UserError('There are no client requirements')
+        # else:
+        #    raise UserError('There are no client requirements')
 
     def get_requirements(self):
         for rec in self:
@@ -264,8 +263,8 @@ class PropertiesProjectProperty(models.Model):
                 if not self.booked_sale_line_ids:
                     booked_lines.append((0, 0, client))
             self.update({'booked_sale_line_ids': booked_lines})
-        else:
-            raise UserError('There are no client requirements')
+        # else:
+        #    raise UserError('There are no client requirements')
 
     def contracted_sale(self):
         client_reqs = self.env['ibas_realestate.client_requirement'].search(
@@ -294,8 +293,8 @@ class PropertiesProjectProperty(models.Model):
                 if not self.contracted_sale_line_ids:
                     contracted_lines.append((0, 0, client))
             self.update({'contracted_sale_line_ids': contracted_lines})
-        else:
-            raise UserError('There are no client requirements')
+        # else:
+        #    raise UserError('There are no client requirements')
 
     # back to
 
@@ -324,36 +323,40 @@ class PropertiesProjectProperty(models.Model):
             'res_id': self.id
         }
 
-
     @api.model
     def create(self, vals):
         res = super(PropertiesProjectProperty, self).create(vals)
         if res:
-            #Add Price History
+            # Add Price History
             price_history_line_model = self.env['ibas_realestate.price_history_line']
 
             res_create = price_history_line_model.create({
-                            'product_id': res.id,
-                            'effective_date': fields.Datetime.now(),
-                            'selling_price': vals['list_price']})
+                'product_id': res.id,
+                'effective_date': fields.Datetime.now(),
+                'selling_price': vals['list_price']})
         return res
 
-    def write(self,vals):
+    def write(self, vals):
         for rec in self:
             if 'list_price' in vals:
                 price_history_line_model = self.env['ibas_realestate.price_history_line']
 
-                validate_price = price_history_line_model.search([('product_id','=', rec.id)], order="id asc", limit=1)
+                validate_price = price_history_line_model.search(
+                    [('product_id', '=', rec.id)], order="id asc", limit=1)
                 if validate_price:
-                    if  vals['list_price'] < validate_price.selling_price:
-                        raise ValidationError("Selling Price is lower than the Original Price")
-                        
+                    if vals['list_price'] < validate_price.selling_price:
+                        raise ValidationError(
+                            "Selling Price is lower than the Original Price")
+
                 res_create = price_history_line_model.create({
-                            'product_id': rec.id,
-                            'effective_date': fields.Datetime.now(),
-                            'selling_price': vals['list_price']})
+                    'product_id': rec.id,
+                    'effective_date': fields.Datetime.now(),
+                    'selling_price': vals['list_price']})
         res = super(PropertiesProjectProperty, self).write(vals)
         return res
+
+# MENU Model
+
 
 class IBASPropModel(models.Model):
     _name = 'ibas_realestate.propertymodel'
@@ -361,6 +364,8 @@ class IBASPropModel(models.Model):
 
     name = fields.Char(string='Name', required=True)
     project_id = fields.Many2one('ibas_realestate.project', string='Project')
+
+# MENU Client Requirements
 
 
 class IBASRequirementModel(models.Model):
@@ -391,7 +396,10 @@ class IBASPropertyRequirementReservationLine(models.Model):
     def _compute_complied(self):
         for rec in self:
             if rec.requirement_file:
-                rec.complied = True
+                rec.update({
+                    'complied': True,
+                    'compliance_date': fields.Date.today(),
+                })
             else:
                 rec.complied = False
 
@@ -414,7 +422,10 @@ class IBASPropertyRequirementBookedSaleLine(models.Model):
     def _compute_complied(self):
         for rec in self:
             if rec.requirement_file:
-                rec.complied = True
+                rec.update({
+                    'complied': True,
+                    'compliance_date': fields.Date.today(),
+                })
             else:
                 rec.complied = False
 
@@ -437,7 +448,10 @@ class IBASPropertyRequirementContractedSaleLine(models.Model):
     def _compute_complied(self):
         for rec in self:
             if rec.requirement_file:
-                rec.complied = True
+                rec.update({
+                    'complied': True,
+                    'compliance_date': fields.Date.today(),
+                })
             else:
                 rec.complied = False
 
@@ -458,7 +472,10 @@ class IBASPropertyRequirementLoanProceedsLine(models.Model):
     def _compute_complied(self):
         for rec in self:
             if rec.requirement_file:
-                rec.complied = True
+                rec.update({
+                    'complied': True,
+                    'compliance_date': fields.Date.today(),
+                })
             else:
                 rec.complied = False
 
@@ -477,6 +494,8 @@ class IBASPropertyPriceHistoryLine(models.Model):
     user_id = fields.Many2one('res.users', string='Update By:',
                               required=True, default=lambda self: self.env.uid)
 
+# MENU  Type
+
 
 class PropertyClass(models.Model):
     _name = 'ibas_realestate.property_class'
@@ -487,6 +506,7 @@ class PropertyClass(models.Model):
         ('unique_properties_name', 'UNIQUE(name)',
          'You can not have two properties')
     ]
+
 
 class LotClass(models.Model):
     _name = 'ibas_realestate.property_lot'
