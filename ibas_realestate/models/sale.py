@@ -357,4 +357,4 @@ class SaleInterestRate(models.Model):
     _description = 'Interest Rate'
 
     name = fields.Char('Name', required=True)
-    rate = fields.Float(string='Rate %', digits=(5, 5))
+    rate = fields.Float(string='Rate', digits=(5, 5))

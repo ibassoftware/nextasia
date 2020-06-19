@@ -22,17 +22,19 @@
                             </table>
                             <table style="width: 100%;">
                                 <tr>
-                                    <td colspan="3" class="center bg-tomato" style="color: white; font-size: 24px"><strong><span>COMPUTATION</span></strong></td>
+                                    <td colspan="4" class="center bg-tomato" style="color: white; font-size: 24px"><strong><span>COMPUTATION</span></strong></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 60%;"><span>Project Name:</span></td>
+                                    <td style="width: 17%;"><span>Project Name:</span></td>
+                                    <td style="width: 43%;"><strong><span t-field="doc.project_id"/></strong></td>
                                     <td style="width: 20%;"><span class="center">Date:</span></td>
                                     
                                     <td style="width: 20%;"><span class="center" t-field="doc.current_date"/></td>
                                     <!--<td style="width: 20%;"><span class="center" t-field="doc.date_order"/></td>-->
                                 </tr>
                                 <tr>
-                                    <td><strong><span t-field="doc.project_id"/></strong></td>
+                                    <td><span>Address:</span></td>
+                                    <td><strong><span t-field="doc.project_id.address"/></strong></td>
                                     <td><span class="center">Date of Reservation:</span></td>
 
                                     <t t-if="doc.state=='draft'">
@@ -45,7 +47,7 @@
                                     <!--<td><span class="center" t-field="doc.sc_ids[0].date"/></td>-->
                                 </tr>
                                 <tr>
-                                    <td class="b-bottom">Brgy.Soledad San Pablo City, Laguna</td>
+                                    <td class="b-bottom" colspan="2"></td>
                                     <td class="b-bottom"><span class="center">Terms</span></td>
                                     <td class="b-bottom"><span class="center" t-field="doc.dp_terms"/></td>
                                 </tr>
