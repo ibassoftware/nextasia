@@ -29,7 +29,7 @@
                 <field name="reservation_amount"/>
                 <field name="closing_fees" invisible="1"/>
                 <field name="discount_spotdp"/>
-                <field name="interest_rate"></field>
+                <field name="interest_rate" options="{'no_quick_create':True,'no_create_edit':True}"/>
                 
             </xpath>
 
