@@ -79,7 +79,7 @@
             </xpath>
 
             <xpath expr="//group[@name='sale_total']/field[@name='amount_tax']" position="after">
-                <field name="discount_amount_percent" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="disc_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                 <field name="disc_spot" widget="monetary" options="{'currency_field': 'currency_id'}"/>
             </xpath>
 

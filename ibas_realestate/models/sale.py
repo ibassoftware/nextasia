@@ -75,7 +75,7 @@ class IBASSale(models.Model):
                 rec.project_id = rec.unit_id.project_id.id
                 rec.pre_selling_price = rec.unit_id.preselling_price
                 rec.list_price = rec.unit_id.list_price
-                #rec.discount_amount = rec.pre_selling_price - rec.list_price
+                # rec.discount_amount = rec.pre_selling_price - rec.list_price
                 rec.dp_terms = rec.unit_id.dp_terms
 
                 self.update({
@@ -103,7 +103,7 @@ class IBASSale(models.Model):
         ('percentage', 'Percentage'),
     ], string='Discount Type')
 
-    discount_amount = fields.Float(string='Discount Amount')
+    discount_amount = fields.Float(string='Discount Amount', store=True)
     discount_amount_percent = fields.Float(
         string='Discount Amount', compute="_compute_discount_price")
 
@@ -119,6 +119,8 @@ class IBASSale(models.Model):
     discount_spotdp = fields.Monetary(string='Spot DP Discount')
     disc_spot = fields.Monetary(
         string='Discount Spot DP', compute='_disc_spot')
+    disc_amount = fields.Monetary(
+        string='Discount Amount', compute='_disc_amount')
 
     @api.depends('discount_spotdp')
     def _disc_spot(self):
@@ -126,6 +128,24 @@ class IBASSale(models.Model):
             rec.update({
                 'disc_spot': rec.discount_spotdp,
             })
+
+    @api.depends('discount_amount_percent', 'discount_amount')
+    def _disc_amount(self):
+        for rec in self:
+            if self.discount_type == 'fixed':
+                rec.update({
+                    'disc_amount': rec.discount_amount,
+                })
+
+            elif self.discount_type == 'percentage':
+                rec.update({
+                    'disc_amount': rec.discount_amount_percent,
+                })
+
+            else:
+                rec.update({
+                    'disc_amount': 0.0,
+                })
 
     @api.depends('order_line.price_total', 'discount_amount_percent', 'discount_spotdp')
     def _amount_all(self):
@@ -140,7 +160,7 @@ class IBASSale(models.Model):
             order.update({
                 'amount_untaxed': amount_untaxed,
                 'amount_tax': amount_tax,
-                'amount_total': amount_untaxed + amount_tax - (self.discount_amount_percent + self.discount_spotdp),
+                'amount_total': amount_untaxed + amount_tax - (self.disc_amount + self.discount_spotdp),
             })
 
     @api.onchange('discount_type')
@@ -156,7 +176,7 @@ class IBASSale(models.Model):
                 rec.discount_amount_percent = 0.0
                 rec.discount_amount = 0.0
 
-    @api.depends('discount_amount')
+    @api.depends('discount_amount', 'discount_rate_id', 'discount_type')
     def _compute_discount_price(self):
         for rec in self:
             if rec.discount_type == "fixed":
@@ -267,7 +287,7 @@ class IBASSale(models.Model):
         else:
             self.interest_rate = 0.07500
 
-    @api.onchange('downpayment_type', 'dp_per_rate', 'discount_spotdp', 'is_cash', 'reservation_amount')
+    @api.onchange('downpayment_type', 'dp_per_rate', 'discount_spotdp', 'is_cash', 'reservation_amount', 'discount_type', 'discount_amount', 'discount_rate_id')
     def changeDownpaymentAmount(self):
         if self.downpayment_type == 'fixed':
             self.downpayment = self.list_price * 0.10 - 5000
@@ -277,7 +297,10 @@ class IBASSale(models.Model):
                 self.dp_per_rate = self.env.ref('ibas_realestate.rate_10_0').id
 
             rate = self.dp_per_rate and self.dp_per_rate.rate / 100.00
-            amount = self.discounted_price * rate
+
+            amount = 0
+            if self.discount_type:
+                amount += self.discounted_price * rate
 
             if self.discount_spotdp >= 0:
                 dp_amount = amount - \
