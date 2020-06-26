@@ -37,19 +37,17 @@ class PropertiesProjectProperty(models.Model):
 
     @api.onchange('project_id', 'block', 'lot', 'propmodel_id')
     def _compute_name(self):
-        for rec in self:
-            if rec.is_a_property:
-                for rec in self:
-                    try:
-                        rec.name = rec.project_id.name + ' Block ' + \
-                            rec.block + ' Lot ' + rec.lot + '-' + rec.propmodel_id.name
-                    except:
-                        pass
+
+        if self.is_a_property:
+            self.name = self.project_id.name + ' Block ' + self.block + \
+                ' Lot ' + self.lot + ' - ' + self.propmodel_id.name
 
     project_id = fields.Many2one('ibas_realestate.project', string='Project')
     block = fields.Char(string='Block')
     lot = fields.Char(string='Lot')
     phase = fields.Char('Phase')
+    propmodel_id = fields.Many2one(
+        'ibas_realestate.propertymodel', string='Model')
 
     preselling_price = fields.Monetary(string='Pre Selling Price')
 
@@ -78,8 +76,6 @@ class PropertiesProjectProperty(models.Model):
     ], string='Status', default='open', tracking=True)
 
     customer = fields.Many2one('res.partner', string='Customer')
-    propmodel_id = fields.Many2one(
-        'ibas_realestate.propertymodel', string='Model')
 
     last_dp_date = fields.Date(string='Last DP Date')
     dp_terms = fields.Selection([
@@ -334,7 +330,7 @@ class PropertiesProjectProperty(models.Model):
 
             res_create = price_history_line_model.create({
                 'product_id': res.id,
-                'effective_date': rec.price_history_current_date,
+                'effective_date': res.price_history_current_date,
                 'selling_price': vals['list_price']})
         return res
 

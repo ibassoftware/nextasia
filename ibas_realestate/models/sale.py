@@ -6,6 +6,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import AccessError, UserError, RedirectWarning, ValidationError, Warning
 from datetime import datetime
 from dateutil.relativedelta import *
+import math
 
 
 _logger = logging.getLogger(__name__)
@@ -242,6 +243,9 @@ class IBASSale(models.Model):
 
     sc_ids = fields.One2many(
         'ibas_realestate.sample_computation.line', 'order_id', string='Sample Computation')
+
+    def ord(self, n):
+        return str(n)+("th" if 4 <= n % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th"))
 
     def action_compute_sc(self):
         for rec in self:

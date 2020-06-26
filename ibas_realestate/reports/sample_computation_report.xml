@@ -35,14 +35,14 @@
                                 <tr>
                                     <td><span>Address:</span></td>
                                     <td><strong><span t-field="doc.project_id.address"/></strong></td>
-                                    <td><span class="center">Date of Reservation:</span></td>
+                                    <td><span class="center">Valid Until:</span></td>
 
                                     <t t-if="doc.state=='draft'">
                                         <td/>
                                         
                                     </t>
                                     <t t-if="doc.state !='draft'">
-                                        <td style="width: 20%;"><span class="center" t-field="doc.date_order"/></td>
+                                        <td style="width: 20%;"><span class="center" t-field="doc.validity_date"/></td>
                                     </t>
                                     <!--<td><span class="center" t-field="doc.sc_ids[0].date"/></td>-->
                                 </tr>
@@ -240,7 +240,7 @@
                                 - The actual interest rate is only estimated and will be subjected for actual computation by the bank or pag-ibig. <br/>
                                 - This 10% downpayment and 90% loanable amount scheme is only for Developer's Acrredited Banks and Pag-Ibig. <br/>
                                 - This OFFICIAL COMPUTATION is only valid and binding if signed by the duly authorized signatories. <br/>
-                                - The 3% interest rate is applicable only for clients under provincial rate with maximum 12K and manila rate wit 15K gross income per month otherwise 6.375% shall follow. <br/>
+                                - The 3% interest rate is applicable only for clients under provincial rate with maximum 12K and manila rate with 15K gross income per month otherwise 6.375% shall follow. <br/>
                             </p>
                             </div>
                             <table style="width: 100%">
