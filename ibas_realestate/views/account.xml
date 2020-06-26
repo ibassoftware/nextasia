@@ -1,0 +1,27 @@
+<odoo>
+<data>
+    <record id="ibas_account_move_view_form" model="ir.ui.view">
+        <field name="name">account.move.view.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            
+            <xpath expr="//field[@name='narration']" position="after">
+                    <div>
+                        <label for="disc_spot" string="Discount Spot DP :"/>
+                        <field name='disc_spot'/>
+                    </div>
+                   
+                    <div>
+                        <label for="disc_amount" string="Discount Amount :"/>
+                        <field name='disc_amount'/>
+                    </div>
+                    <div class="oe_subtotal_footer_separator">
+                        <label for="discount_rate" string="Discount Rate :"/>
+                        <field name="discount_rate" class="oe_inline"/>
+                    </div>
+            </xpath>
+        </field>
+    </record>
+</data>
+</odoo>

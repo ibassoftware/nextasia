@@ -11,6 +11,12 @@ from dateutil.relativedelta import *
 _logger = logging.getLogger(__name__)
 
 
+class IBASSaleOrderLine(models.Model):
+    _inherit = 'sale.order.line'
+
+    disc = fields.Float(string='Discount')
+
+
 class IBASSale(models.Model):
     _inherit = 'sale.order'
     unit_id = fields.Many2one('product.product', string='Unit', domain=[('is_a_property', '=', True),
@@ -121,6 +127,42 @@ class IBASSale(models.Model):
         string='Discount Spot DP', compute='_disc_spot')
     disc_amount = fields.Monetary(
         string='Discount Amount', compute='_disc_amount')
+
+    def _prepare_invoice(self):
+        """
+        Prepare the dict of values to create the new invoice for a sales order. This method may be
+        overridden to implement custom invoice generation (making sure to call super() to establish
+        a clean extension chain).
+        """
+        self.ensure_one()
+        journal = self.env['account.move'].with_context(
+            force_company=self.company_id.id, default_type='out_invoice')._get_default_journal()
+        if not journal:
+            raise UserError(_('Please define an accounting sales journal for the company %s (%s).') % (
+                self.company_id.name, self.company_id.id))
+
+        invoice_vals = {
+            'ref': self.client_order_ref or '',
+            'type': 'out_invoice',
+            'narration': self.note,
+            'currency_id': self.pricelist_id.currency_id.id,
+            'campaign_id': self.campaign_id.id,
+            'medium_id': self.medium_id.id,
+            'source_id': self.source_id.id,
+            'invoice_user_id': self.user_id and self.user_id.id,
+            'team_id': self.team_id.id,
+            'partner_id': self.partner_invoice_id.id,
+            'partner_shipping_id': self.partner_shipping_id.id,
+            'fiscal_position_id': self.fiscal_position_id.id or self.partner_invoice_id.property_account_position_id.id,
+            'invoice_origin': self.name,
+            'invoice_payment_term_id': self.payment_term_id.id,
+            'invoice_payment_ref': self.reference,
+            'transaction_ids': [(6, 0, self.transaction_ids.ids)],
+            'invoice_line_ids': [],
+            'disc_spot': self.disc_spot,
+            'disc_amount': self.disc_amount,
+        }
+        return invoice_vals
 
     @api.depends('discount_spotdp')
     def _disc_spot(self):

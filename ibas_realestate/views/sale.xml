@@ -5,6 +5,11 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='order_line']/tree/field[@name='discount']" position="after">
+                <field name="disc" string="Disc."/>
+            </xpath>
+
             <xpath expr="//field[@name='validity_date']" position="before">
                 <field name="project_id"/>
             </xpath>
