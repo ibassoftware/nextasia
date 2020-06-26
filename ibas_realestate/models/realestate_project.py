@@ -134,11 +134,13 @@ class PropertiesProjectProperty(models.Model):
     on_hold = fields.Boolean('Tech Hold')
 
     reservation_date = fields.Date('Date Reserved')
+    price_history_current_date = fields.Datetime(
+        'Price History Current Date', default=fields.Datetime.now())
 
     sale_order_id = fields.One2many(
         'sale.order', 'unit_id', string='Sale Order')
 
-    so_selling_price = fields.Float(string='Selling Price')
+    so_selling_price = fields.Float(string='SO Selling Price')
 
     list_price = fields.Float(
         'Selling Price', default=1.0,
@@ -332,7 +334,7 @@ class PropertiesProjectProperty(models.Model):
 
             res_create = price_history_line_model.create({
                 'product_id': res.id,
-                'effective_date': fields.Datetime.now(),
+                'effective_date': rec.price_history_current_date,
                 'selling_price': vals['list_price']})
         return res
 
@@ -350,7 +352,7 @@ class PropertiesProjectProperty(models.Model):
 
                 res_create = price_history_line_model.create({
                     'product_id': rec.id,
-                    'effective_date': fields.Datetime.now(),
+                    'effective_date': rec.price_history_current_date,
                     'selling_price': vals['list_price']})
         res = super(PropertiesProjectProperty, self).write(vals)
         return res
