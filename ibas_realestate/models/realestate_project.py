@@ -37,10 +37,14 @@ class PropertiesProjectProperty(models.Model):
 
     @api.onchange('project_id', 'block', 'lot', 'propmodel_id')
     def _compute_name(self):
+        for rec in self:
+            if rec.is_a_property:
 
-        if self.is_a_property:
-            self.name = self.project_id.name + ' Block ' + self.block + \
-                ' Lot ' + self.lot + ' - ' + self.propmodel_id.name
+                try:
+                    rec.name = rec.project_id.name + ' Block ' + rec.block + \
+                        ' Lot ' + rec.lot + ' - ' + rec.propmodel_id.name
+                except:
+                    pass
 
     project_id = fields.Many2one('ibas_realestate.project', string='Project')
     block = fields.Char(string='Block')

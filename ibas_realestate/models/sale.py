@@ -6,7 +6,6 @@ from odoo import _, api, fields, models
 from odoo.exceptions import AccessError, UserError, RedirectWarning, ValidationError, Warning
 from datetime import datetime
 from dateutil.relativedelta import *
-import math
 
 
 _logger = logging.getLogger(__name__)
@@ -244,9 +243,6 @@ class IBASSale(models.Model):
     sc_ids = fields.One2many(
         'ibas_realestate.sample_computation.line', 'order_id', string='Sample Computation')
 
-    def ord(self, n):
-        return str(n)+("th" if 4 <= n % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th"))
-
     def action_compute_sc(self):
         for rec in self:
             if rec.unit_id.id is not False:
@@ -272,6 +268,28 @@ class IBASSale(models.Model):
                         monthly_fees = rec.downpayment  # - rec.discount_spotdp
                     while i < my_dp_term_int:
                         month_iteration = i + 1
+                        ordinal = ""
+                        if month_iteration != 0:
+                            if month_iteration == 1:
+                                ordinal = str(month_iteration) + "st"
+                            elif month_iteration == 2:
+                                ordinal = str(month_iteration) + "nd"
+
+                            elif month_iteration == 3:
+                                ordinal = str(month_iteration) + "rd"
+
+                            elif month_iteration == 21:
+                                ordinal = str(month_iteration) + "st"
+
+                            elif month_iteration == 22:
+                                ordinal = str(month_iteration) + "nd"
+
+                            elif month_iteration == 23:
+                                ordinal = str(month_iteration) + "rd"
+
+                            else:
+                                ordinal = str(month_iteration) + "th"
+
                         mydate = datetime.today() + relativedelta(months=+month_iteration)
 
                         self.update({
@@ -279,7 +297,7 @@ class IBASSale(models.Model):
                                 'date': mydate,
                                 'payment_amount': monthly_fees,
                                 'closing_fees': monthly_closing_fees,
-                                'description': 'Monthly',
+                                'description': ordinal + ' Downpayment',
                             })]
                         })
                         i = i + 1
@@ -460,7 +478,8 @@ class IBASSale(models.Model):
     @api.depends('list_price', 'downpayment')
     def _compute_loanable_amount(self):
         for rec in self:
-            rec.loanable_amount = rec.list_price - rec.downpayment - rec.reservation_amount
+            rec.loanable_amount = rec.discounted_price - rec.downpayment - \
+                rec.reservation_amount - rec.discount_spotdp
     # For Reports
     current_date = fields.Datetime('Date', compute='_compute_report_gen_date')
 
