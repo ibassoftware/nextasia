@@ -40,6 +40,7 @@
         'views/property_class_views.xml',
         'views/property_model_views.xml',
         'views/property_lot_views.xml',
+        'views/property_finishing_views.xml',
         'views/group_views.xml',
         'views/ir_ui_menu.xml',
     ],

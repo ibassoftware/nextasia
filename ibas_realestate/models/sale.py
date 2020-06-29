@@ -393,11 +393,11 @@ class IBASSale(models.Model):
     interest_rate = fields.Many2one(
         'sale.interest.rate', string='Interest Rate')
 
-    # @api.model
-    # def default_get(self, fields):
-    #    res = super(IBASSale, self).default_get(fields)
-    #    res['interest_rate'] = 2
-    #    return res
+    @api.model
+    def default_get(self, fields):
+        res = super(IBASSale, self).default_get(fields)
+        res['interest_rate'] = 2
+        return res
 
     @api.depends('loanable_amount', 'interest_rate')
     def _compute_monthly_3(self):

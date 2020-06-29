@@ -1,0 +1,31 @@
+<odoo>
+<data>
+    <record id="ibas_realestate_property_finishing_form" model="ir.ui.view">
+        <field name="name">ibas_realestate_property_finishing_form</field>
+        <field name="model">ibas_realestate.property_finishing</field>
+        <field name="arch" type="xml">
+            <form string="Finishing">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ibas_realestate_property_finishing" model="ir.actions.act_window">
+        <field name="name">Finishing</field>
+        <field name="res_model">ibas_realestate.property_finishing</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+    </record>
+
+    <menuitem
+        id="ibas_realestate_property_finishing_menu"
+        name="Finishing"
+        action="action_ibas_realestate_property_finishing"
+        parent="ibas_re_menu"
+        sequence="40"/>
+</data>
+</odoo>
