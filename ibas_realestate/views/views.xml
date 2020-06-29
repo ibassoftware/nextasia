@@ -89,7 +89,7 @@
             <field name="responsible" invisible="1"/>
             <field name="responsible_emp_id" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}"/>
             
-            <field name="dp_terms" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
+            <field name="dp_terms" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}"/>
             <field name="categ_id" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}"/>        
             </group>
             <group>
@@ -102,7 +102,7 @@
               <field name="actual_construction_complete_date" attrs="{'readonly' :['|','|',('on_hold', '=', True),('state','=', 'accept'),('state','=','proceed')]}"/>
               <field name="last_dp_date" attrs="{'readonly' :['|','|',('on_hold', '=', True),('state','=', 'accept'),('state','=','proceed')]}"/>
               <field name="reservation_date" attrs="{'readonly' :['|','|',('on_hold', '=', True),('state','=', 'accept'),('state','=','proceed')]}"/>
-              <field name="finishing_id"/>
+              <field name="finishing_id" required="1"/>
               <field name="price_history_current_date" attrs="{'readonly' :['|','|',('on_hold', '=', True),('state','=', 'accept'),('state','=','proceed')]}"/>
 
             </group>
