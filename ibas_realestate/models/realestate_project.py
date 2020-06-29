@@ -134,7 +134,8 @@ class PropertiesProjectProperty(models.Model):
     on_hold = fields.Boolean('Tech Hold')
 
     reservation_date = fields.Date('Date Reserved')
-    finishing_id = fields.Many2one('ibas_realestate.property_finishing', string='Finishing')
+    finishing_id = fields.Many2one(
+        'ibas_realestate.property_finishing', string='Finishing')
     price_history_current_date = fields.Datetime(
         'Price History Current Date', default=fields.Datetime.now())
 
@@ -340,6 +341,8 @@ class PropertiesProjectProperty(models.Model):
         return res
 
     def write(self, vals):
+
+        res = super(PropertiesProjectProperty, self).write(vals)
         for rec in self:
             if 'list_price' in vals:
                 price_history_line_model = self.env['ibas_realestate.price_history_line']
@@ -355,7 +358,6 @@ class PropertiesProjectProperty(models.Model):
                     'product_id': rec.id,
                     'effective_date': rec.price_history_current_date,
                     'selling_price': vals['list_price']})
-        res = super(PropertiesProjectProperty, self).write(vals)
         return res
 
 # MENU Model
