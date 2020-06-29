@@ -1,0 +1,81 @@
+<odoo>
+    <data>
+        <record id="ibas_realestate_property_group_user_view_form" model="ir.ui.view">
+            <field name="name">ibas_realestate.property_group_user_view.form</field> 
+            <field name="model">product.product</field>
+            <field name="groups_id" eval="[(6,0,[ref('ibas_realestate.group_ibas_realestate_user')])]"/>
+            <field name="inherit_id" ref="ibas_realestate.ire_property_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='project_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='block']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='lot']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='phase']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='propmodel_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='propclass_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='proplot_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='floor_area']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='lot_area']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='list_price']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+            </field> 
+        </record>
+
+         <record id="ibas_realestate_property_group_manager_view_form" model="ir.ui.view">
+            <field name="name">ibas_realestate.property_group_manager_view.form</field> 
+            <field name="model">product.product</field>
+            <field name="groups_id" eval="[(6,0,[ref('ibas_realestate.group_ibas_realestate_manager')])]"/>
+            <field name="inherit_id" ref="ibas_realestate.ire_property_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='project_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='block']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='lot']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='phase']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='propmodel_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='propclass_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='proplot_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='floor_area']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='lot_area']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='list_price']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+            </field> 
+        </record>
+    </data>
+</odoo>
