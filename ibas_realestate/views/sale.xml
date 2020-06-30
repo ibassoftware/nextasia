@@ -6,8 +6,11 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
 
-            <xpath expr="//field[@name='order_line']/tree/field[@name='discount']" position="after">
-                <field name="disc" string="Disc."/>
+           <xpath expr="//field[@name='note']" position="before">
+                <field name="disc_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="disc_spot" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="discount_rate" readonly="1"/>
+                <button colspan="2" name="button_dummy" states="draft,sent" string="(UPDATE DISCOUNT)" type="object" class="oe_link"/>
             </xpath>
 
             <xpath expr="//field[@name='validity_date']" position="before">
@@ -81,11 +84,6 @@
 
             <xpath expr="//button[@name='action_draft']" position="after">
                 <button string="Compute Sample Computation" name="action_compute_sc" type="object" class="oe_highlight"/>
-            </xpath>
-
-            <xpath expr="//group[@name='sale_total']/field[@name='amount_tax']" position="after">
-                <field name="disc_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                <field name="disc_spot" widget="monetary" options="{'currency_field': 'currency_id'}"/>
             </xpath>
 
         </field>
