@@ -9,7 +9,7 @@
            <xpath expr="//field[@name='note']" position="before">
                 <field name="disc_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                 <field name="disc_spot" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                <field name="discount_rate" readonly="1"/>
+                <field name="discount_rate" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="1"/>
                 <button colspan="2" name="button_dummy" states="draft,sent" string="(UPDATE DISCOUNT)" type="object" class="oe_link"/>
             </xpath>
 
@@ -40,7 +40,7 @@
                     </group>
                     <group string="Down Payment">
                         <field name="downpayment_type"/>
-                        <field name="dp_per_rate" attrs="{'invisible' :[('downpayment_type', '=', 'fixed')], 'required': [('downpayment_type', '!=', 'fixed')]}"/>
+                        <field name="dp_per_rate" attrs="{'invisible' :[('downpayment_type', '!=', 'percentage')], 'required': [('downpayment_type', '!=', 'fixed')]}"/>
                         <field name="downpayment" string="Downpayment Amount" attrs="{'readonly': [('downpayment_type', '!=', 'fixed')]}" force_save="1"/>
                         <field name="is_cash"/>
                         <field name="discount_spotdp"/>
