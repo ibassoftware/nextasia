@@ -135,10 +135,16 @@
                                 <tr>
                                     <td class="b-left b-bottom b-top"></td>
                                     <td class="b-bottom b-top"></td>
-                                    <td class="center b-bottom b-right b-top"> <t t-esc="'{:,.2f}'.format(sum(total.payment_amount for total in doc.sc_ids))" /> Php </td>
+                                    <td class="center b-bottom b-right b-top"> <t t-esc="'{:,.2f}'.format(sum(total.payment_amount for total in doc.sc_ids))"/> Php </td>
+                                </tr>
+                                 <tr style="background-color:lightgray">
+                                    <td class="b-left b-bottom b-top"></td>
+                                    <td class="b-bottom b-top">Outstanding Balance</td>
+                                    <td class="center b-bottom b-right b-top"> <t t-esc="'{:,.2f}'.format(doc.loanable_amount)"/> Php </td>
                                 </tr>
                                 
                             </table>
+                            
                             <table style="width: 70%; margin-left: auto; margin-right: auto;">
                             <tr>
                                 <td class="center"><i>Letter of Guarantee from Financing Institution</i></td>
