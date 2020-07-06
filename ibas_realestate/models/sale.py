@@ -111,7 +111,7 @@ class IBASSale(models.Model):
     discount_type = fields.Selection([
         ('fixed', 'Fixed'),
         ('percentage', 'Percentage'),
-    ], string='Discount Type')
+    ], string='Discount Type', default='fixed')
 
     discount_amount = fields.Float(string='Discount Amount', store=True)
     discount_amount_percent = fields.Float(
@@ -124,9 +124,30 @@ class IBASSale(models.Model):
         string="Discounted Price", compute="_compute_discount_price")
 
     downpayment = fields.Monetary(string='Downpayment')
-    reservation_amount = fields.Monetary(string='Reservation')
+    fix_downpayment = fields.Monetary(string='Fix Downpayment')
     closing_fees = fields.Monetary(string='Closing Fees')
+    # RESERVATION ========================================
+    reservation_type = fields.Selection([
+        ('fixed', 'Fixed'),
+        ('percentage', 'Percentage'),
+    ], string='Reservation Type', default='fixed')
+    reservation_rate = fields.Many2one(
+        'sale.reservation.rate', string='Reservation Percentage')
+    reservation_amount = fields.Monetary(string='Reservation')
+    # RESERVATION ========================================
+
+    # SPOT DP ============================================
+    discount_spotdp_type = fields.Selection([
+        ('fixed', 'Fixed'),
+        ('percentage', 'Percentage'),
+    ], string='Discount Spot DP Type', default='fixed')
+
+    discount_spotdp_rate = fields.Many2one(
+        'sale.spotdp.rate', string='Spot DP Percentage')
+
     discount_spotdp = fields.Monetary(string='Spot DP Discount')
+    # SPOT DP ===========================================
+
     disc_spot = fields.Monetary(
         string='Discount Spot DP', compute='_disc_spot')
     disc_amount = fields.Monetary(
@@ -189,6 +210,8 @@ class IBASSale(models.Model):
     def _prepare_invoice(self,):
         invoice_vals = super(IBASSale, self)._prepare_invoice()
         invoice_vals.update({
+            'unit_id': self.unit_id.id,
+            'downpayment': self.downpayment,
             'disc_spot': self.disc_spot,
             'disc_amount': self.disc_amount,
         })
@@ -354,7 +377,7 @@ class IBASSale(models.Model):
     is_cash = fields.Boolean(string='Cash DP')
 
     downpayment_type = fields.Selection(
-        [('fixed', 'Fixed'), ('percentage', 'Percentage')], string='Downpayment Type')
+        [('fixed', 'Fixed'), ('percentage', 'Percentage')], string='Downpayment Type', default='percentage')
     dp_per_rate = fields.Many2one(
         'sale.downpayment.rate', string='DP Rate Percentage')
     downpayment_per_rate = fields.Selection(
@@ -370,15 +393,17 @@ class IBASSale(models.Model):
             self.interest_rate = 0.06375
         else:
             self.interest_rate = 0.07500
-
-    @api.onchange('downpayment_type', 'dp_per_rate', 'discount_spotdp', 'is_cash', 'reservation_amount', 'discount_type', 'discount_amount', 'discount_rate_id')
+    # COMPUTE DOWNPAYMENT ========================================
+    @api.onchange('list_price', 'downpayment_type', 'dp_per_rate', 'discount_spotdp', 'is_cash', 'reservation_amount', 'discount_type', 'discount_amount', 'discount_rate_id')
     def changeDownpaymentAmount(self):
         if not self.downpayment_type:
             self.downpayment = 0.0
+            self.fix_downpayment = 0.0
             rate = self.dp_per_rate = False
 
         elif self.downpayment_type == 'fixed':
             self.downpayment = self.list_price * 0.10 - 5000
+            self.fix_downpayment = self.list_price * 0.10 - 5000
             rate = self.dp_per_rate = False
 
         else:
@@ -387,6 +412,7 @@ class IBASSale(models.Model):
 
             rate = self.dp_per_rate and self.dp_per_rate.rate / 100.00
 
+            self.fix_downpayment = self.discounted_price * rate
             amount = 0
 
             if self.discount_type or self.dp_per_rate:
@@ -404,6 +430,42 @@ class IBASSale(models.Model):
                 dp_amount = amount - \
                     (self.reservation_amount + self.discount_spotdp)
                 self.downpayment = dp_amount
+
+    # COMPUTE DOWNPAYMENT ========================================
+
+    # COMPUTE SPOT DP RATE ========================================
+    @api.onchange('discount_spotdp_type', 'discount_spotdp_rate', 'is_cash', 'discount_amount_percent', 'discount_amount', 'fix_downpayment')
+    def _onchange_discount_spotdp_rate(self):
+        if not self.discount_spotdp_rate:
+            self.discount_spotdp_rate = self.env.ref(
+                'ibas_realestate.spotdp_rate_10_0').id
+
+        rate = self.discount_spotdp_rate and self.discount_spotdp_rate.rate / 100.00
+
+        if self.discount_spotdp_type == 'percentage':
+            self.discount_spotdp = self.fix_downpayment * rate
+
+        if self.discount_spotdp_type == False:
+            self.discount_spotdp = 0.0
+
+    # COMPUTE SPOT DP RATE ========================================
+
+    # COMPUTE RESERVATION RATE ========================================
+    @api.onchange('reservation_type', 'reservation_rate', 'discount_amount_percent', 'discount_amount', 'fix_downpayment')
+    def _onchange_reservation_rate(self):
+        if not self.reservation_rate:
+            self.reservation_rate = self.env.ref(
+                'ibas_realestate.reservation_rate_10_0').id
+
+        rate = self.reservation_rate and self.reservation_rate.rate / 100.00
+
+        if self.reservation_type == 'percentage':
+            self.reservation_amount = self.fix_downpayment * rate
+
+        if self.reservation_type == False:
+            self.reservation_amount = 0.0
+
+    # COMPUTE RESERVATION RATE ========================================
 
     @api.onchange('dp_terms')
     def _onchange_dp_terms(self):
@@ -558,3 +620,19 @@ class SaleDiscountRate(models.Model):
 
     name = fields.Char('Name', required=True)
     rate = fields.Float(string='Rate', digits=(5, 5))
+
+
+class SaleSpotDPRate(models.Model):
+    _name = 'sale.spotdp.rate'
+    _description = 'Spot DP Rate'
+
+    name = fields.Char('Name', required=True)
+    rate = fields.Float(string='Rate %', digits=(5, 5))
+
+
+class SaleReservationRate(models.Model):
+    _name = 'sale.reservation.rate'
+    _description = 'Reservation Rate'
+
+    name = fields.Char('Name', required=True)
+    rate = fields.Float(string='Rate %', digits=(5, 5))

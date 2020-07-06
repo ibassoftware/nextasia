@@ -13,6 +13,16 @@
 		    <field name="name">10.0%</field> 
 		    <field name="rate">10.0000</field>
 		</record>
+
+		<record id="spotdp_rate_10_0" model="sale.spotdp.rate">
+		    <field name="name">10.0%</field> 
+		    <field name="rate">10.0000</field>
+		</record>
+
+		<record id="reservation_rate_10_0" model="sale.reservation.rate">
+		    <field name="name">10.0%</field> 
+		    <field name="rate">10.0000</field>
+		</record>
     	
     </data>
 </odoo>
