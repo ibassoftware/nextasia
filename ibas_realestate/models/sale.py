@@ -255,9 +255,10 @@ class IBASSale(models.Model):
     @api.onchange('list_price')
     def _onchange_list_price(self):
         for rec in self:
-            rec.downpayment = rec.list_price * 0.10 - 5000  # 50000
+            rec.downpayment = 0  # rec.list_price * 0.10 - 5000  # 50000
             rec.reservation_amount = 5000  # 50000
             rec.closing_fees = rec.list_price * 0.05
+            rec.discounted_price = rec.list_price
 
     sc_ids = fields.One2many(
         'ibas_realestate.sample_computation.line', 'order_id', string='Sample Computation')
@@ -372,9 +373,14 @@ class IBASSale(models.Model):
 
     @api.onchange('downpayment_type', 'dp_per_rate', 'discount_spotdp', 'is_cash', 'reservation_amount', 'discount_type', 'discount_amount', 'discount_rate_id')
     def changeDownpaymentAmount(self):
-        if self.downpayment_type == 'fixed':
+        if not self.downpayment_type:
+            self.downpayment = 0.0
+            rate = self.dp_per_rate = False
+
+        elif self.downpayment_type == 'fixed':
             self.downpayment = self.list_price * 0.10 - 5000
             rate = self.dp_per_rate = False
+
         else:
             if not self.dp_per_rate:
                 self.dp_per_rate = self.env.ref('ibas_realestate.rate_10_0').id
@@ -382,7 +388,8 @@ class IBASSale(models.Model):
             rate = self.dp_per_rate and self.dp_per_rate.rate / 100.00
 
             amount = 0
-            if self.discount_type:
+
+            if self.discount_type or self.dp_per_rate:
                 amount += self.discounted_price * rate
 
             if self.discount_spotdp >= 0:
