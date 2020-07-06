@@ -22,30 +22,32 @@
                             </table>
                             <table style="width: 100%;">
                                 <tr>
-                                    <td colspan="3" class="center bg-tomato" style="color: white; font-size: 24px"><strong><span>COMPUTATION</span></strong></td>
+                                    <td colspan="4" class="center bg-tomato" style="color: white; font-size: 24px"><strong><span>COMPUTATION</span></strong></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 60%;"><span>Project Name:</span></td>
+                                    <td style="width: 17%;"><span>Project Name:</span></td>
+                                    <td style="width: 43%;"><strong><span t-field="doc.project_id"/></strong></td>
                                     <td style="width: 20%;"><span class="center">Date:</span></td>
                                     
                                     <td style="width: 20%;"><span class="center" t-field="doc.current_date"/></td>
                                     <!--<td style="width: 20%;"><span class="center" t-field="doc.date_order"/></td>-->
                                 </tr>
                                 <tr>
-                                    <td><strong><span t-field="doc.project_id"/></strong></td>
-                                    <td><span class="center">Date of Reservation:</span></td>
+                                    <td><span>Address:</span></td>
+                                    <td><strong><span t-field="doc.project_id.address"/></strong></td>
+                                    <td><span class="center">Valid Until:</span></td>
 
                                     <t t-if="doc.state=='draft'">
                                         <td/>
                                         
                                     </t>
                                     <t t-if="doc.state !='draft'">
-                                        <td style="width: 20%;"><span class="center" t-field="doc.date_order"/></td>
+                                        <td style="width: 20%;"><span class="center" t-field="doc.validity_date"/></td>
                                     </t>
                                     <!--<td><span class="center" t-field="doc.sc_ids[0].date"/></td>-->
                                 </tr>
                                 <tr>
-                                    <td class="b-bottom">Brgy.Soledad San Pablo City, Laguna</td>
+                                    <td class="b-bottom" colspan="2"></td>
                                     <td class="b-bottom"><span class="center">Terms</span></td>
                                     <td class="b-bottom"><span class="center" t-field="doc.dp_terms"/></td>
                                 </tr>
@@ -58,19 +60,20 @@
                                     <td style="width: 23%" class="center"><span t-field="doc.unit_id.block"/></td>
                                 </tr> 
                                 <tr>
-                                    <td colspan="2"> </td>     
+                                    <td>House Model:</td>
+                                    <td><strong><span t-field="doc.unit_id.propmodel_id"/></strong></td>     
                                     <td style="text-align:right;">Lot No.:</td>
                                     <td class="center"><span t-field="doc.unit_id.lot"/></td>
                                 </tr> 
                                 <tr>
-                                    <td>House Model:</td>
-                                    <td><strong><span t-field="doc.unit_id.propmodel_id"/></strong></td>
+                                    <td>Type:</td>
+                                    <td><strong><span t-field="doc.unit_id.propclass_id"/></strong></td>
                                     <td style="text-align:right;">Lot Area(sqm):</td>
                                      <td class="center"><span t-field="doc.unit_id.lot_area"/></td>
                                 </tr>
                                  <tr>
-                                    <td>Type:</td>
-                                    <td><strong><span t-field="doc.unit_id.propclass_id"/></strong></td>
+                                    <td>Financing Type:</td>
+                                    <td><strong><span t-field="doc.financing_type"/></strong></td>
                                     <td style="text-align:right;">Floor Area(sqm):</td>
                                     <td class="center"><span t-field="doc.unit_id.floor_area"/></td>
                                 </tr> 
@@ -79,30 +82,42 @@
                                     <td></td>
                                 </tr> 
                                  <tr>
-                                    <td>Financing Type:</td>
-                                    <td><strong><span t-field="doc.financing_type"/></strong></td>
+                                    <td>Lot Class</td>
+                                    <td><strong><span t-field="doc.unit_id.proplot_id"/></strong></td>
                                     <!--
                                     <td style="text-align:right;"> <span t-field="doc.unit_id.preselling_price"/></td>
                                     -->
                                     <td style="text-align:right;">Reservation:</td>
                                     <td class="b-bottom-1" style="text-align:right;"><span t-field="doc.sc_ids[0].payment_amount"/></td>
-                                </tr> 
+                                </tr>
+
                                  <tr>
-                                    <td>Selling Price</td>
-                                    <td style="text-align:right;"> <span t-field="doc.list_price"/></td>
+                                    <td>Finishing</td>
+                                    <td><strong><span t-field="doc.unit_id.finishing_id"/></strong></td>
                                     <!--
                                     <td>Discount:</td>
                                     <td style="text-align:right;"> <span t-esc="'{:,.2f}'.format(doc.discount_amount)"/> Php</td>
                                     -->
                                     <td style="text-align:right;">Downpayment:</td>
                                     <td class="b-bottom-1" style="text-align:right;"><span t-field="doc.downpayment"/></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Selling Price</td>
+                                    <td style="text-align:right;"> <span t-field="doc.list_price"/></td>
+                                    <!--
+                                    <td>Discount:</td>
+                                    <td style="text-align:right;"> <span t-esc="'{:,.2f}'.format(doc.discount_amount)"/> Php</td>
+                                    -->
+                                    <td style="text-align:right;">Spot DP Discount:</td>
+                                    <td class="b-bottom-1" style="text-align:right;"><span t-field="doc.discount_spotdp"/></td>
                                 </tr> 
                                 <tr>
                                     <td>Discounted Price:</td>
                                     <td class="b-bottom b-right b-left b-top" style="text-align:right;"><span t-esc="'{:,.2f}'.format(doc.list_price - doc.discount_spotdp)"/> Php</td>
 
                                     <td style="text-align:right;">Spot DP Discount:</td>
-                                    <td class="b-bottom-1" style="text-align:right;"><span t-field="doc.discount_spotdp"/></td>
+                                    <td class="b-bottom-1" style="text-align:right;"></td>
                                 </tr> 
                             </table>
                             <hr class="line"/>
@@ -238,7 +253,7 @@
                                 - The actual interest rate is only estimated and will be subjected for actual computation by the bank or pag-ibig. <br/>
                                 - This 10% downpayment and 90% loanable amount scheme is only for Developer's Acrredited Banks and Pag-Ibig. <br/>
                                 - This OFFICIAL COMPUTATION is only valid and binding if signed by the duly authorized signatories. <br/>
-                                - The 3% interest rate is applicable only for clients under provincial rate with maximum 12K and manila rate wit 15K gross income per month otherwise 6.375% shall follow. <br/>
+                                - The 3% interest rate is applicable only for clients under provincial rate with maximum 12K and manila rate with 15K gross income per month otherwise 6.375% shall follow. <br/>
                             </p>
                             </div>
                             <table style="width: 100%">

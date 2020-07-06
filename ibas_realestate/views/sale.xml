@@ -5,6 +5,11 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='order_line']/tree/field[@name='discount']" position="after">
+                <field name="disc" string="Disc."/>
+            </xpath>
+
             <xpath expr="//field[@name='validity_date']" position="before">
                 <field name="project_id"/>
             </xpath>
@@ -15,22 +20,39 @@
             </xpath>
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="pre_selling_price" widget="monetary" invisible="1"/>
-                <field name="discount_amount" widget="monetary" invisible="1"/>
+                
                 <field name="financing_type" required="1"/>
                 <field name="list_price" widget="monetary"/>
             </xpath>
 
-            <xpath expr="//field[@name='payment_term_id']" position="after">            
-                <field name="downpayment_type"/>
-                <field name="dp_per_rate" attrs="{'invisible' :[('downpayment_type', '=', 'fixed')], 'required': [('downpayment_type', '!=', 'fixed')]}"/>
-                <field name="downpayment" attrs="{'readonly': [('downpayment_type', '!=', 'fixed')]}" force_save="1"/>
-                <field name="dp_terms"/>
-                <field name="is_cash"/>
-                <field name="reservation_amount"/>
+            <xpath expr="//sheet/group" position="after">
+                <group>
+                     <group string="Discount">
+                        <field name="discounted_price" widget="monetary"/>
+                        <field name="discount_type"/>
+                        <field name="discount_rate_id" attrs="{'invisible': [('discount_type','!=','percentage')]}"/>
+                        <field name="discount_amount" widget="monetary" invisible="0"  attrs="{'invisible': [('discount_type','!=','fixed')]}"/>
+                        <field name="discount_amount_percent" widget="monetary" invisible="0"  attrs="{'invisible': [('discount_type','!=','percentage')]}"/>
+                        <field name="payment_term_id" options="{'no_open':True,'no_create': True}"/>
+                    </group>
+                    <group string="Down Payment">
+                        <field name="downpayment_type"/>
+                        <field name="dp_per_rate" attrs="{'invisible' :[('downpayment_type', '=', 'fixed')], 'required': [('downpayment_type', '!=', 'fixed')]}"/>
+                        <field name="downpayment" string="Downpayment Amount" attrs="{'readonly': [('downpayment_type', '!=', 'fixed')]}" force_save="1"/>
+                        <field name="is_cash"/>
+                        <field name="discount_spotdp"/>
+                        <field name="reservation_amount"/>
+                        <field name="dp_terms"/>
+                    </group>
+                   
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="replace">            
+            </xpath>
+
+            <xpath expr="//field[@name='date_order']" position="after">            
                 <field name="closing_fees" invisible="1"/>
-                <field name="discount_spotdp"/>
-                <field name="interest_rate"></field>
-                
+                <field name="interest_rate" options="{'no_quick_create':True,'no_create_edit':True}"/> 
             </xpath>
 
             <xpath expr="//page[@name='order_lines']" position="before">
@@ -59,6 +81,11 @@
 
             <xpath expr="//button[@name='action_draft']" position="after">
                 <button string="Compute Sample Computation" name="action_compute_sc" type="object" class="oe_highlight"/>
+            </xpath>
+
+            <xpath expr="//group[@name='sale_total']/field[@name='amount_tax']" position="after">
+                <field name="disc_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="disc_spot" widget="monetary" options="{'currency_field': 'currency_id'}"/>
             </xpath>
 
         </field>
@@ -196,6 +223,56 @@
         </field> 
     </record>
 
+       <!-- Discount Rate -->
+    <record id="sale_discount_rate_form" model="ir.ui.view">
+        <field name="name">sale.discount.rate.form</field> 
+        <field name="model">sale.discount.rate</field>
+        <field name="arch" type="xml">
+            <form string="Discount Rate">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="rate"/>
+                    </group>
+                </sheet>                
+            </form> 
+        </field> 
+    </record>
+
+    <record id="sale_discount_rate_tree" model="ir.ui.view">
+        <field name="name">sale.discount.rate.tree</field> 
+        <field name="model">sale.discount.rate</field>
+        <field name="arch" type="xml">
+            <tree string="Discount Rate">
+                <field name="name"/>
+                <field name="rate"/>                
+            </tree> 
+        </field> 
+    </record>
+
+    <record id="sale_discount_rate_search" model="ir.ui.view">
+        <field name="name">sale.discount.rate.search</field> 
+        <field name="model">sale.discount.rate</field>
+        <field name="arch" type="xml">
+            <search string="Discount Rate">
+                <field name="name"/>
+                <field name="rate"/>                
+            </search>
+        </field> 
+    </record>
+
+    <record id="open_sale_discount_rate" model="ir.actions.act_window">
+        <field name="name">Discount Rate</field> 
+        <field name="res_model">sale.discount.rate</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+           <p class="o_view_nocontent_smiling_face">
+            Create a Discount Rate        
+           </p> 
+        </field> 
+    </record>
+
+
 
     <menuitem id="menu_sale_downpayment_rate" 
       name= "Down Payment Rate" 
@@ -210,5 +287,12 @@
       parent="sale.menu_sale_config"
       action="open_sale_interest_rate"
       sequence="100"/>
+
+    <menuitem id="menu_sale_discount_rate" 
+      name= "Discount Rate" 
+      groups="base.group_system" 
+      parent="sale.menu_sale_config"
+      action="open_sale_discount_rate"
+      sequence="101"/>
 </data>
 </odoo>

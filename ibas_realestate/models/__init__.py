@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
 
-from . import models, realestate_project, sale, res_partner, hr
+from . import models, realestate_project, sale, res_partner, hr, account
