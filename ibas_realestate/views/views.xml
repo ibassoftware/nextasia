@@ -80,6 +80,7 @@
             <field name="propmodel_id" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
             <field name="propclass_id" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
             <field name="proplot_id" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
+            <field name="finishing_id" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
             <field name="floor_area" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
             <field name="lot_area" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
             <field name="list_price" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" widget="monetary"/>
@@ -89,7 +90,7 @@
             <field name="responsible" invisible="1"/>
             <field name="responsible_emp_id" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}"/>
             
-            <field name="dp_terms" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}" required="1"/>
+            <field name="dp_terms" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}"/>
             <field name="categ_id" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}"/>        
             </group>
             <group>
@@ -101,8 +102,8 @@
               <field name="construction_end_date" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}"/>
               <field name="actual_construction_complete_date" attrs="{'readonly' :['|','|',('on_hold', '=', True),('state','=', 'accept'),('state','=','proceed')]}"/>
               <field name="last_dp_date" attrs="{'readonly' :['|','|',('on_hold', '=', True),('state','=', 'accept'),('state','=','proceed')]}"/>
-
               <field name="reservation_date" attrs="{'readonly' :['|','|',('on_hold', '=', True),('state','=', 'accept'),('state','=','proceed')]}"/>
+              <field name="price_history_current_date" attrs="{'readonly' :['|','|',('on_hold', '=', True),('state','=', 'accept'),('state','=','proceed')]}"/>
 
             </group>
           </group>

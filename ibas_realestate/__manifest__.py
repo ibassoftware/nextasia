@@ -20,7 +20,7 @@
     'version': '0.3',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'product', 'sale', 'hr', 'contacts'],
+    'depends': ['base', 'product', 'sale_management', 'hr', 'contacts', 'account'],
 
     # always loaded
     'data': [
@@ -35,10 +35,12 @@
         'views/sale.xml',
         'views/client_requirement.xml',
         'views/res_partner.xml',
+        'views/account.xml',
         'views/templates.xml',
         'views/property_class_views.xml',
         'views/property_model_views.xml',
         'views/property_lot_views.xml',
+        'views/property_finishing_views.xml',
         'views/group_views.xml',
         'views/ir_ui_menu.xml',
     ],
