@@ -6,6 +6,8 @@ from odoo import _, api, fields, models
 from odoo.exceptions import AccessError, UserError, RedirectWarning, ValidationError, Warning
 from datetime import datetime
 from dateutil.relativedelta import *
+import odoo.addons.decimal_precision as dp
+
 
 
 _logger = logging.getLogger(__name__)
@@ -14,11 +16,14 @@ _logger = logging.getLogger(__name__)
 class IBASSaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    disc = fields.Float(string='Discount')
+    discount = fields.Float(string='Discount (%)',
+                            digits=(16, 20), default=0.0)
 
 
 class IBASSale(models.Model):
     _inherit = 'sale.order'
+
+    # Realestate
     unit_id = fields.Many2one('product.product', string='Unit', domain=[('is_a_property', '=', True),
                                                                         ('state', '=', 'open')])
 
@@ -128,42 +133,73 @@ class IBASSale(models.Model):
     disc_amount = fields.Monetary(
         string='Discount Amount', compute='_disc_amount')
 
-    def _prepare_invoice(self):
+    # Discount price
+    @api.depends('order_line.price_total')
+    def _amount_all(self):
         """
-        Prepare the dict of values to create the new invoice for a sales order. This method may be
-        overridden to implement custom invoice generation (making sure to call super() to establish
-        a clean extension chain).
+        Compute the total amounts of the SO.
         """
-        self.ensure_one()
-        journal = self.env['account.move'].with_context(
-            force_company=self.company_id.id, default_type='out_invoice')._get_default_journal()
-        if not journal:
-            raise UserError(_('Please define an accounting sales journal for the company %s (%s).') % (
-                self.company_id.name, self.company_id.id))
+        for order in self:
+            amount_untaxed = amount_tax = amount_discount = 0.0
+            for line in order.order_line:
+                amount_untaxed += line.price_subtotal
+                amount_tax += line.price_tax
+                amount_discount += (line.product_uom_qty *
+                                    line.price_unit * line.discount) / 100
+            order.update({
+                'amount_untaxed': amount_untaxed,
+                'amount_tax': amount_tax,
+                'amount_discount': amount_discount,
+                'amount_total': amount_untaxed + amount_tax,
+            })
 
-        invoice_vals = {
-            'ref': self.client_order_ref or '',
-            'type': 'out_invoice',
-            'narration': self.note,
-            'currency_id': self.pricelist_id.currency_id.id,
-            'campaign_id': self.campaign_id.id,
-            'medium_id': self.medium_id.id,
-            'source_id': self.source_id.id,
-            'invoice_user_id': self.user_id and self.user_id.id,
-            'team_id': self.team_id.id,
-            'partner_id': self.partner_invoice_id.id,
-            'partner_shipping_id': self.partner_shipping_id.id,
-            'fiscal_position_id': self.fiscal_position_id.id or self.partner_invoice_id.property_account_position_id.id,
-            'invoice_origin': self.name,
-            'invoice_payment_term_id': self.payment_term_id.id,
-            'invoice_payment_ref': self.reference,
-            'transaction_ids': [(6, 0, self.transaction_ids.ids)],
-            'invoice_line_ids': [],
+    discount_rate = fields.Float('Discount Rate', digits=dp.get_precision('Account'), readonly=True, states={
+                                 'draft': [('readonly', False)], 'sent': [('readonly', False)]}, compute='_compute_discount_rate')
+    amount_untaxed = fields.Monetary(string='Untaxed Amount', store=True, readonly=True, compute='_amount_all',
+                                     track_visibility='always')
+    amount_tax = fields.Monetary(string='Taxes', store=True, readonly=True, compute='_amount_all',
+                                 track_visibility='always')
+    amount_total = fields.Monetary(string='Total', store=True, readonly=True, compute='_amount_all',
+                                   track_visibility='always')
+    amount_discount = fields.Monetary(string='Discount', store=True, readonly=True, compute='_amount_all',
+                                      digits=dp.get_precision('Account'), track_visibility='always')
+
+    @api.depends('disc_spot', 'disc_amount')
+    def _compute_discount_rate(self):
+        for rec in self:
+            if rec.disc_spot != 0 or rec.disc_amount != 0:
+                rec.discount_rate += rec.disc_spot
+                rec.discount_rate += rec.disc_amount
+            else:
+                rec.discount_rate += (rec.disc_amount + rec.disc_spot)
+
+    @api.onchange('disc_spot', 'disc_amount', 'discount_rate', 'order_line')
+    def supply_rate(self):
+
+        for order in self:
+            total = discount = 0.0
+            for line in order.order_line:
+                total += (line.product_uom_qty * line.price_unit)
+            if order.discount_rate != 0:
+                discount = (order.discount_rate / total) * 100
+            else:
+                discount = order.discount_rate
+            for line in order.order_line:
+                line.discount = discount
+
+    def _prepare_invoice(self,):
+        invoice_vals = super(IBASSale, self)._prepare_invoice()
+        invoice_vals.update({
             'disc_spot': self.disc_spot,
             'disc_amount': self.disc_amount,
-        }
+        })
         return invoice_vals
 
+    def button_dummy(self):
+
+        self.supply_rate()
+        return True
+    # Discount price
     @api.depends('discount_spotdp')
     def _disc_spot(self):
         for rec in self:
@@ -188,22 +224,6 @@ class IBASSale(models.Model):
                 rec.update({
                     'disc_amount': 0.0,
                 })
-
-    @api.depends('order_line.price_total', 'discount_amount_percent', 'discount_spotdp')
-    def _amount_all(self):
-        """
-        Compute the total amounts of the SO.
-        """
-        for order in self:
-            amount_untaxed = amount_tax = 0.0
-            for line in order.order_line:
-                amount_untaxed += line.price_subtotal
-                amount_tax += line.price_tax
-            order.update({
-                'amount_untaxed': amount_untaxed,
-                'amount_tax': amount_tax,
-                'amount_total': amount_untaxed + amount_tax - (self.disc_amount + self.discount_spotdp),
-            })
 
     @api.onchange('discount_type')
     def _onchange_discount_type(self):
@@ -236,9 +256,10 @@ class IBASSale(models.Model):
     @api.onchange('list_price')
     def _onchange_list_price(self):
         for rec in self:
-            rec.downpayment = rec.list_price * 0.10 - 5000  # 50000
+            rec.downpayment = 0  # rec.list_price * 0.10 - 5000  # 50000
             rec.reservation_amount = 5000  # 50000
             rec.closing_fees = rec.list_price * 0.05
+            rec.discounted_price = rec.list_price
 
     sc_ids = fields.One2many(
         'ibas_realestate.sample_computation.line', 'order_id', string='Sample Computation')
@@ -353,9 +374,14 @@ class IBASSale(models.Model):
 
     @api.onchange('downpayment_type', 'dp_per_rate', 'discount_spotdp', 'is_cash', 'reservation_amount', 'discount_type', 'discount_amount', 'discount_rate_id')
     def changeDownpaymentAmount(self):
-        if self.downpayment_type == 'fixed':
+        if not self.downpayment_type:
+            self.downpayment = 0.0
+            rate = self.dp_per_rate = False
+
+        elif self.downpayment_type == 'fixed':
             self.downpayment = self.list_price * 0.10 - 5000
             rate = self.dp_per_rate = False
+
         else:
             if not self.dp_per_rate:
                 self.dp_per_rate = self.env.ref('ibas_realestate.rate_10_0').id
@@ -363,7 +389,8 @@ class IBASSale(models.Model):
             rate = self.dp_per_rate and self.dp_per_rate.rate / 100.00
 
             amount = 0
-            if self.discount_type:
+
+            if self.discount_type or self.dp_per_rate:
                 amount += self.discounted_price * rate
 
             if self.discount_spotdp >= 0:
@@ -411,11 +438,11 @@ class IBASSale(models.Model):
     interest_rate = fields.Many2one(
         'sale.interest.rate', string='Interest Rate')
 
-    @api.model
-    def default_get(self, fields):
-        res = super(IBASSale, self).default_get(fields)
-        res['interest_rate'] = 2
-        return res
+    # @api.model
+    # def default_get(self, fields):
+    #    res = super(IBASSale, self).default_get(fields)
+    #    res['interest_rate'] = self.interest_rate[0] if self.interest_rate else None
+    #    return res
 
     @api.depends('loanable_amount', 'interest_rate')
     def _compute_monthly_3(self):
