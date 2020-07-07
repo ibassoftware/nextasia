@@ -114,10 +114,10 @@
                                 </tr> 
                                 <tr>
                                     <td>Discounted Price:</td>
-                                    <td class="b-bottom b-right b-left b-top" style="text-align:right;"><span t-esc="'{:,.2f}'.format(doc.list_price - doc.discount_spotdp)"/> Php</td>
+                                    <td class="b-bottom b-right b-left b-top" style="text-align:right;"><span t-esc="'{:,.2f}'.format(doc.discounted_price)"/> Php</td>
 
-                                    <td style="text-align:right;">Spot DP Discount:</td>
-                                    <td class="b-bottom-1" style="text-align:right;"></td>
+                                    <td><![CDATA[&nbsp;]]></td>
+                                    <td><![CDATA[&nbsp;]]></td>
                                 </tr> 
                             </table>
                             <hr class="line"/>
