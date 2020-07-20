@@ -43,10 +43,10 @@
                         <field name="dp_per_rate" attrs="{'invisible' :[('downpayment_type', '!=', 'percentage')], 'required': [('downpayment_type', '!=', 'fixed')]}"/>
                         <field name="downpayment" string="Downpayment Amount" attrs="{'readonly': [('downpayment_type', '!=', 'fixed')]}" force_save="1"/>
                         <field name="fix_downpayment" string="Fix Downpayment Amount" invisible="1"/>
-                        <field name="is_cash"/>
-                        <field name="discount_spotdp_type"/>
-                        <field name="discount_spotdp_rate" attrs="{'invisible' :[('discount_spotdp_type', '!=', 'percentage')], 'required': [('discount_spotdp_type', '!=', 'fixed')]}"/>
-                        <field name="discount_spotdp" attrs="{'readonly' :[('discount_spotdp_type', '=', 'percentage')]}" force_save="1"/>
+                        <!--<field name="is_cash"/> -->
+                        <field name="discount_spotdp_type" string="Downpayment Discount Type"/>
+                        <field name="discount_spotdp_rate" string="Downpayment Discount Rate" attrs="{'invisible' :[('discount_spotdp_type', '!=', 'percentage')], 'required': [('discount_spotdp_type', '!=', 'fixed')]}"/>
+                        <field name="discount_spotdp" string="Downpayment Discount" attrs="{'readonly' :[('discount_spotdp_type', '=', 'percentage')]}" force_save="1"/>
                         <field name="reservation_type"/>
                         <field name="reservation_rate" attrs="{'invisible' :[('reservation_type', '!=', 'percentage')], 'required': [('reservation_type', '=', 'percentage')]}"/>
                         <field name="reservation_amount" attrs="{'readonly' :[('reservation_type', '=', 'percentage')]}" force_save="1"/>

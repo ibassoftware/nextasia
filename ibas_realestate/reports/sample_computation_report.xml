@@ -109,7 +109,7 @@
                                     <td>Discount:</td>
                                     <td style="text-align:right;"> <span t-esc="'{:,.2f}'.format(doc.discount_amount)"/> Php</td>
                                     -->
-                                    <td style="text-align:right;">Spot DP Discount:</td>
+                                    <td style="text-align:right;">Downpayment Discount:</td>
                                     <td class="b-bottom-1" style="text-align:right;"><span t-field="doc.discount_spotdp"/></td>
                                 </tr> 
                                 <tr>
