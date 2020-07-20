@@ -9,7 +9,6 @@ from dateutil.relativedelta import *
 import odoo.addons.decimal_precision as dp
 
 
-
 _logger = logging.getLogger(__name__)
 
 
@@ -29,6 +28,10 @@ class IBASSale(models.Model):
 
     project_id = fields.Many2one('ibas_realestate.project', string='Project',
                                  compute="_onchange_unit_id", store=True)
+
+    # open date order, readonly=True
+    date_order = fields.Datetime(string='Order Date', required=True, readonly=False, index=True, states={'draft': [('readonly', False)], 'sent': [(
+        'readonly', False)]}, copy=False, default=fields.Datetime.now, help="Creation date of draft/sent orders,\nConfirmation date of confirmed orders.")
 
     def action_cancel(self):
 
@@ -308,8 +311,8 @@ class IBASSale(models.Model):
                     my_dp_term_int = int(rec.dp_terms)
                     monthly_closing_fees = rec.closing_fees / my_dp_term_int
                     monthly_fees = rec.downpayment / my_dp_term_int
-                    if rec.is_cash:
-                        monthly_fees = rec.downpayment  # - rec.discount_spotdp
+                    # if rec.is_cash:
+                    #    monthly_fees = rec.downpayment  # - rec.discount_spotdp
                     while i < my_dp_term_int:
                         month_iteration = i + 1
                         ordinal = ""
@@ -375,7 +378,7 @@ class IBASSale(models.Model):
     ], string='DP Terms',
         states={'draft': [('readonly', False)], 'sent': [('readonly', False)]})
 
-    is_cash = fields.Boolean(string='Cash DP')
+    #is_cash = fields.Boolean(string='Cash DP')
 
     downpayment_type = fields.Selection(
         [('fixed', 'Fixed'), ('percentage', 'Percentage')], string='Downpayment Type', default='percentage')
@@ -395,7 +398,7 @@ class IBASSale(models.Model):
         else:
             self.interest_rate = 0.07500
     # COMPUTE DOWNPAYMENT ========================================
-    @api.onchange('list_price', 'downpayment_type', 'dp_per_rate', 'discount_spotdp', 'is_cash', 'reservation_amount', 'discount_type', 'discount_amount', 'discount_rate_id')
+    @api.onchange('list_price', 'downpayment_type', 'dp_per_rate', 'discount_spotdp', 'reservation_amount', 'discount_type', 'discount_amount', 'discount_rate_id')
     def changeDownpaymentAmount(self):
         if not self.downpayment_type:
             self.downpayment = 0.0
@@ -424,8 +427,8 @@ class IBASSale(models.Model):
                     (self.reservation_amount + self.discount_spotdp)
                 self.downpayment = dp_amount
 
-            if not self.is_cash:
-                self.discount_spotdp = 0.0
+            # if not self.is_cash:
+            #    self.discount_spotdp = 0.0
 
             if self.reservation_amount >= 0:
                 dp_amount = amount - \
@@ -435,7 +438,7 @@ class IBASSale(models.Model):
     # COMPUTE DOWNPAYMENT ========================================
 
     # COMPUTE SPOT DP RATE ========================================
-    @api.onchange('discount_spotdp_type', 'discount_spotdp_rate', 'is_cash', 'discount_amount_percent', 'discount_amount', 'fix_downpayment')
+    @api.onchange('discount_spotdp_type', 'discount_spotdp_rate', 'discount_amount_percent', 'discount_amount', 'fix_downpayment')
     def _onchange_discount_spotdp_rate(self):
         if not self.discount_spotdp_rate:
             self.discount_spotdp_rate = self.env.ref(
@@ -473,14 +476,14 @@ class IBASSale(models.Model):
         if self.unit_id:
             self.unit_id.dp_terms = self.dp_terms
 
-    @api.onchange('is_cash')
-    def _onchange_is_cash(self):
-        if self.unit_id:
-            if self.is_cash:
-                self.dp_terms = '1'
-                self.unit_id.dp_terms = '1'
-            else:
-                self.dp_terms = self.unit_id.dp_terms
+    # @api.onchange('is_cash')
+    # def _onchange_is_cash(self):
+    #    if self.unit_id:
+    #        if self.is_cash:
+    #            self.dp_terms = '1'
+    #            self.unit_id.dp_terms = '1'
+    #        else:
+    #            self.dp_terms = self.unit_id.dp_terms
 
     monthly_3 = fields.Monetary(
         compute='_compute_monthly_3', string='Monthly Amortization 3 Years')

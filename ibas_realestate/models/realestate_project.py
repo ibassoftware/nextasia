@@ -337,7 +337,7 @@ class PropertiesProjectProperty(models.Model):
             res_create = price_history_line_model.create({
                 'product_id': res.id,
                 'effective_date': res.price_history_current_date,
-                # 'selling_price': vals['list_price']
+                'selling_price': vals['list_price']
             })
         return res
 
@@ -358,7 +358,7 @@ class PropertiesProjectProperty(models.Model):
                 res_create = price_history_line_model.create({
                     'product_id': rec.id,
                     'effective_date': rec.price_history_current_date,
-                    # 'selling_price': vals['list_price']
+                    'selling_price': vals['list_price']
                 })
         return res
 
