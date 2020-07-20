@@ -29,6 +29,10 @@ class IBASSale(models.Model):
     project_id = fields.Many2one('ibas_realestate.project', string='Project',
                                  compute="_onchange_unit_id", store=True)
 
+    # open date order, readonly=True
+    date_order = fields.Datetime(string='Order Date', required=True, readonly=False, index=True, states={'draft': [('readonly', False)], 'sent': [(
+        'readonly', False)]}, copy=False, default=fields.Datetime.now, help="Creation date of draft/sent orders,\nConfirmation date of confirmed orders.")
+
     def action_cancel(self):
 
         if self.unit_id:
