@@ -133,7 +133,8 @@ class PropertiesProjectProperty(models.Model):
 
     on_hold = fields.Boolean('Tech Hold')
 
-    reservation_date = fields.Date('Date Reserved')
+    reservation_date = fields.Date(
+        string='Date Reserved', compute='_compute_reservation_date')
     finishing_id = fields.Many2one(
         'ibas_realestate.property_finishing', string='Finishing')
     price_history_current_date = fields.Datetime(
@@ -148,6 +149,16 @@ class PropertiesProjectProperty(models.Model):
         'Selling Price', default=1.0,
         digits='Product Price',
         help="Price at which the product is sold to customers.")
+
+    @api.depends('sale_order_id')
+    def _compute_reservation_date(self):
+        sale_order = self.env['sale.order'].search(
+            [('unit_id', '=', self.id), ('state', '=', 'sale')])
+        for rec in self:
+            if sale_order:
+                rec.reservation_date = sale_order[0].date_order
+            else:
+                rec.reservation_date = False
 
     @api.constrains('name')
     def _check_names(self):
