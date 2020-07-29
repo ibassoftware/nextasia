@@ -299,7 +299,7 @@ class IBASSale(models.Model):
 
                 self.update({
                     'sc_ids': [(0, 0, {
-                        'date': datetime.today(),
+                        'date': rec.date_order,
                         'payment_amount': rec.reservation_amount,
                         'closing_fees': 0,
                         'description': 'Reservation',
@@ -337,7 +337,8 @@ class IBASSale(models.Model):
                             else:
                                 ordinal = str(month_iteration) + "th"
 
-                        mydate = datetime.today() + relativedelta(months=+month_iteration)
+                        mydate = rec.date_order + \
+                            relativedelta(months=+month_iteration)
 
                         self.update({
                             'sc_ids': [(0, 0, {

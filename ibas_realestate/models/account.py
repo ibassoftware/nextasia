@@ -109,8 +109,9 @@ class IBASAccount(models.Model):
     # discount_type = fields.Selection([('percent', 'Percentage'), ('amount', 'Amount')], string='Discount Type',
     #
     #                          readonly=True, states={'draft': [('readonly', False)]}, default='percent')
-    unit_id = fields.Many2one('product.product', string='Unit', domain=[('is_a_property', '=', True),
-                                                                        ('state', '=', 'open')])
+
+    unit_id = fields.Many2one('product.product', string='Unit', domain=[
+                              ('is_a_property', '=', True), ('state', '=', 'open')])
 
     downpayment = fields.Monetary(string='Downpayment')
     discount_rate = fields.Float('Discount Amount', digits=(16, 2), readonly=True,
