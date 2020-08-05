@@ -134,7 +134,8 @@ class PropertiesProjectProperty(models.Model):
     on_hold = fields.Boolean('Tech Hold')
 
     reservation_date = fields.Date(
-        string='Date Reserved', compute='_compute_reservation_date')
+        string='Date Reserved', compute='_compute_reservation_date', store=True)
+
     finishing_id = fields.Many2one(
         'ibas_realestate.property_finishing', string='Finishing')
     price_history_current_date = fields.Datetime(
