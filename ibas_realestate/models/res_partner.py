@@ -390,7 +390,7 @@ class IBASCustomer(models.Model):
             if self.middle_name:
                 name += self.middle_name
 
-            vals.update({'name': name.upper()})
+            vals.update({'name': name})
         self.update(vals)
 
     @api.depends('monthly_gross_salary', 'allowances', 'commisions')
