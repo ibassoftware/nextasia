@@ -4,6 +4,7 @@ import logging
 
 from odoo import _, api, fields, models
 from odoo.exceptions import Warning, UserError, ValidationError
+from dateutil.relativedelta import relativedelta
 
 _logger = logging.getLogger(__name__)
 
@@ -157,7 +158,9 @@ class PropertiesProjectProperty(models.Model):
             [('unit_id', '=', self.id), ('state', '=', 'sale')])
         for rec in self:
             if sale_order:
-                rec.reservation_date = sale_order[0].date_order
+                reserve_date = sale_order[0].date_order + \
+                    relativedelta(hours=8)
+                rec.reservation_date = reserve_date
             else:
                 rec.reservation_date = False
 
