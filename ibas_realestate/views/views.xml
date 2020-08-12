@@ -102,7 +102,7 @@
               <field name="construction_end_date" attrs="{'readonly' :['|',('on_hold', '=', True),('state','!=', 'open')]}"/>
               <field name="actual_construction_complete_date" attrs="{'readonly' :['|','|',('on_hold', '=', True),('state','=', 'accept'),('state','=','proceed')]}"/>
               <field name="last_dp_date" attrs="{'readonly' :['|','|',('on_hold', '=', True),('state','=', 'accept'),('state','=','proceed')]}"/>
-              <field name="reservation_date" attrs="{'readonly' :['|','|',('on_hold', '=', True),('state','=', 'accept'),('state','=','proceed')]}"/>
+              <field name="reservation_date"/>
               <field name="price_history_current_date" attrs="{'readonly' :['|','|',('on_hold', '=', True),('state','=', 'accept'),('state','=','proceed')]}"/>
 
             </group>

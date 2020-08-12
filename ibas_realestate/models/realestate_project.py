@@ -151,7 +151,7 @@ class PropertiesProjectProperty(models.Model):
         digits='Product Price',
         help="Price at which the product is sold to customers.")
 
-    @api.depends('sale_order_id')
+    @api.depends('sale_order_id.date_order')
     def _compute_reservation_date(self):
         sale_order = self.env['sale.order'].search(
             [('unit_id', '=', self.id), ('state', '=', 'sale')])
