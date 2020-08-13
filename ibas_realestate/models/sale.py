@@ -297,9 +297,10 @@ class IBASSale(models.Model):
                     'sc_ids': [(5, 0, 0)]
                 })
 
+                reserve_date = rec.date_order + relativedelta(hours=8)
                 self.update({
                     'sc_ids': [(0, 0, {
-                        'date': rec.date_order,
+                        'date': reserve_date,
                         'payment_amount': rec.reservation_amount,
                         'closing_fees': 0,
                         'description': 'Reservation',
@@ -338,7 +339,7 @@ class IBASSale(models.Model):
                                 ordinal = str(month_iteration) + "th"
 
                         mydate = rec.date_order + \
-                            relativedelta(months=+month_iteration)
+                            relativedelta(months=+month_iteration, hours=8)
 
                         self.update({
                             'sc_ids': [(0, 0, {
