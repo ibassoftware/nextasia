@@ -36,6 +36,7 @@
         'views/client_requirement.xml',
         'views/res_partner.xml',
         'views/account.xml',
+        'views/account_payment_views.xml',
         'views/templates.xml',
         'views/property_class_views.xml',
         'views/property_model_views.xml',

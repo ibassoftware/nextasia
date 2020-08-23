@@ -26,6 +26,7 @@
         id="ibas_realestate_property_class_menu"
         name="Type"
         action="action_ibas_realestate_property_class"
+        groups="ibas_realestate.group_ibas_realestate_administrator"
         parent="ibas_re_menu"
         sequence="20"/>
 </data>

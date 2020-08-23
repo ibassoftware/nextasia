@@ -25,6 +25,7 @@
         id="ibas_realestate_property_finishing_menu"
         name="Finishing"
         action="action_ibas_realestate_property_finishing"
+        groups="ibas_realestate.group_ibas_realestate_administrator"
         parent="ibas_re_menu"
         sequence="40"/>
 </data>
