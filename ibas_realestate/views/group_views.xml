@@ -48,7 +48,25 @@
                 <xpath expr="//field[@name='categ_id']" position="attributes">
                     <attribute name="readonly">True</attribute>
                 </xpath>
-                <xpath expr="//field[@name='actual_construction_complete_date']" position="attributes">
+                <xpath expr="//field[@name='categ_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='customer']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='financing_type']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='contractor']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='construction_start_date']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='construction_end_date']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                 <xpath expr="//field[@name='actual_construction_complete_date']" position="attributes">
                     <attribute name="readonly">True</attribute>
                 </xpath>
                 <xpath expr="//field[@name='last_dp_date']" position="attributes">
