@@ -27,6 +27,7 @@
         id="client_req_menu"
         name="Client Requirements"
         action="client_reqs_action"
+        groups="ibas_realestate.group_ibas_realestate_administrator"
         parent="ibas_re_menu"
         sequence="10"/>
 </data>

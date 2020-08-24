@@ -27,6 +27,9 @@
                 <xpath expr="//field[@name='proplot_id']" position="attributes">
                     <attribute name="readonly">True</attribute>
                 </xpath>
+                <xpath expr="//field[@name='finishing_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
                 <xpath expr="//field[@name='floor_area']" position="attributes">
                     <attribute name="readonly">True</attribute>
                 </xpath>
@@ -34,6 +37,42 @@
                     <attribute name="readonly">True</attribute>
                 </xpath>
                 <xpath expr="//field[@name='list_price']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='responsible_emp_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='dp_terms']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='categ_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='categ_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='customer']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='financing_type']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='contractor']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='construction_start_date']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='construction_end_date']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                 <xpath expr="//field[@name='actual_construction_complete_date']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='last_dp_date']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='price_history_current_date']" position="attributes">
                     <attribute name="readonly">True</attribute>
                 </xpath>
             </field> 
