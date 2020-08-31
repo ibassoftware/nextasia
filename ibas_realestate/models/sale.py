@@ -236,12 +236,12 @@ class IBASSale(models.Model):
     @api.depends('discount_amount_percent', 'discount_amount')
     def _disc_amount(self):
         for rec in self:
-            if self.discount_type == 'fixed':
+            if rec.discount_type == 'fixed':
                 rec.update({
                     'disc_amount': rec.discount_amount,
                 })
 
-            elif self.discount_type == 'percentage':
+            elif rec.discount_type == 'percentage':
                 rec.update({
                     'disc_amount': rec.discount_amount_percent,
                 })
