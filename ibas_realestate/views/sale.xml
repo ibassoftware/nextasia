@@ -117,7 +117,7 @@
 
             <xpath expr="//field[@name='amount_total']" position="replace">
                 <field name="list_price" string="Total" widget="monetary" optional="hide"/>
-                <field name="discount_rate" widget="monetary" optional="hide"/>
+                <field name="disc_amount" widget="monetary" optional="hide"/>
                 <field name="discounted_price" widget="monetary"/>
             </xpath>
             
