@@ -12,5 +12,19 @@
 
         </field>
     </record>
+
+    <record id="ibas_account_payment_view_tree" model="ir.ui.view">
+        <field name="name">account.payment.view.tree</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_tree"/>
+        <field name="arch" type="xml">
+            
+            <xpath expr="//field[@name='name']" position="after">
+                <field name='check_number'/>
+                <field name='communication'/>
+            </xpath>
+
+        </field>
+    </record>
 </data>
 </odoo>
