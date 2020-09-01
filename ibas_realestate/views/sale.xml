@@ -113,17 +113,14 @@
             <xpath expr="//field[@name='expected_date']" position="replace">
             </xpath>
           
-            <xpath expr="//field[@name='amount_total']" position="after">
+           
+
+            <xpath expr="//field[@name='amount_total']" position="replace">
+                <field name="list_price" string="Total" widget="monetary" optional="hide"/>
+                <field name="discount_rate" widget="monetary" optional="hide"/>
                 <field name="discounted_price" widget="monetary"/>
             </xpath>
-
-            <xpath expr="//field[@name='amount_total']" position="attributes">
-                <attribute name="optional">hide</attribute>
-            </xpath>
             
-            <xpath expr="//field[@name='amount_total']" position="before">
-                <field name="discount_rate" widget="monetary" optional="hide"/>
-            </xpath>
         
          
 
