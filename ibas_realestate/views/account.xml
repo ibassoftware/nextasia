@@ -12,7 +12,19 @@
 
              <xpath expr="//page[@name='other_info']" position="after">
                 <page string="Payments" name="payments">
-                    <field name="payment_ids"/>
+                    <field name="payment_ids" widget="many2many">
+                        <tree default_order="payment_date">
+                        <field name="payment_date"/>
+                        <field name="name"/>
+                        <field name="check_number"/>
+                        <field name="communication"/>
+                        <field name="journal_id"/>
+                        <field name="payment_method_id"/>
+                        <field name="partner_id"/>
+                        <field name="amount"/>
+                        <field name="state"/>
+                        </tree>
+                    </field>
                 </page>
             </xpath>
             <!--End of Create Payments-->
