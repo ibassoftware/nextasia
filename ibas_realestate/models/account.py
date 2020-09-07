@@ -10,6 +10,7 @@ class IBASAccount(models.Model):
     payment_ids = fields.Many2many('account.payment', 'account_invoice_payment_rel',
                                    'invoice_id', 'payment_id', string="Payments", copy=False, readonly=True,)
 
+
     @api.depends(
         'line_ids.debit',
         'line_ids.credit',
@@ -170,7 +171,7 @@ class IBASAccount(models.Model):
                     payment_data = {
                         'journal_id': journal_id,
                         'payment_method_id': payment_method_id.id,
-                        'payment_date': fields.Date.today(),
+                        'payment_date': line.date_maturity,  # fields.Date.today(),
                         'communication': line.name,
                         'invoice_ids': [(4, self.id)],
                         'payment_type': payment_type,
