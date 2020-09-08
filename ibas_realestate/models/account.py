@@ -8,8 +8,7 @@ class IBASAccount(models.Model):
     _inherit = 'account.move'
 
     payment_ids = fields.Many2many('account.payment', 'account_invoice_payment_rel',
-                                   'invoice_id', 'payment_id', string="Payments", copy=False, readonly=True,)
-
+                                   'invoice_id', 'payment_id', string="Payments", copy=False)
 
     @api.depends(
         'line_ids.debit',
