@@ -13,7 +13,7 @@
              <xpath expr="//page[@name='other_info']" position="after">
                 <page string="Payments" name="payments">
                     <field name="payment_ids" widget="many2many">
-                        <tree default_order="payment_date">
+                        <tree default_order="payment_date" delete="0" create="0">
                         <field name="payment_date"/>
                         <field name="name"/>
                         <field name="check_number"/>
