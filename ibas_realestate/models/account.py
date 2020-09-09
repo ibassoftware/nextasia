@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from odoo.exceptions import Warning, UserError, ValidationError
 
 
 class IBASAccount(models.Model):
     _inherit = 'account.move'
+
+    payment_ids = fields.Many2many('account.payment', 'account_invoice_payment_rel',
+                                   'invoice_id', 'payment_id', string="Payments", copy=False)
 
     @api.depends(
         'line_ids.debit',
@@ -147,6 +151,46 @@ class IBASAccount(models.Model):
                 line._onchange_price_subtotal()
 
             inv._compute_invoice_taxes_by_group()
+
+    def create_voucher(self):
+        if self.line_ids:
+            paymethod_obj = self.env['account.payment.method']
+            payment_type = 'inbound'
+            payment_method = paymethod_obj.search(
+                [('payment_type', '=', payment_type)])
+            if payment_method:
+                payment_method_id = payment_method[0]
+            else:
+                raise UserError("No payment method defined.")
+
+            for line in self.line_ids:
+                if line.debit > 0:
+                    journal_id = self.env['account.journal'].search(
+                        [('company_id', '=', self.env.company.id), ('type', 'in', ('bank', 'cash'))], limit=1).id
+                    payment_data = {
+                        'journal_id': journal_id,
+                        'payment_method_id': payment_method_id.id,
+                        'payment_date': line.date_maturity,  # fields.Date.today(),
+                        'communication': line.name,
+                        'invoice_ids': [(4, self.id)],
+                        'payment_type': payment_type,
+                        'amount': line.debit,
+                        'move_line_ids': [(4, line.id)],
+                        'partner_id': line.partner_id.id,
+                        'partner_type': 'customer',
+                    }
+                    if line.payment_id:
+                        raise UserError("Payment Already Created")
+                    else:
+                        payrec = self.env['account.payment'].create(
+                            payment_data)
+
+                # payrec.post()
+                # self.env.user.notify_info(
+                #    'Payment transactions are posted and customer account was updated.', title='Payment Posting', sticky=False)
+        else:
+            raise UserError(
+                "No Journal Items")
 
 
 class IBASAccountMoveLine(models.Model):

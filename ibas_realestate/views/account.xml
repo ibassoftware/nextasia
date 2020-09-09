@@ -5,6 +5,30 @@
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.view_move_form"/>
         <field name="arch" type="xml">
+            <!--Create Payments-->
+            <xpath expr="//button[@name='button_draft']" position="after">
+                <button name="create_voucher" string="Create Payments" class="oe_highlight" type="object" groups="account.group_account_invoice" attrs="{'invisible': [('state', '!=', 'posted')]}"/>
+            </xpath>
+
+             <xpath expr="//page[@name='other_info']" position="after">
+                <page string="Payments" name="payments">
+                    <field name="payment_ids" widget="many2many">
+                        <tree default_order="payment_date" delete="0" create="0">
+                        <field name="payment_date"/>
+                        <field name="name"/>
+                        <field name="check_number"/>
+                        <field name="communication"/>
+                        <field name="journal_id"/>
+                        <field name="payment_method_id"/>
+                        <field name="partner_id"/>
+                        <field name="amount"/>
+                        <field name="state"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <!--End of Create Payments-->
+            
             
             <xpath expr="//field[@name='narration']" position="before">
                     <div>

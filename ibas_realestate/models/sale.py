@@ -30,8 +30,8 @@ class IBASSale(models.Model):
                                  compute="_onchange_unit_id", store=True)
 
     # open date order, readonly=True
-    date_order = fields.Datetime(string='Order Date', required=True, readonly=False, index=True, states={'draft': [('readonly', False)], 'sent': [(
-        'readonly', False)]}, copy=False, default=fields.Datetime.now, help="Creation date of draft/sent orders,\nConfirmation date of confirmed orders.")
+    date_order = fields.Date(string='Order Date', required=True, readonly=False, index=True, states={'draft': [('readonly', False)], 'sent': [(
+        'readonly', False)]}, copy=False, default=fields.Date.today, help="Creation date of draft/sent orders,\nConfirmation date of confirmed orders.")
 
     def action_cancel(self):
 
@@ -297,7 +297,7 @@ class IBASSale(models.Model):
                     'sc_ids': [(5, 0, 0)]
                 })
 
-                reserve_date = rec.date_order + relativedelta(hours=8)
+                reserve_date = rec.date_order  # + relativedelta(hours=8)
                 self.update({
                     'sc_ids': [(0, 0, {
                         'date': reserve_date,
@@ -339,7 +339,7 @@ class IBASSale(models.Model):
                                 ordinal = str(month_iteration) + "th"
 
                         mydate = rec.date_order + \
-                            relativedelta(months=+month_iteration, hours=8)
+                            relativedelta(months=+month_iteration)
 
                         self.update({
                             'sc_ids': [(0, 0, {
