@@ -10,6 +10,16 @@ class IBASAccount(models.Model):
     payment_ids = fields.Many2many('account.payment', 'account_invoice_payment_rel',
                                    'invoice_id', 'payment_id', string="Payments", copy=False)
 
+    payment_count = fields.Integer(
+        string="Payment Count", compute='_compute_payment')
+
+    @api.depends("payment_ids")
+    def _compute_payment(self):
+        if self.payment_ids:
+            self.payment_count = len(self.payment_ids)
+        else:
+            self.payment_count = 0
+
     @api.depends(
         'line_ids.debit',
         'line_ids.credit',
@@ -173,9 +183,11 @@ class IBASAccount(models.Model):
                         'payment_date': line.date_maturity,  # fields.Date.today(),
                         'communication': line.name,
                         'invoice_ids': [(4, self.id)],
+                        # 'invoice_ids': [(4, inv.id, None) for inv in self._get_invoices(payment)],
                         'payment_type': payment_type,
                         'amount': line.debit,
-                        'move_line_ids': [(4, line.id)],
+                        'currency_id': self.currency_id.id,
+                        # 'move_line_ids': [(4, line.id)],
                         'partner_id': line.partner_id.id,
                         'partner_type': 'customer',
                     }
@@ -184,8 +196,8 @@ class IBASAccount(models.Model):
                     else:
                         payrec = self.env['account.payment'].create(
                             payment_data)
+                        # payrec.post()
 
-                # payrec.post()
                 # self.env.user.notify_info(
                 #    'Payment transactions are posted and customer account was updated.', title='Payment Posting', sticky=False)
         else:

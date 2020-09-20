@@ -7,11 +7,13 @@
         <field name="arch" type="xml">
             <!--Create Payments-->
             <xpath expr="//button[@name='button_draft']" position="after">
-                <button name="create_voucher" string="Create Payments" class="oe_highlight" type="object" groups="account.group_account_invoice" attrs="{'invisible': [('state', '!=', 'posted')]}"/>
+                <button name="create_voucher" string="Create Payments" class="oe_highlight" type="object" groups="account.group_account_invoice" 
+                attrs="{'invisible': ['|', '|', '|', ('payment_count', '!=', 0),('state', '!=', 'posted'), ('invoice_payment_state', '!=', 'not_paid'), ('type', 'not in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt'))]}"/>
             </xpath>
 
              <xpath expr="//page[@name='other_info']" position="after">
                 <page string="Payments" name="payments">
+                    <field name="payment_count" invisible="1"/>
                     <field name="payment_ids" widget="many2many">
                         <tree default_order="payment_date" delete="0" create="0">
                         <field name="payment_date"/>
