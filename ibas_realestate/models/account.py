@@ -174,7 +174,7 @@ class IBASAccount(models.Model):
                 raise UserError("No payment method defined.")
 
             for line in self.line_ids:
-                if line.debit > 0:
+                if line.account_id.user_type_id.id == self.env.ref('account.data_account_type_receivable').id:
                     journal_id = self.env['account.journal'].search(
                         [('company_id', '=', self.env.company.id), ('type', 'in', ('bank', 'cash'))], limit=1).id
                     payment_data = {
@@ -183,7 +183,6 @@ class IBASAccount(models.Model):
                         'payment_date': line.date_maturity,  # fields.Date.today(),
                         'communication': line.name,
                         'invoice_ids': [(4, self.id)],
-                        # 'invoice_ids': [(4, inv.id, None) for inv in self._get_invoices(payment)],
                         'payment_type': payment_type,
                         'amount': line.debit,
                         'currency_id': self.currency_id.id,
