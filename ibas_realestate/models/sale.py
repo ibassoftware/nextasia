@@ -218,6 +218,7 @@ class IBASSale(models.Model):
             'downpayment': self.downpayment,
             'disc_spot': self.disc_spot,
             'disc_amount': self.disc_amount,
+            'invoice_date': self.date_order,
         })
         return invoice_vals
 
