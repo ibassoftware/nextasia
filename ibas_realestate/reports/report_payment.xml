@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_cus_purchase_order_inherit" inherit_id="account.report_payment_receipt_document">
+        <xpath expr="//table" position="replace">
+            
+        </xpath>
+
+        <xpath expr="//div/h3" position="before">
+            <h3><![CDATA[&nbsp;]]></h3>
+        </xpath>
+       
+    </template>
+
+</odoo>
