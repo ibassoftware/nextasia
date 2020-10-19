@@ -84,7 +84,7 @@ class IBASCustomer(models.Model):
 
     is_ofw = fields.Boolean(string='Is an OFW')
     duration_stay_from = fields.Char(string='From') #change to char
-    duration_stay_to = fields.Char(string='To') #change to char
+    # duration_stay_to = fields.Char(string='To') #change to char
 
     buying_reason = fields.Selection([
         ('upgrade', 'Upgrade'),

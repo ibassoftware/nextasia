@@ -14,5 +14,6 @@ class IBASSaleAdvancePaymentInv(models.TransientModel):
 
         invoice_vals.update({
             'unit_id': order.unit_id.id,
+            'invoice_date': order.date_order
         })
         return invoice_vals
