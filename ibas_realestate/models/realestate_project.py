@@ -73,9 +73,9 @@ class PropertiesProjectProperty(models.Model):
 
     state = fields.Selection([
         ('open', 'Available'),
-        ('reserved', 'Reservation Sale'),
-        ('booked', 'Booked Sale'),
-        ('contracted', 'Contracted Sale'),
+        ('reserved', 'Reservation Stage'),
+        ('booked', 'Booked Stage'),
+        ('contracted', 'Contracted Stage'),
         ('proceed', 'Loan Proceeds'),
         ('accept', 'Acceptance'),
     ], string='Status', default='open', tracking=True)
