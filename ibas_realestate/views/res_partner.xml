@@ -315,8 +315,8 @@
             <xpath expr="//field[@name='vat']" position="before">
                 <label for="duration_stay_from" string="Duration of Stay"/>
                 <div>
-                    <field name="duration_stay_from" placeholder="From" class="oe_inline"/> to 
-                    <field name="duration_stay_to" placeholder="To" class="oe_inline"/>
+                    <field name="duration_stay_from"/> 
+                    <!-- <field name="duration_stay_to" placeholder="To" class="oe_inline"/> -->
                 </div>
                 <field name="home_ownership"/>
             </xpath>
