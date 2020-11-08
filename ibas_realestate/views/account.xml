@@ -56,6 +56,7 @@
         <field name="arch" type="xml">
             <!--Create Payments-->
             <xpath expr="//button[@name='button_draft']" position="after">
+                <button name="refresh" attrs="{'invisible': [('state', '!=', 'draft')]}" string="refresh" class="oe_highlight" type="object"/>
                 <button name="create_voucher" string="Create Payments" class="oe_highlight" type="object" groups="account.group_account_invoice" 
                 attrs="{'invisible': ['|', '|', '|', ('payment_count', '!=', 0),('state', '!=', 'posted'), ('invoice_payment_state', '!=', 'not_paid'), ('type', 'not in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt'))]}"/>
             </xpath>

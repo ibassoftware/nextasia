@@ -13,6 +13,10 @@ class IBASAccount(models.Model):
     payment_count = fields.Integer(
         string="Payment Count", compute='_compute_payment')
 
+    def refresh(self):
+        if self.invoice_date:
+            self._recompute_dynamic_lines()
+
     @api.depends("payment_ids")
     def _compute_payment(self):
         if self.payment_ids:
