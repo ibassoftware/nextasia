@@ -32,6 +32,7 @@
         'reports/report_formats.xml',
         'reports/report_invoice.xml',
         'reports/report_payment.xml',
+        'reports/report_sale.xml',
         'reports/sample_computation_report.xml',
         'views/views.xml',
         'views/sale.xml',
