@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_cus_invoice_inherit" inherit_id="account.report_invoice_document">
+
+        <xpath expr="//address" position="before">
+            <h2><![CDATA[&nbsp;]]></h2>
+        </xpath>
+       
+    </template>
+
+</odoo>

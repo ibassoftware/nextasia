@@ -30,6 +30,7 @@
         'wizard/update_sale_price_wiz_views.xml',
         # 'reports/client_information_report.xml',
         'reports/report_formats.xml',
+        'reports/report_invoice.xml',
         'reports/report_payment.xml',
         'reports/sample_computation_report.xml',
         'views/views.xml',
