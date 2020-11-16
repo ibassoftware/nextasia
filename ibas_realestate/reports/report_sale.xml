@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_cus_sale_inherit" inherit_id="sale.report_saleorder_document">
+
+        <xpath expr="//div[@t-field='doc.partner_id']" position="before">
+            <h2><![CDATA[&nbsp;]]></h2>
+        </xpath>
+       
+    </template>
+
+</odoo>
