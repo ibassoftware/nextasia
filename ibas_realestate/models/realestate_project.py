@@ -74,8 +74,8 @@ class PropertiesProjectProperty(models.Model):
     state = fields.Selection([
         ('open', 'Available'),
         ('reserved', 'Reservation Stage'),
-        ('booked', 'Booked Stage'),
-        ('contracted', 'Contracted Stage'),
+        ('booked', 'Booking Stage'),
+        ('contracted', 'Contracting Stage'),
         ('proceed', 'Loan Proceeds'),
         ('accept', 'Acceptance'),
     ], string='Status', default='open', tracking=True)
@@ -396,8 +396,8 @@ class IBASRequirementModel(models.Model):
 
     name = fields.Char(string='Name', required=True)
     default_requirement = fields.Boolean(string='Default')
-    stage = fields.Selection([('reservation', 'Reservation'),
-                              ('booked', 'Booked Sale'), ('contracted', 'Contracted Sale'), ('proceeds', 'Loan Proceeds')], string="Stage")
+    stage = fields.Selection([('reservation', 'Reservation Stage'),
+                              ('booked', 'Booking Stage'), ('contracted', 'Contracting Stage'), ('proceeds', 'Loan Proceeds')], string="Stage")
 
 # reservation
 

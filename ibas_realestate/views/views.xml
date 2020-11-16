@@ -114,7 +114,7 @@
         <notebook>
         <page string="Requirements">
         <group>
-        <label for='reservation_line_ids' string="RESERVATION" colspan="5" style="font-size:13px; padding: 5px; vertical-align: middle; margin-top:0px; text-align:left; background-color: green; color:white; border:1px solid grey;"/>
+        <label for='reservation_line_ids' string="RESERVATION STAGE" colspan="5" style="font-size:13px; padding: 5px; vertical-align: middle; margin-top:0px; text-align:left; background-color: green; color:white; border:1px solid grey;"/>
         <field name="reservation_line_ids" nolabel="1" attrs="{'readonly': ['|',('state','!=','reserved'),('on_hold','=', True)]}">
             <tree editable="bottom">
               <field name="requirement" options="{'no_open':1,'no_create':1,'no_create_edit':1}"/>
@@ -125,10 +125,10 @@
           </field>
         </group>
         <group>
-        <label for='booked_sale_line_ids' string="BOOKED SALE" colspan="5" style="font-size:13px; padding: 5px; vertical-align: middle; margin-top:0px; text-align:left; background-color: green; color:white; border:1px solid grey;"/>
+        <label for='booked_sale_line_ids' string="BOOKING STAGE" colspan="5" style="font-size:13px; padding: 5px; vertical-align: middle; margin-top:0px; text-align:left; background-color: green; color:white; border:1px solid grey;"/>
         <field name="booked_sale_line_ids" nolabel="1" attrs="{'readonly': ['|',('state','!=','booked'),('on_hold','=',True)]}">
             <tree editable="bottom">
-              <field name="requirement" options="{'no_open':1,'no_create':1,'no_create_edit':1}"/>
+              <field name="requirement" options="{'no_open':1,'no_create':1,'no_create_edit':1}" string="Booking"/>
               <field name="compliance_date"/>
               <field name="requirement_file"/>
               <field name="complied" attrs="{'readonly': [('requirement_file','!=', False)]}"/>
@@ -136,10 +136,10 @@
           </field>
         </group>
         <group>
-        <label for='contracted_sale_line_ids' string="CONTRACTED SALE" colspan="5" style="font-size:13px; padding: 5px; vertical-align: middle; margin-top:0px; text-align:left; background-color: green; color:white; border:1px solid grey;"/>
+        <label for='contracted_sale_line_ids' string="CONTRACTING STAGE" colspan="5" style="font-size:13px; padding: 5px; vertical-align: middle; margin-top:0px; text-align:left; background-color: green; color:white; border:1px solid grey;"/>
         <field name="contracted_sale_line_ids" nolabel="1" attrs="{'readonly': ['|',('state','!=','contracted'),('on_hold','=',True)]}">
             <tree editable="bottom">
-              <field name="requirement" options="{'no_open':1,'no_create':1,'no_create_edit':1}"/>
+              <field name="requirement" options="{'no_open':1,'no_create':1,'no_create_edit':1}" string="Contracting"/>
               <field name="compliance_date"/>
               <field name="requirement_file"/>
               <field name="complied" attrs="{'readonly': [('requirement_file','!=', False)]}"/>

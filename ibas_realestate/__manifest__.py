@@ -20,7 +20,7 @@
     'version': '0.3',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'product', 'sale_management', 'hr', 'contacts', 'account'],
+    'depends': ['base', 'product', 'sale_management', 'hr', 'contacts', 'account_accountant'],
 
     # always loaded
     'data': [
@@ -30,7 +30,9 @@
         'wizard/update_sale_price_wiz_views.xml',
         # 'reports/client_information_report.xml',
         'reports/report_formats.xml',
+        'reports/report_invoice.xml',
         'reports/report_payment.xml',
+        'reports/report_sale.xml',
         'reports/sample_computation_report.xml',
         'views/views.xml',
         'views/sale.xml',

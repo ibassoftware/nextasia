@@ -1,5 +1,54 @@
 <odoo>
 <data>
+     <!-- receipt -->
+    <record model="ir.ui.menu" id="account.menu_action_move_out_receipt_type">
+		<field name="groups_id" eval="[(4,ref('account.group_account_invoice'))]"/>
+	</record>
+
+    <!-- credit notes -->
+    <record model="ir.ui.menu" id="account.menu_action_move_out_refund_type">
+		<field name="groups_id" eval="[(4,ref('account.group_account_invoice'))]"/>
+	</record>
+
+    <!-- invoice -->
+    <record model="ir.ui.menu" id="account.menu_action_move_out_invoice_type">
+		<field name="groups_id" eval="[(4,ref('account.group_account_invoice'))]"/>
+	</record>
+
+    <!-- Age Payable -->
+    <record model="ir.ui.menu" id="account_reports.menu_action_account_report_aged_payable">
+		<field name="groups_id" eval="[(4,ref('account.group_account_invoice'))]"/>
+	</record>
+    <!-- Audit report Menu -->
+    <record model="ir.ui.menu" id="account_reports.account_reports_audit_reports_menu">
+		<field name="groups_id" eval="[(4,ref('account.group_account_invoice'))]"/>
+	</record>
+    <!-- Report Management -->
+    <record model="ir.ui.menu" id="account.account_reports_management_menu">
+		<field name="groups_id" eval="[(4,ref('account.group_account_invoice'))]"/>
+	</record>
+    <!-- Vendors -->
+    <record model="ir.ui.menu" id="account.menu_finance_payables">
+		<field name="groups_id" eval="[(4,ref('account.group_account_invoice'))]"/>
+	</record>
+    <!-- Follow-up Report -->
+    <record model="ir.ui.menu" id="account_followup.customer_statements_menu">
+		<field name="groups_id" eval="[(4,ref('account.group_account_invoice'))]"/>
+	</record>
+    <!-- Products -->
+    <record model="ir.ui.menu" id="account.product_product_menu_sellable">
+		<field name="groups_id" eval="[(4,ref('account.group_account_invoice'))]"/>
+	</record>
+
+
+    <record model="ir.ui.menu" id="account.menu_finance_reports">
+		<field name="groups_id" eval="[(4,ref('ibas_realestate.group_account_collection'))]"/>
+	</record>
+
+    <record model="ir.ui.menu" id="account_accountant.menu_accounting">
+		<field name="groups_id" eval="[(4,ref('ibas_realestate.group_account_collection'))]"/>
+	</record>
+
     <record id="ibas_account_move_view_form" model="ir.ui.view">
         <field name="name">account.move.view.form</field>
         <field name="model">account.move</field>
@@ -7,6 +56,7 @@
         <field name="arch" type="xml">
             <!--Create Payments-->
             <xpath expr="//button[@name='button_draft']" position="after">
+                <button name="refresh" attrs="{'invisible': [('state', '!=', 'draft')]}" string="refresh" class="oe_highlight" type="object"/>
                 <button name="create_voucher" string="Create Payments" class="oe_highlight" type="object" groups="account.group_account_invoice" 
                 attrs="{'invisible': ['|', '|', '|', ('payment_count', '!=', 0),('state', '!=', 'posted'), ('invoice_payment_state', '!=', 'not_paid'), ('type', 'not in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt'))]}"/>
             </xpath>
