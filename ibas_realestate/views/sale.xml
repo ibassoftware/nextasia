@@ -1,436 +1,415 @@
 <odoo>
-<data>
+    <data>
 
-    <record id="ibas_sale_view_form" model="ir.ui.view">
-        <field name="name">sale.order.view.form</field>
-        <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_form"/>
-        <field name="arch" type="xml">
+        <record id="ibas_sale_view_form" model="ir.ui.view">
+            <field name="name">sale.order.view.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
 
-            <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d']" position="attributes">
-                <attribute name="groups">sales_team.group_sale_manager</attribute>
-            </xpath>
+                <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d']" position="attributes">
+                    <attribute name="groups">sales_team.group_sale_manager</attribute>
+                </xpath>
 
-           <xpath expr="//field[@name='note']" position="before">
-                <field name="disc_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                <field name="disc_spot" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                <field name="discount_rate" string="Total Discount Amount" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="1"/>
-                <button colspan="2" name="button_dummy" states="draft,sent" string="(UPDATE DISCOUNT)" type="object" class="oe_link"/>
-            </xpath>
+                <xpath expr="//button[@name='action_cancel']" position="replace">
+                    <button name="action_cancel" states="draft,sent,sale" type="object" string="Cancel" groups="sales_team.group_sale_manager,base.group_system"/>
+                </xpath>
 
-            <xpath expr="//field[@name='validity_date']" position="before">
-                <field name="project_id"/>
-            </xpath>
-            <xpath expr="//field[@name='partner_id']" position="before">
-                <field name="unit_id" context="{
+                <xpath expr="//field[@name='note']" position="before">
+                    <field name="disc_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    <field name="disc_spot" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    <field name="discount_rate" string="Total Discount Amount" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="1"/>
+                    <button colspan="2" name="button_dummy" states="draft,sent" string="(UPDATE DISCOUNT)" type="object" class="oe_link"/>
+                </xpath>
+
+                <xpath expr="//field[@name='validity_date']" position="before">
+                    <field name="project_id"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="before">
+                    <field name="unit_id" context="{
                     'form_view_ref':'ibas_realestate.ire_property_view_form'
-                    }" />  
-            </xpath>
-            <xpath expr="//field[@name='partner_id']" position="after">
-                <field name="pre_selling_price" widget="monetary" invisible="1"/>
-                
-                <field name="financing_type" required="1"/>
-                <field name="list_price" widget="monetary"/>
-            </xpath>
+                    }" />
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="pre_selling_price" widget="monetary" invisible="1"/>
 
-            <xpath expr="//sheet/group" position="after">
-                <group>
-                     <group string="Discount">
-                        <field name="discounted_price" widget="monetary"/>
-                        <field name="discount_type"/>
-                        <field name="discount_rate_id" attrs="{'invisible': [('discount_type','!=','percentage')]}"/>
-                        <field name="discount_amount" widget="monetary" attrs="{'invisible': [('discount_type','!=','fixed')]}"/>
-                        <field name="discount_amount_percent" widget="monetary" attrs="{'invisible': [('discount_type','!=','percentage')]}"/>
-                        <field name="payment_term_id" options="{'no_open':True,'no_create': True}"/>
-                    </group>
-                    <group string="Down Payment">
-                        <field name="downpayment_type"/>
-                        <field name="dp_per_rate" attrs="{'invisible' :[('downpayment_type', '!=', 'percentage')], 'required': [('downpayment_type', '!=', 'fixed')]}"/>
-                        <field name="downpayment" string="Downpayment Amount" attrs="{'readonly': [('downpayment_type', '!=', 'fixed')]}" force_save="1"/>
-                        <field name="fix_downpayment" string="Fix Downpayment Amount" invisible="1"/>
-                        <!--<field name="is_cash"/> -->
-                        <field name="discount_spotdp_type" string="Downpayment Discount Type"/>
-                        <field name="discount_spotdp_rate" string="Downpayment Discount Rate" attrs="{'invisible' :[('discount_spotdp_type', '!=', 'percentage')], 'required': [('discount_spotdp_type', '!=', 'fixed')]}"/>
-                        <field name="discount_spotdp" string="Downpayment Discount" attrs="{'readonly' :[('discount_spotdp_type', '=', 'percentage')]}" force_save="1"/>
-                        <field name="reservation_type"/>
-                        <field name="reservation_rate" attrs="{'invisible' :[('reservation_type', '!=', 'percentage')], 'required': [('reservation_type', '=', 'percentage')]}"/>
-                        <field name="reservation_amount" attrs="{'readonly' :[('reservation_type', '=', 'percentage')]}" force_save="1"/>
-                        <field name="dp_terms"/>
-                    </group>
-                   
-                </group>
-            </xpath>
-            <xpath expr="//field[@name='payment_term_id']" position="replace">            
-            </xpath>
+                    <field name="financing_type" required="1"/>
+                    <field name="list_price" widget="monetary"/>
+                </xpath>
 
-            <xpath expr="//field[@name='date_order']" position="after">            
-                <field name="closing_fees" invisible="1"/>
-                <field name="interest_rate" options="{'no_quick_create':True,'no_create_edit':True}"/> 
-            </xpath>
-
-            <xpath expr="//page[@name='order_lines']" position="before">
-                <page name="sc" string="Sample Computation">
-                    <field name="sc_ids">
-                        <tree>
-                            <field name="description"/>
-                            <field name="date"/>
-                            <field name="payment_amount" sum="Monthly DP"/>
-                            <field name="closing_fees" sum="Closing Fees" invisible="1"/>
-                            <field name="total" sum="Total" invisible="1"/>
-                        </tree>
-                    </field>    
+                <xpath expr="//sheet/group" position="after">
                     <group>
-                    <group>
-                    <field name="loanable_amount"/>
-                    <field name="monthly_3" attrs="{'invisible' :[('financing_type', '=', 'phdmf')]}"/>
-                    <field name="monthly_5"/>
-                    <field name="monthly_10"/>
-                     <field name="monthly_20"/>
-                     <field name="monthly_30" attrs="{'invisible' :[('financing_type', '!=', 'phdmf')]}"/>
+                        <group string="Discount">
+                            <field name="discounted_price" widget="monetary"/>
+                            <field name="discount_type"/>
+                            <field name="discount_rate_id" attrs="{'invisible': [('discount_type','!=','percentage')]}"/>
+                            <field name="discount_amount" widget="monetary" attrs="{'invisible': [('discount_type','!=','fixed')]}"/>
+                            <field name="discount_amount_percent" widget="monetary" attrs="{'invisible': [('discount_type','!=','percentage')]}"/>
+                            <field name="payment_term_id" options="{'no_open':True,'no_create': True}"/>
+                        </group>
+                        <group string="Down Payment">
+                            <field name="downpayment_type"/>
+                            <field name="dp_per_rate" attrs="{'invisible' :[('downpayment_type', '!=', 'percentage')], 'required': [('downpayment_type', '!=', 'fixed')]}"/>
+                            <field name="downpayment" string="Downpayment Amount" attrs="{'readonly': [('downpayment_type', '!=', 'fixed')]}" force_save="1"/>
+                            <field name="fix_downpayment" string="Fix Downpayment Amount" invisible="1"/>
+                            <!--<field name="is_cash"/> -->
+                            <field name="discount_spotdp_type" string="Downpayment Discount Type"/>
+                            <field name="discount_spotdp_rate" string="Downpayment Discount Rate" attrs="{'invisible' :[('discount_spotdp_type', '!=', 'percentage')], 'required': [('discount_spotdp_type', '!=', 'fixed')]}"/>
+                            <field name="discount_spotdp" string="Downpayment Discount" attrs="{'readonly' :[('discount_spotdp_type', '=', 'percentage')]}" force_save="1"/>
+                            <field name="reservation_type"/>
+                            <field name="reservation_rate" attrs="{'invisible' :[('reservation_type', '!=', 'percentage')], 'required': [('reservation_type', '=', 'percentage')]}"/>
+                            <field name="reservation_amount" attrs="{'readonly' :[('reservation_type', '=', 'percentage')]}" force_save="1"/>
+                            <field name="dp_terms"/>
+                        </group>
+
                     </group>
-                    </group>
-                </page>
-            </xpath>
+                </xpath>
+                <xpath expr="//field[@name='payment_term_id']" position="replace">
+                </xpath>
 
-            <xpath expr="//button[@name='action_draft']" position="after">
-                <button string="Compute Sample Computation" name="action_compute_sc" type="object" class="oe_highlight"/>
-            </xpath>
+                <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="closing_fees" invisible="1"/>
+                    <field name="interest_rate" options="{'no_quick_create':True,'no_create_edit':True}"/>
+                </xpath>
 
-        </field>
-    </record>
+                <xpath expr="//page[@name='order_lines']" position="before">
+                    <page name="sc" string="Sample Computation">
+                        <field name="sc_ids">
+                            <tree>
+                                <field name="description"/>
+                                <field name="date"/>
+                                <field name="payment_amount" sum="Monthly DP"/>
+                                <field name="closing_fees" sum="Closing Fees" invisible="1"/>
+                                <field name="total" sum="Total" invisible="1"/>
+                            </tree>
+                        </field>
+                        <group>
+                            <group>
+                                <field name="loanable_amount"/>
+                                <field name="monthly_3" attrs="{'invisible' :[('financing_type', '=', 'phdmf')]}"/>
+                                <field name="monthly_5"/>
+                                <field name="monthly_10"/>
+                                <field name="monthly_20"/>
+                                <field name="monthly_30" attrs="{'invisible' :[('financing_type', '!=', 'phdmf')]}"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
 
-    <record id="ibas_sale_view_tree" model="ir.ui.view">
-        <field name="name">sale.order.view.tree</field>
-        <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_tree"/>
-        <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_draft']" position="after">
+                    <button string="Compute Sample Computation" name="action_compute_sc" type="object" class="oe_highlight"/>
+                </xpath>
 
-            <xpath expr="//field[@name='name']" position="after">
-                <field name='unit_id'/>
-            </xpath>
+            </field>
+        </record>
 
-            <xpath expr="//field[@name='commitment_date']" position="replace">
-            </xpath>
+        <record id="ibas_sale_view_tree" model="ir.ui.view">
+            <field name="name">sale.order.view.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
 
-            <xpath expr="//field[@name='user_id']" position="replace">
-            </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name='unit_id'/>
+                </xpath>
 
-            <xpath expr="//field[@name='expected_date']" position="replace">
-            </xpath>
-          
-           
+                <xpath expr="//field[@name='commitment_date']" position="replace">
+                </xpath>
 
-            <xpath expr="//field[@name='amount_total']" position="replace">
-                <field name="list_price" string="Total" widget="monetary" optional="hide"/>
-                <field name="disc_amount" widget="monetary" optional="hide"/>
-                <field name="discounted_price" widget="monetary"/>
-            </xpath>
-            
-        
-         
+                <xpath expr="//field[@name='user_id']" position="replace">
+                </xpath>
 
-            
-
-        </field>
-    </record>
-
-    <record id="ibas_sale_view_quotation_tree" model="ir.ui.view">
-        <field name="name">sale.order.view.quotation.tree</field>
-        <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
-        <field name="arch" type="xml">
-
-            <xpath expr="//field[@name='name']" position="after">
-                <field name='unit_id'/>
-            </xpath>
-
-            <xpath expr="//field[@name='commitment_date']" position="replace">
-            </xpath>
-
-        </field>
-    </record>
+                <xpath expr="//field[@name='expected_date']" position="replace">
+                </xpath>
 
 
-    <record id="sale_downpayment_rate_form" model="ir.ui.view">
-        <field name="name">sale.downpayment.rate.form</field> 
-        <field name="model">sale.downpayment.rate</field>
-        <field name="arch" type="xml">
-            <form string="Downpayment Rate">
-                <sheet>
-                    <group>
-                        <field name="name"/>
-                        <field name="rate"/>
-                    </group>
-                </sheet>                
-            </form> 
-        </field> 
-    </record>
 
-    <record id="sale_downpayment_rate_tree" model="ir.ui.view">
-        <field name="name">sale.downpayment.rate.tree</field> 
-        <field name="model">sale.downpayment.rate</field>
-        <field name="arch" type="xml">
-            <tree string="Downpayment Rate">
-                <field name="name"/>
-                <field name="rate"/>                
-            </tree> 
-        </field> 
-    </record>
+                <xpath expr="//field[@name='amount_total']" position="replace">
+                    <field name="list_price" string="Total" widget="monetary" optional="hide"/>
+                    <field name="disc_amount" widget="monetary" optional="hide"/>
+                    <field name="discounted_price" widget="monetary"/>
+                </xpath>
 
-    <record id="sale_downpayment_rate_search" model="ir.ui.view">
-        <field name="name">sale.downpayment.rate.search</field> 
-        <field name="model">sale.downpayment.rate</field>
-        <field name="arch" type="xml">
-            <search string="Downpayment Rate">
-                <field name="name"/>
-                <field name="rate"/>                
-            </search>
-        </field> 
-    </record>
 
-    <record id="open_sale_downpayment_rate" model="ir.actions.act_window">
-        <field name="name"> Downpayment Rate</field> 
-        <field name="res_model">sale.downpayment.rate</field>
-        <field name="view_mode">tree,form</field>
-        <field name="help" type="html">
-           <p class="o_view_nocontent_smiling_face">
+
+
+
+
+            </field>
+        </record>
+
+        <record id="ibas_sale_view_quotation_tree" model="ir.ui.view">
+            <field name="name">sale.order.view.quotation.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name='unit_id'/>
+                </xpath>
+
+                <xpath expr="//field[@name='commitment_date']" position="replace">
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <record id="sale_downpayment_rate_form" model="ir.ui.view">
+            <field name="name">sale.downpayment.rate.form</field>
+            <field name="model">sale.downpayment.rate</field>
+            <field name="arch" type="xml">
+                <form string="Downpayment Rate">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="rate"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="sale_downpayment_rate_tree" model="ir.ui.view">
+            <field name="name">sale.downpayment.rate.tree</field>
+            <field name="model">sale.downpayment.rate</field>
+            <field name="arch" type="xml">
+                <tree string="Downpayment Rate">
+                    <field name="name"/>
+                    <field name="rate"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="sale_downpayment_rate_search" model="ir.ui.view">
+            <field name="name">sale.downpayment.rate.search</field>
+            <field name="model">sale.downpayment.rate</field>
+            <field name="arch" type="xml">
+                <search string="Downpayment Rate">
+                    <field name="name"/>
+                    <field name="rate"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="open_sale_downpayment_rate" model="ir.actions.act_window">
+            <field name="name"> Downpayment Rate</field>
+            <field name="res_model">sale.downpayment.rate</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
             Create a Downpayment Rate        
-           </p> 
-        </field> 
-    </record>
+                </p>
+            </field>
+        </record>
 
 
 
-    <!-- Interest Rate -->
-    <record id="sale_interst_rate_form" model="ir.ui.view">
-        <field name="name">sale.interest.rate.form</field> 
-        <field name="model">sale.interest.rate</field>
-        <field name="arch" type="xml">
-            <form string="Interest Rate">
-                <sheet>
-                    <group>
-                        <field name="name"/>
-                        <field name="rate"/>
-                    </group>
-                </sheet>                
-            </form> 
-        </field> 
-    </record>
+        <!-- Interest Rate -->
+        <record id="sale_interst_rate_form" model="ir.ui.view">
+            <field name="name">sale.interest.rate.form</field>
+            <field name="model">sale.interest.rate</field>
+            <field name="arch" type="xml">
+                <form string="Interest Rate">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="rate"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
 
-    <record id="sale_interest_rate_tree" model="ir.ui.view">
-        <field name="name">sale.interest.rate.tree</field> 
-        <field name="model">sale.interest.rate</field>
-        <field name="arch" type="xml">
-            <tree string="Interest Rate">
-                <field name="name"/>
-                <field name="rate"/>                
-            </tree> 
-        </field> 
-    </record>
+        <record id="sale_interest_rate_tree" model="ir.ui.view">
+            <field name="name">sale.interest.rate.tree</field>
+            <field name="model">sale.interest.rate</field>
+            <field name="arch" type="xml">
+                <tree string="Interest Rate">
+                    <field name="name"/>
+                    <field name="rate"/>
+                </tree>
+            </field>
+        </record>
 
-    <record id="sale_interest_rate_search" model="ir.ui.view">
-        <field name="name">sale.interest.rate.search</field> 
-        <field name="model">sale.interest.rate</field>
-        <field name="arch" type="xml">
-            <search string="Interest Rate">
-                <field name="name"/>
-                <field name="rate"/>                
-            </search>
-        </field> 
-    </record>
+        <record id="sale_interest_rate_search" model="ir.ui.view">
+            <field name="name">sale.interest.rate.search</field>
+            <field name="model">sale.interest.rate</field>
+            <field name="arch" type="xml">
+                <search string="Interest Rate">
+                    <field name="name"/>
+                    <field name="rate"/>
+                </search>
+            </field>
+        </record>
 
-    <record id="open_sale_interest_rate" model="ir.actions.act_window">
-        <field name="name"> Interest Rate</field> 
-        <field name="res_model">sale.interest.rate</field>
-        <field name="view_mode">tree,form</field>
-        <field name="help" type="html">
-           <p class="o_view_nocontent_smiling_face">
+        <record id="open_sale_interest_rate" model="ir.actions.act_window">
+            <field name="name"> Interest Rate</field>
+            <field name="res_model">sale.interest.rate</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
             Create a Interest Rate        
-           </p> 
-        </field> 
-    </record>
+                </p>
+            </field>
+        </record>
 
-       <!-- Discount Rate -->
-    <record id="sale_discount_rate_form" model="ir.ui.view">
-        <field name="name">sale.discount.rate.form</field> 
-        <field name="model">sale.discount.rate</field>
-        <field name="arch" type="xml">
-            <form string="Discount Rate">
-                <sheet>
-                    <group>
-                        <field name="name"/>
-                        <field name="rate"/>
-                    </group>
-                </sheet>                
-            </form> 
-        </field> 
-    </record>
+        <!-- Discount Rate -->
+        <record id="sale_discount_rate_form" model="ir.ui.view">
+            <field name="name">sale.discount.rate.form</field>
+            <field name="model">sale.discount.rate</field>
+            <field name="arch" type="xml">
+                <form string="Discount Rate">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="rate"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
 
-    <record id="sale_discount_rate_tree" model="ir.ui.view">
-        <field name="name">sale.discount.rate.tree</field> 
-        <field name="model">sale.discount.rate</field>
-        <field name="arch" type="xml">
-            <tree string="Discount Rate">
-                <field name="name"/>
-                <field name="rate"/>                
-            </tree> 
-        </field> 
-    </record>
+        <record id="sale_discount_rate_tree" model="ir.ui.view">
+            <field name="name">sale.discount.rate.tree</field>
+            <field name="model">sale.discount.rate</field>
+            <field name="arch" type="xml">
+                <tree string="Discount Rate">
+                    <field name="name"/>
+                    <field name="rate"/>
+                </tree>
+            </field>
+        </record>
 
-    <record id="sale_discount_rate_search" model="ir.ui.view">
-        <field name="name">sale.discount.rate.search</field> 
-        <field name="model">sale.discount.rate</field>
-        <field name="arch" type="xml">
-            <search string="Discount Rate">
-                <field name="name"/>
-                <field name="rate"/>                
-            </search>
-        </field> 
-    </record>
+        <record id="sale_discount_rate_search" model="ir.ui.view">
+            <field name="name">sale.discount.rate.search</field>
+            <field name="model">sale.discount.rate</field>
+            <field name="arch" type="xml">
+                <search string="Discount Rate">
+                    <field name="name"/>
+                    <field name="rate"/>
+                </search>
+            </field>
+        </record>
 
-    <record id="open_sale_discount_rate" model="ir.actions.act_window">
-        <field name="name">Discount Rate</field> 
-        <field name="res_model">sale.discount.rate</field>
-        <field name="view_mode">tree,form</field>
-        <field name="help" type="html">
-           <p class="o_view_nocontent_smiling_face">
+        <record id="open_sale_discount_rate" model="ir.actions.act_window">
+            <field name="name">Discount Rate</field>
+            <field name="res_model">sale.discount.rate</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
             Create a Discount Rate        
-           </p> 
-        </field> 
-    </record>
+                </p>
+            </field>
+        </record>
 
-    <!-- Spot DP Discount Rate -->
-    <record id="sale_spotdp_rate_form" model="ir.ui.view">
-        <field name="name">sale.spotdp.rate.form</field> 
-        <field name="model">sale.spotdp.rate</field>
-        <field name="arch" type="xml">
-            <form string="Spot Downpayment Rate">
-                <sheet>
-                    <group>
-                        <field name="name"/>
-                        <field name="rate"/>
-                    </group>
-                </sheet>                
-            </form> 
-        </field> 
-    </record>
+        <!-- Spot DP Discount Rate -->
+        <record id="sale_spotdp_rate_form" model="ir.ui.view">
+            <field name="name">sale.spotdp.rate.form</field>
+            <field name="model">sale.spotdp.rate</field>
+            <field name="arch" type="xml">
+                <form string="Spot Downpayment Rate">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="rate"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
 
-    <record id="sale_spotdp_rate_tree" model="ir.ui.view">
-        <field name="name">sale.spotdp.rate.tree</field> 
-        <field name="model">sale.spotdp.rate</field>
-        <field name="arch" type="xml">
-            <tree string="Spot Downpayment Rate">
-                <field name="name"/>
-                <field name="rate"/>                
-            </tree> 
-        </field> 
-    </record>
+        <record id="sale_spotdp_rate_tree" model="ir.ui.view">
+            <field name="name">sale.spotdp.rate.tree</field>
+            <field name="model">sale.spotdp.rate</field>
+            <field name="arch" type="xml">
+                <tree string="Spot Downpayment Rate">
+                    <field name="name"/>
+                    <field name="rate"/>
+                </tree>
+            </field>
+        </record>
 
-    <record id="sale_spotdp_rate_search" model="ir.ui.view">
-        <field name="name">sale.spotdp.rate.search</field> 
-        <field name="model">sale.spotdp.rate</field>
-        <field name="arch" type="xml">
-            <search string="Spot Downpayment Rate">
-                <field name="name"/>
-                <field name="rate"/>                
-            </search>
-        </field> 
-    </record>
+        <record id="sale_spotdp_rate_search" model="ir.ui.view">
+            <field name="name">sale.spotdp.rate.search</field>
+            <field name="model">sale.spotdp.rate</field>
+            <field name="arch" type="xml">
+                <search string="Spot Downpayment Rate">
+                    <field name="name"/>
+                    <field name="rate"/>
+                </search>
+            </field>
+        </record>
 
-    <record id="open_sale_spotdp_rate" model="ir.actions.act_window">
-        <field name="name">Spot Downpayment Rate</field> 
-        <field name="res_model">sale.spotdp.rate</field>
-        <field name="view_mode">tree,form</field>
-        <field name="help" type="html">
-           <p class="o_view_nocontent_smiling_face">
+        <record id="open_sale_spotdp_rate" model="ir.actions.act_window">
+            <field name="name">Spot Downpayment Rate</field>
+            <field name="res_model">sale.spotdp.rate</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
             Create a Spot Downpayment Rate        
-           </p> 
-        </field> 
-    </record>
+                </p>
+            </field>
+        </record>
 
-    <!-- Reservation Rate -->
-    <record id="sale_reservation_rate_form" model="ir.ui.view">
-        <field name="name">sale.reservation.rate.form</field> 
-        <field name="model">sale.reservation.rate</field>
-        <field name="arch" type="xml">
-            <form string="Rervation Rate">
-                <sheet>
-                    <group>
-                        <field name="name"/>
-                        <field name="rate"/>
-                    </group>
-                </sheet>                
-            </form> 
-        </field> 
-    </record>
+        <!-- Reservation Rate -->
+        <record id="sale_reservation_rate_form" model="ir.ui.view">
+            <field name="name">sale.reservation.rate.form</field>
+            <field name="model">sale.reservation.rate</field>
+            <field name="arch" type="xml">
+                <form string="Rervation Rate">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="rate"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
 
-    <record id="sale_reservation_rate_tree" model="ir.ui.view">
-        <field name="name">sale.reservation.rate.tree</field> 
-        <field name="model">sale.reservation.rate</field>
-        <field name="arch" type="xml">
-            <tree string="Reservation Rate">
-                <field name="name"/>
-                <field name="rate"/>                
-            </tree> 
-        </field> 
-    </record>
+        <record id="sale_reservation_rate_tree" model="ir.ui.view">
+            <field name="name">sale.reservation.rate.tree</field>
+            <field name="model">sale.reservation.rate</field>
+            <field name="arch" type="xml">
+                <tree string="Reservation Rate">
+                    <field name="name"/>
+                    <field name="rate"/>
+                </tree>
+            </field>
+        </record>
 
-    <record id="sale_reservation_rate_search" model="ir.ui.view">
-        <field name="name">sale.reservation.rate.search</field> 
-        <field name="model">sale.reservation.rate</field>
-        <field name="arch" type="xml">
-            <search string="Reservation Rate">
-                <field name="name"/>
-                <field name="rate"/>                
-            </search>
-        </field> 
-    </record>
+        <record id="sale_reservation_rate_search" model="ir.ui.view">
+            <field name="name">sale.reservation.rate.search</field>
+            <field name="model">sale.reservation.rate</field>
+            <field name="arch" type="xml">
+                <search string="Reservation Rate">
+                    <field name="name"/>
+                    <field name="rate"/>
+                </search>
+            </field>
+        </record>
 
-    <record id="open_sale_reservation_rate" model="ir.actions.act_window">
-        <field name="name">Reservation Rate</field> 
-        <field name="res_model">sale.reservation.rate</field>
-        <field name="view_mode">tree,form</field>
-        <field name="help" type="html">
-           <p class="o_view_nocontent_smiling_face">
+        <record id="open_sale_reservation_rate" model="ir.actions.act_window">
+            <field name="name">Reservation Rate</field>
+            <field name="res_model">sale.reservation.rate</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
             Create a Reservation Rate        
-           </p> 
-        </field> 
-    </record>
+                </p>
+            </field>
+        </record>
 
 
-    <menuitem id="menu_sale_downpayment_rate" 
-      name= "Down Payment Rate" 
-      groups="base.group_system" 
-      parent="sale.menu_sale_config"
-      action="open_sale_downpayment_rate"
-      sequence="99"/>
+        <menuitem id="menu_sale_downpayment_rate" name= "Down Payment Rate" groups="base.group_system" parent="sale.menu_sale_config" action="open_sale_downpayment_rate" sequence="99"/>
 
-    <menuitem id="menu_sale_interest_rate" 
-      name= "Interest Rate" 
-      groups="base.group_system" 
-      parent="sale.menu_sale_config"
-      action="open_sale_interest_rate"
-      sequence="100"/>
+        <menuitem id="menu_sale_interest_rate" name= "Interest Rate" groups="base.group_system" parent="sale.menu_sale_config" action="open_sale_interest_rate" sequence="100"/>
 
-    <menuitem id="menu_sale_discount_rate" 
-      name= "Discount Rate" 
-      groups="base.group_system" 
-      parent="sale.menu_sale_config"
-      action="open_sale_discount_rate"
-      sequence="101"/>
+        <menuitem id="menu_sale_discount_rate" name= "Discount Rate" groups="base.group_system" parent="sale.menu_sale_config" action="open_sale_discount_rate" sequence="101"/>
 
-    <menuitem id="menu_sale_spotdp_rate" 
-      name= "Spot Downpayment Rate" 
-      groups="base.group_system" 
-      parent="sale.menu_sale_config"
-      action="open_sale_spotdp_rate"
-      sequence="102"/>
+        <menuitem id="menu_sale_spotdp_rate" name= "Spot Downpayment Rate" groups="base.group_system" parent="sale.menu_sale_config" action="open_sale_spotdp_rate" sequence="102"/>
 
-    <menuitem id="menu_sale_reservation_rate" 
-      name= "Reservation Rate" 
-      groups="base.group_system" 
-      parent="sale.menu_sale_config"
-      action="open_sale_reservation_rate"
-      sequence="102"/>
-</data>
+        <menuitem id="menu_sale_reservation_rate" name= "Reservation Rate" groups="base.group_system" parent="sale.menu_sale_config" action="open_sale_reservation_rate" sequence="102"/>
+    </data>
 </odoo>
